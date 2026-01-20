@@ -2,1901 +2,231 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>今天吃点啥</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内娱男星·命运翻牌</title>
     <style>
-        :root {
-            --primary-color: #ff6b6b;
-            --secondary-color: #ffa502;
-            --bg-color: #f9f9f9;
-            --text-color: #333;
-            --card-bg: #ffffff;
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-            --border-radius: 12px;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             min-height: 100vh;
-            overflow-x: hidden;
-            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+            overflow: hidden;
         }
 
         .container {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            transition: var(--transition);
-        }
-
-        .screen {
-            display: none;
-            min-height: 100vh;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .screen.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .header {
             text-align: center;
+            max-width: 600px;
+            width: 100%;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 2.5em;
             margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            margin-bottom: 8px;
-            text-shadow: 0 2px 4px rgba(255, 107, 107, 0.2);
-        }
-
-        .header p {
-            color: #666;
-            font-size: 1rem;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            letter-spacing: 2px;
         }
 
         .card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-        }
-
-        .card h2 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
-            outline: none;
-            text-align: center;
-            margin: 10px 0;
-            width: 100%;
-        }
-
-        .btn:active {
-            transform: scale(0.97);
-            box-shadow: 0 2px 5px rgba(255, 107, 107, 0.3);
-        }
-
-        .btn.secondary {
-            background-color: var(--secondary-color);
-            box-shadow: 0 4px 10px rgba(255, 165, 2, 0.3);
-        }
-
-        .btn.outline {
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            box-shadow: none;
-        }
-
-        .preferences-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .preference-item {
-            display: block;
-            padding: 15px;
-            border-radius: var(--border-radius);
-            border: 2px solid #e0e0e0;
-            text-align: center;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .preference-item.selected {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
-        }
-
-        .slider-container {
-            margin: 20px 0;
-        }
-
-        .slider-container label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
-        .range-slider {
-            width: 100%;
-            -webkit-appearance: none;
-            height: 8px;
-            border-radius: 5px;
-            background: #e0e0e0;
-            outline: none;
-            margin-bottom: 10px;
-        }
-
-        .range-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .range-slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            border: none;
-        }
-
-        .range-value {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .deciding-screen {
-            text-align: center;
-            padding: 40px 0;
-        }
-
-        .food-wheel {
-            position: relative;
-            width: 250px;
-            height: 250px;
-            margin: 0 auto 30px;
-        }
-
-        .wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(
-                var(--primary-color) 0deg 60deg,
-                #ff9a9a 60deg 120deg,
-                var(--secondary-color) 120deg 180deg,
-                #ffc066 180deg 240deg,
-                #ff7b7b 240deg 300deg,
-                #ffb342 300deg 360deg
-            );
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
-            position: relative;
-            transform-origin: center;
-            animation: wheel-spin 4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
-        }
-
-        @keyframes wheel-spin {
-            0% { transform: rotate(0deg); }
-            30% { transform: rotate(720deg); }
-            60% { transform: rotate(1080deg); }
-            100% { transform: rotate(720deg); }
-        }
-
-        .wheel-pointer {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 30px;
-            background-color: white;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            z-index: 1;
-            filter: drop-shadow(0 -2px 3px rgba(0, 0, 0, 0.2));
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            margin: 20px 0;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-fill {
-            height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 5px;
-            transition: width 0.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-fill::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: shimmer 1.5s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .thinking-text {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: var(--primary-color);
-            margin-top: 20px;
-            animation: thinking 2s infinite;
-        }
-
-        @keyframes thinking {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .result-card {
-            text-align: center;
-            padding: 30px 20px;
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin: 20px 0;
-            border: 2px solid var(--primary-color);
-            animation: pop-in 0.5s ease-out;
-        }
-
-        @keyframes pop-in {
-            0% { transform: scale(0.8); opacity: 0; }
-            70% { transform: scale(1.05); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .food-name {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            text-shadow: 0 2px 4px rgba(255, 107, 107, 0.2);
-        }
-
-        .food-description {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #555;
-            margin-bottom: 20px;
-        }
-
-        .history-item {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .history-food {
-            font-weight: 500;
-        }
-
-        .history-date {
-            font-size: 0.9rem;
-            color: #999;
-        }
-
-        .empty-history {
-            text-align: center;
-            padding: 30px 0;
-            color: #999;
-        }
-
-        .back-btn {
-            background-color: transparent;
-            border: none;
-            color: var(--primary-color);
-            font-size: 1rem;
-            padding: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-around;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: white;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px 0;
-            z-index: 999;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #888;
-            font-size: 0.8rem;
-        }
-
-        .nav-item.active {
-            color: var(--primary-color);
-        }
-
-        .nav-icon {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-
-        .toast.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .food-category {
-            font-size: 0.9rem;
-            color: #888;
-            background-color: #f1f1f1;
-            padding: 5px 10px;
+            width: 280px;
+            height: 400px;
+            margin: 0 auto 40px;
+            background-color: #fff;
             border-radius: 15px;
-            display: inline-block;
-            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
         }
 
-        /* 为体验不同的主题增加的样式 */
-        .theme-selector {
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            font-weight: bold;
         }
 
-        .theme-option {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
+        .card-front {
+            background: linear-gradient(to bottom, #d4af37, #b8860b);
+            color: #8b4513;
+            font-size: 1.5em;
+        }
+
+        .card-back {
+            background-color: #fff;
+            transform: rotateY(180deg);
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .star-image {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+            border-bottom: 2px solid #eee;
+        }
+
+        .star-name {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 1.2em;
+            color: #333;
+            font-weight: bold;
+        }
+
+        button {
+            background-color: #ff4b5c;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(255,75,92,0.4);
+            transition: all 0.3s;
+            font-weight: bold;
         }
 
-        .theme-option:active {
-            transform: scale(0.9);
+        button:hover {
+            background-color: #ff3344;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,75,92,0.6);
         }
 
-        .theme-option.selected {
-            transform: scale(1.1);
-            box-shadow: 0 0 0 2px white, 0 0 0 4px var(--primary-color);
+        button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        /* 辅助图标和字体样式 */
-        .icon {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
-        /* 适应更窄的屏幕 */
-        @media (max-width: 360px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .food-name {
-                font-size: 1.5rem;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-            }
-            
-            .preferences-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* 加载动画 */
-        .spinner {
-            width: 40px;
-            height: 40px;
-            margin: 20px auto;
-            border: 4px solid rgba(255, 107, 107, 0.3);
-            border-top: 4px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* 滚动效果优化 */
-        .smooth-scroll {
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        /* 响应式布局的额外优化 */
-        @media (min-height: 700px) {
-            .container {
-                padding-bottom: 80px;
-            }
+        .credits {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.7);
         }
     </style>
 </head>
 <body>
-    <!-- 欢迎页面 -->
-    <div id="welcome-screen" class="screen active">
-        <div class="container">
-            <div class="header">
-                <h1>今天吃点啥</h1>
-                <p>让选择困难症不再困难</p>
-            </div>
-            
-            <div class="card">
-                <h2>欢迎使用</h2>
-                <p>这款应用能够帮助您在饭点选择时提供"终极一锤"的决策，不仅提供美食建议，还会用充满说服力的语言刺激您的味蕾。</p>
-                <p>首次使用，请先设置您的口味偏好，这将帮助我们更好地为您推荐。</p>
-                <button id="start-btn" class="btn">开始设置</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 偏好设置页面 -->
-    <div id="preferences-screen" class="screen">
-        <div class="container">
-            <div class="header">
-                <h1>口味偏好</h1>
-                <p>帮助我们了解您的口味</p>
-            </div>
-            
-            <div class="card">
-                <h2>喜欢的菜系</h2>
-                <div class="preferences-container">
-                    <div class="preference-item" data-preference="cuisine" data-value="川湘菜">川湘菜</div>
-                    <div class="preference-item" data-preference="cuisine" data-value="粤菜">粤菜</div>
-                    <div class="preference-item" data-preference="cuisine" data-value="西北菜">西北菜</div>
-                    <div class="preference-item" data-preference="cuisine" data-value="江浙菜">江浙菜</div>
-                    <div class="preference-item" data-preference="cuisine" data-value="日料">日料</div>
-                    <div class="preference-item" data-preference="cuisine" data-value="韩料">韩料</div>
-                    <div class="preference-item" data-preference="cuisine" data-value="西餐">西餐</div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h2>口味偏好</h2>
-                <div class="slider-container">
-                    <label>辣度偏好</label>
-                    <input type="range" min="1" max="5" value="3" class="range-slider" id="spicy-slider">
-                    <div class="range-value">
-                        <span>不辣</span>
-                        <span>中等</span>
-                        <span>麻辣</span>
-                    </div>
-                </div>
-                
-                <div class="slider-container">
-                    <label>甜度偏好</label>
-                    <input type="range" min="1" max="5" value="3" class="range-slider" id="sweet-slider">
-                    <div class="range-value">
-                        <span>不甜</span>
-                        <span>中等</span>
-                        <span>甜蜜</span>
-                    </div>
-                </div>
-                
-                <div class="slider-container">
-                    <label>重口程度</label>
-                    <input type="range" min="1" max="5" value="3" class="range-slider" id="savory-slider">
-                    <div class="range-value">
-                        <span>清淡</span>
-                        <span>中等</span>
-                        <span>重口</span>
-                    </div>
-                </div>
-            </div>
-            
-            <button id="save-preferences-btn" class="btn">保存偏好</button>
-        </div>
-    </div>
-
-    <!-- 主页面 -->
-    <div id="main-screen" class="screen">
-        <div class="container">
-            <div class="header">
-                <h1>今天吃点啥</h1>
-                <p>一键解决选择困难</p>
-            </div>
-            
-            <div class="card">
-                <h2>开始决策</h2>
-                <p>点击下方按钮，让我们为您推荐今天的美食，并用"定音锤"帮您做出最终决定。</p>
-                <button id="decide-btn" class="btn">今天吃点啥</button>
-                <button id="try-new-btn" class="btn secondary">来点新鲜的</button>
-            </div>
-            
-            <div class="card">
-                <h2>最近推荐</h2>
-                <div id="recent-recommendations">
-                    <div class="empty-history">暂无推荐记录</div>
-                </div>
-            </div>
-        </div>
+    <div class="container">
+        <h1>✨ 内娱男星·命运翻牌 ✨</h1>
         
-        <div class="navigation">
-            <a href="#" class="nav-item active" data-screen="main-screen">
-                <div class="nav-icon">🏠</div>
-                <span>首页</span>
-            </a>
-            <a href="#" class="nav-item" data-screen="history-screen">
-                <div class="nav-icon">📜</div>
-                <span>历史</span>
-            </a>
-            <a href="#" class="nav-item" data-screen="settings-screen">
-                <div class="nav-icon">⚙️</div>
-                <span>设置</span>
-            </a>
-        </div>
-    </div>
-
-    <!-- 决策中页面 -->
-    <div id="deciding-screen" class="screen">
-        <div class="container">
-            <div class="deciding-screen">
-                <div class="food-wheel">
-                    <div class="wheel-pointer"></div>
-                    <div class="wheel"></div>
-                </div>
-                
-                <div class="thinking-text">正在决策中，请稍候...</div>
-                
-                <div class="progress-bar">
-                    <div class="progress-fill" id="decision-progress"></div>
-                </div>
-                
-                <p>我们正在考虑您的口味偏好，分析历史记录，寻找最佳推荐...</p>
+        <div class="card" id="card">
+            <div class="card-front">点击下方按钮翻牌</div>
+            <div class="card-back">
+                <img id="starImg" class="star-image" src="" alt="男星">
+                <div id="starName" class="star-name"></div>
             </div>
         </div>
-    </div>
 
-    <!-- 结果页面 -->
-    <div id="result-screen" class="screen">
-        <div class="container">
-            <div class="header">
-                <h1>为您推荐</h1>
-                <p>这是您今天的终极选择</p>
-            </div>
-            
-            <div class="result-card">
-                <div class="food-category" id="result-category">川湘菜</div>
-                <div class="food-name" id="result-food">麻婆豆腐</div>
-                <div class="food-description" id="result-description">
-                    这道麻婆豆腐红而不辣、辣而不猛、香而不腻，嫩滑的豆腐裹挟着鲜香的肉末，麻辣鲜香的味道让人回味无穷。这不是简单的一道菜，这是川菜的灵魂，是对味蕾的一次革命性冲击！
-                </div>
-            </div>
-            
-            <button id="accept-btn" class="btn">就吃这个了</button>
-            <button id="retry-btn" class="btn outline">换一个推荐</button>
-        </div>
+        <button id="drawBtn">开始翻牌</button>
+        <p class="credits">星库包含流量、演技、顶流等各类内娱男星</p>
     </div>
-
-    <!-- 历史记录页面 -->
-    <div id="history-screen" class="screen">
-        <div class="container">
-            <div class="header">
-                <h1>历史记录</h1>
-                <p>您的美食记忆</p>
-            </div>
-            
-            <div class="card">
-                <h2>推荐历史</h2>
-                <div id="history-list">
-                    <div class="empty-history">暂无历史记录</div>
-                </div>
-            </div>
-            
-            <button id="clear-history-btn" class="btn outline">清空历史记录</button>
-        </div>
-    </div>
-
-    <!-- 设置页面 -->
-    <div id="settings-screen" class="screen">
-        <div class="container">
-            <div class="header">
-                <h1>设置</h1>
-                <p>个性化您的体验</p>
-            </div>
-            
-            <div class="card">
-                <h2>修改口味偏好</h2>
-                <button id="edit-preferences-btn" class="btn">修改偏好</button>
-            </div>
-            
-            <div class="card">
-                <h2>主题色</h2>
-                <div class="theme-selector">
-                    <div class="theme-option selected" style="background-color: #ff6b6b;" data-primary="#ff6b6b" data-secondary="#ffa502"></div>
-                    <div class="theme-option" style="background-color: #4ecdc4;" data-primary="#4ecdc4" data-secondary="#ff9f43"></div>
-                    <div class="theme-option" style="background-color: #6c5ce7;" data-primary="#6c5ce7" data-secondary="#fdcb6e"></div>
-                    <div class="theme-option" style="background-color: #2ecc71;" data-primary="#2ecc71" data-secondary="#e74c3c"></div>
-                    <div class="theme-option" style="background-color: #f368e0;" data-primary="#f368e0" data-secondary="#48dbfb"></div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h2>关于</h2>
-                <p>今天吃点啥 v1.0</p>
-                <p>一款解决选择困难症的美食推荐工具</p>
-            </div>
-            
-            <button id="reset-app-btn" class="btn outline">重置应用</button>
-        </div>
-    </div>
-
-    <!-- 提示框 -->
-    <div id="toast" class="toast">提示信息</div>
 
     <script>
-        // 食物数据库
-        const foodDatabase = {
-            "川湘菜": [
-                { name: "麻婆豆腐", spicy: 4, sweet: 1, savory: 4, hammer: "这道麻婆豆腐红而不辣、辣而不猛、香而不腻，嫩滑的豆腐裹挟着鲜香的肉末，麻辣鲜香的味道让人回味无穷。这不是简单的一道菜，这是川菜的灵魂，是对味蕾的一次革命性冲击！" },
-                { name: "水煮鱼", spicy: 5, sweet: 1, savory: 5, hammer: "鲜嫩的鱼肉在沸腾的红油中翻滚，吸收了数十种香料的精华，入口先是麻辣，后是鲜香四溢。每一口都是挑战，每一口都是征服，今天的你，值得这样的美食体验！" },
-                { name: "回锅肉", spicy: 3, sweet: 2, savory: 5, hammer: "肥而不腻的五花肉，与青椒和豆瓣酱的完美融合，是川菜的经典之作。那层次分明的口感，让人瞬间明白了什么是真正的色香味俱全，这一口下去，胃和心都被满足了！" },
-                { name: "辣子鸡", spicy: 5, sweet: 1, savory: 4, hammer: "金黄酥脆的鸡肉粒，和大量的干辣椒一起爆炒，每一粒都是香辣的精华。一把抓起，一口闷，辣得痛快，香得过瘾，这哪是一道菜，简直是一场舌尖上的狂欢！" },
-                { name: "剁椒鱼头", spicy: 4, sweet: 1, savory: 4, hammer: "肥美的鱼头遇上了剁椒的辣，被蒸汽封锁的鲜美一下子释放，那股鲜辣交融的气息，简直让人口水泛滥。精华全在这鱼头中，今天就让这无与伦比的美味征服你！" },
-                { name: "夫妻肺片", spicy: 4, sweet: 1, savory: 3, hammer: "薄如纸的牛肉片，糯韧的牛舌，爽脆的牛肚，浸泡在红油中，香气四溢。一口入魂，麻辣鲜香瞬间占领味蕾，这不仅是一道凉菜，更是川菜麻辣艺术的巅峰之作！" },
-                { name: "宫保鸡丁", spicy: 3, sweet: 2, savory: 3, hammer: "鲜嫩的鸡肉，香脆的花生，加上干辣椒和花椒的点缀，酸甜麻辣的完美平衡。这哪是普通的鸡丁，简直是一场味觉的盛宴，今天无论如何都该尝一尝这经典中的经典！" },
-                { name: "毛血旺", spicy: 5, sweet: 1, savory: 5, hammer: "这锅红彤彤的毛血旺，是四川人对美食的热情具象化。鸭血入口即化，毛肚脆嫩爽滑，各种食材在麻辣鲜香的汤底中激情碰撞，每一口都是极致的满足，让人欲罢不能！" },
-                { name: "泡椒凤爪", spicy: 4, sweet: 1, savory: 3, hammer: "这些被泡椒浸泡的凤爪，吸收了辣椒的精华，变得酸辣开胃。啃起来既是享受又是挑战，那酸爽麻辣的滋味钻入骨髓，绝对是下饭神器，再来一碗米饭吧！" },
-                { name: "干锅兔", spicy: 4, sweet: 1, savory: 4, hammer: "干香麻辣的兔肉，与各种香料和蔬菜共舞，每一块都紧实鲜香。辣味层层递进，香气不断释放，这哪是简单的吃饭，简直是一场舌尖上的冒险！" },
-                { name: "口水鸡", spicy: 3, sweet: 1, savory: 3, hammer: "这道冷菜简直就是麻辣鲜香的教科书！嫩滑的鸡肉裹着红油和花椒，层次丰富的香辣味道让人一吃就停不下来。名副其实的'口水鸡'，因为它真的能让你口水直流！" },
-                { name: "东坡肘子", spicy: 1, sweet: 4, savory: 5, hammer: "这道东坡肘子色泽红亮，肥而不腻，瘦而不柴，入口即化。那浓郁的酱香与肉香完美融合，仿佛每一口都在诉说着千年的美食故事，今天，就让这种传统的奢华征服你吧！" },
-                { name: "龙抄手", spicy: 3, sweet: 1, savory: 3, hammer: "每一个抄手都是匠心独运的艺术品，薄如蝉翼的皮包裹着鲜香的馅料，配上特制红油，一口咬下，汤汁四溢，鲜香扑鼻，这种幸福来得如此简单直接！" },
-                { name: "香辣蟹", spicy: 5, sweet: 1, savory: 4, hammer: "肥美的蟹肉被香辣的酱汁完全覆盖，香气扑鼻。剥开蟹壳，鲜美的蟹肉吸收了所有的香辣，一口下去，辣得过瘾，鲜得惊人，这才是活着的意义！" },
-                { name: "冷锅鱼", spicy: 4, sweet: 1, savory: 4, hammer: "这不是普通的鱼，这是融合了无数香料精华的美味。鱼肉鲜嫩，汤底麻辣，青花椒的香气直冲脑门，每一口都让人沉醉。别犹豫了，这正是你今天该尝试的美食体验！" },
-                { name: "担担面", spicy: 4, sweet: 1, savory: 4, hammer: "这碗担担面可不简单，筋道的面条上铺满了香气四溢的肉末，浇上特制红油，拌起来香气扑鼻。一口下去，麻、辣、鲜、香、酥，五味俱全，绝对能治愈你一整天的疲惫！" },
-                { name: "鱼香肉丝", spicy: 3, sweet: 3, savory: 3, hammer: "这道经典川菜集酸甜咸辣于一身，薄如丝的猪肉在特制酱汁中翻滚，吸收了所有的精华。入口先酸后甜，再而辣，层次丰富的味道让人欲罢不能，这才是真正的下饭神器！" },
-                { name: "钵钵鸡", spicy: 4, sweet: 1, savory: 3, hammer: "一根根竹签上串着鸡肉、鸡皮、鸡翅等多种部位，浸泡在特制红油中，入口麻辣鲜香。每一串都是惊喜，每一口都是满足，这种街头美食的魅力，怎能抗拒？" },
-                { name: "麻辣香锅", spicy: 5, sweet: 1, savory: 5, hammer: "这一锅红彤彤的香锅，简直是麻辣爱好者的天堂！各种食材在麻辣香料的包裹下翻滚，香气四溢。一口下去，麻辣与鲜香在口中爆发，满足感瞬间溢满全身，今天就该来一份！" },
-                { name: "芙蓉鸡片", spicy: 2, sweet: 2, savory: 3, hammer: "这道菜将嫩滑的鸡片与蛋清完美结合，色泽洁白如雪，鲜嫩无比。入口即化的口感，温润的味道，是川菜中的一股清流，更是抚慰疲惫味蕾的绝佳选择！" },
-                { name: "干煸四季豆", spicy: 3, sweet: 1, savory: 3, hammer: "这道干煸四季豆外表油亮，口感酥脆，豆香和肉末的鲜香完美融合。那种欲罢不能的香辣味道，让人不知不觉就能消灭一大盘，绝对是米饭的完美伴侣！" },
-                { name: "酸菜鱼", spicy: 3, sweet: 1, savory: 4, hammer: "这一锅酸菜鱼，汤色乳白，鱼肉嫩滑，酸菜爽口。一口汤，一口鱼，酸辣过瘾，鲜香四溢。这哪是吃饭，简直是一场味蕾的狂欢，今天就让这道美食点亮你的味蕾！" },
-                { name: "红油抄手", spicy: 3, sweet: 1, savory: 3, hammer: "每一个抄手都是对味道的完美诠释，薄皮嫩馅，浸泡在红油之中，香气四溢。一口咬下，汤汁四溢，那种满足感无可替代，这才是冬日里最令人期待的温暖！" },
-                { name: "鱼香茄子", spicy: 3, sweet: 2, savory: 3, hammer: "软糯的茄子吸收了鱼香味的精华，色泽红亮，香气扑鼻。咬上一口，又酸又甜又辣，层次丰富的味道让人停不下来，这哪是素菜，简直是素食者的天堂！" },
-                { name: "蒜泥白肉", spicy: 2, sweet: 1, savory: 3, hammer: "薄如纸的白肉，配上香气四溢的蒜泥酱汁，清爽不腻。一口下去，蒜香四溢，肉香浓郁，清凉爽口，在这炎热的夏天，还有什么比这更让人食欲大开的呢？" },
-                { name: "水煮牛肉", spicy: 5, sweet: 1, savory: 5, hammer: "这一盆红彤彤的水煮牛肉，光是看着就让人血脉偾张！薄薄的牛肉片在麻辣汤底中翻滚，吸收了所有的香料精华。一口下去，麻辣鲜香瞬间爆发，这简直就是对味蕾的极致挑战！" },
-                { name: "白肉血肠", spicy: 3, sweet: 1, savory: 5, hammer: "这道四川传统名菜将白肉和血肠完美结合，一口咬下，肉香四溢，血肠独特的风味在口中蔓延。配上特制的蘸料，简直是一场味觉的盛宴，绝对值得一试！" },
-                { name: "怪味鸡", spicy: 3, sweet: 2, savory: 3, hammer: "这道怪味鸡名副其实，集麻辣、酸甜、咸鲜于一体，味道复杂而协调。鸡肉嫩滑，入口即化，层次丰富的味道让人欲罢不能，一尝就忘不了的美味！" },
-                { name: "椒麻鸡", spicy: 4, sweet: 1, savory: 3, hammer: "这只看似普通的鸡，却蕴含了无限的惊喜。麻辣鲜香的外表下，是鲜嫩多汁的鸡肉。那种让人舌尖发麻的快感，回味无穷的香辣，足以征服最挑剔的味蕾！" },
-                { name: "泡椒牛蛙", spicy: 4, sweet: 1, savory: 4, hammer: "这锅泡椒牛蛙，色泽红亮，香气四溢。牛蛙肉质鲜嫩，泡椒酸辣开胃，一口下去，酸辣与鲜美在口中爆发，让人瞬间食欲大开，这绝对是聚餐的绝佳选择！" },
-                { name: "口水豆腐", spicy: 3, sweet: 1, savory: 3, hammer: "这道'口水豆腐'名不虚传，嫩滑的豆腐裹挟着红油和香料，一口下去，麻辣鲜香在口中爆发，那种满足感让人欲罢不能，真的会让人口水直流！" },
-                { name: "香锅", spicy: 5, sweet: 1, savory: 5, hammer: "这一锅红彤彤的香锅，是麻辣爱好者的终极选择！各种食材在麻辣香料的烹饪下变得无比诱人，一口下去，麻辣与鲜香在口中爆发，满足感瞬间溢满全身！" },
-                { name: "烧白", spicy: 2, sweet: 1, savory: 4, hammer: "这道四川传统名菜，将肥瘦相间的猪肉煮至酥烂，配上特制的调料，一口下去，肉香四溢，回味悠长。那种纯粹的美味，让人忘却一切烦恼，只想慢慢品味！" },
-                { name: "干煸肥肠", spicy: 4, sweet: 1, savory: 5, hammer: "这道干煸肥肠外酥里嫩，麻辣鲜香，每一口都是挑战和享受。肥肠在干辣椒和花椒的包裹下变得如此诱人，那种欲罢不能的味道，绝对让你难以忘怀！" },
-                { name: "豆瓣鱼", spicy: 4, sweet: 1, savory: 4, hammer: "这道豆瓣鱼将鲜嫩的鱼肉与浓郁的豆瓣酱完美结合，红亮的汤汁，鲜美的鱼肉，香辣的口感，一口下去，满足感瞬间爆棚，这绝对是你今天的不二之选！" },
-                { name: "灯影牛肉", spicy: 3, sweet: 1, savory: 4, hammer: "这道灯影牛肉薄如纸，通透若灯影，色泽红亮，香气四溢。一入口，牛肉的鲜香和特制调料的麻辣瞬间在口中爆发，这种绝妙的体验，值得你亲自品尝！" },
-                { name: "粉蒸肉", spicy: 2, sweet: 2, savory: 4, hammer: "这道粉蒸肉色泽红亮，肉质酥烂，米粉吸收了肉的精华，香气四溢。一口下去，肉香浓郁，入口即化，那种满足感无可替代，这才是真正的家常美味！" },
-                { name: "水煮肉片", spicy: 5, sweet: 1, savory: 5, hammer: "这一盘水煮肉片，红油翻滚，香气扑鼻。薄如纸的肉片在麻辣汤底中游走，吸收了所有的精华。一口下去，麻辣鲜香瞬间爆发，这绝对是对味蕾的极致挑战！" },
-                { name: "藿香鱼", spicy: 3, sweet: 1, savory: 4, hammer: "这道藿香鱼将鲜嫩的鱼肉与独特的藿香完美结合，香气扑鼻，味道独特。一口下去，鱼肉的鲜美和藿香的清爽在口中交融，这种独特的体验，值得你尝试！" },
-                { name: "豆豉鱼", spicy: 3, sweet: 1, savory: 4, hammer: "这道豆豉鱼将鲜嫩的鱼肉与香气四溢的豆豉完美结合，香气扑鼻，回味无穷。一口下去，鱼肉的鲜美和豆豉的香气在口中交融，这种绝妙的体验，让人欲罢不能！" },
-                { name: "梅菜扣肉", spicy: 1, sweet: 2, savory: 5, hammer: "这道梅菜扣肉层次分明，肥而不腻，瘦而不柴，梅菜的咸香与肉的鲜美完美融合。一口下去，肉香四溢，回味悠长，这种满足感无可替代，绝对是你今天的最佳选择！" },
-                { name: "干锅土豆片", spicy: 4, sweet: 1, savory: 3, hammer: "这道干锅土豆片，薄如纸的土豆片在香料的包裹下变得无比诱人，脆嫩可口，香辣适中。一口接一口，根本停不下来，这种简单而纯粹的美味，值得你尝试！" },
-                { name: "辣子鸡丁", spicy: 5, sweet: 1, savory: 4, hammer: "这道辣子鸡丁，金黄酥脆的鸡肉粒与大量的干辣椒一起炒制，香气四溢。一口下去，麻辣鲜香在口中爆发，那种让人欲罢不能的美味，绝对能征服最挑剔的味蕾！" },
-                { name: "泡菜牛肉", spicy: 4, sweet: 1, savory: 4, hammer: "这道泡菜牛肉将鲜嫩的牛肉与酸辣的泡菜完美结合，酸辣开胃，回味无穷。一口下去，牛肉的鲜美和泡菜的酸辣在口中交融，这种绝妙的体验，值得你亲自品尝！" },
-                { name: "蒜苗回锅肉", spicy: 3, sweet: 1, savory: 5, hammer: "这道蒜苗回锅肉将肥瘦相间的五花肉与鲜嫩的蒜苗完美结合，香气四溢，回味无穷。一口下去，肉香四溢，蒜香扑鼻，这种绝妙的体验，让人欲罢不能！" },
-                { name: "腊味合蒸", spicy: 2, sweet: 1, savory: 5, hammer: "这道腊味合蒸将各种腊肉、腊肠等完美结合，香气四溢，回味无穷。一口下去，浓郁的腊味在口中扩散，那种满足感无可替代，绝对是下酒的绝佳选择！" },
-                { name: "干煸花菜", spicy: 3, sweet: 1, savory: 3, hammer: "这道干煸花菜，脆嫩的花菜在干辣椒的包裹下变得无比诱人，香辣适中，回味无穷。一口接一口，根本停不下来，这种简单而纯粹的美味，值得你尝试！" },
-                { name: "酸汤肥牛", spicy: 3, sweet: 1, savory: 4, hammer: "这道酸汤肥牛，酸辣开胃的汤底中，薄如纸的牛肉片翻滚着，吸收了所有的精华。一口汤，一口肉，酸辣鲜香，回味无穷，这绝对是冬日里的温暖选择！" },
-                { name: "红烧肘子", spicy: 1, sweet: 3, savory: 5, hammer: "这道红烧肘子色泽红亮，肉质酥烂，入口即化，浓郁的酱香与肉香完美融合。一口下去，满足感瞬间爆棚，那种无可替代的美味，绝对是你今天的不二之选！" },
-                { name: "虎皮青椒", spicy: 3, sweet: 1, savory: 3, hammer: "这道虎皮青椒，表皮微焦的青椒像虎皮一样的纹路，搭配特制的调料，香辣适中，回味无穷。一口咬下，脆嫩多汁，这种简单而纯粹的美味，值得你尝试！" }
-            ],
-            "粤菜": [
-                { name: "白切鸡", spicy: 1, sweet: 1, savory: 3, hammer: "这只白切鸡，皮爽肉滑，鲜嫩多汁，蘸上特制的姜葱酱，每一口都是对原汁原味的极致追求。如此简单却又如此美妙的滋味，正是广东人心中的至高美食，今天你绝对不能错过！" },
-                { name: "烧鹅", spicy: 1, sweet: 2, savory: 5, hammer: "这只烧鹅，皮脆肉嫩，油而不腻，挂着诱人的琥珀色泽。咬上一口，外皮酥脆，内里鲜嫩，肉香四溢，回味无穷，这哪是简单的一餐，简直是一场味蕾的盛宴！" },
-                { name: "叉烧", spicy: 1, sweet: 4, savory: 4, hammer: "这盘叉烧色泽红亮，肥瘦适中，甜咸适口，入口即化。那蜜汁烧制的外表焦香可口，里面却依然多汁鲜嫩，每一口都是对舌尖的极致享受，这才是真正的粤式风味！" },
-                { name: "烧腊饭", spicy: 1, sweet: 3, savory: 5, hammer: "这份烧腊饭简直就是广东人的灵魂食物！香喷喷的米饭上铺着烧鸭、叉烧和烧肉，每一块肉都有自己的个性，却又能完美融合。吃上一口，鲜香四溢，满足感瞬间爆棚！" },
-                { name: "蜜汁叉烧包", spicy: 1, sweet: 4, savory: 3, hammer: "这个叉烧包，外表如雪般洁白蓬松，内里却藏着蜜汁叉烧的惊喜。咬上一口，柔软的包皮中迸发出甜咸适中的叉烧馅，浓郁的肉香与面香交融，简直是两种食物的天作之合！" },
-                { name: "虾饺", spicy: 1, sweet: 1, savory: 3, hammer: "这盘虾饺，晶莹剔透的薄皮下是饱满的虾肉，一口咬下，鲜甜的虾肉汁水迸发，回味悠长。这哪是简单的点心，分明是大海的鲜美精华被完美封存，等待你的味蕾去解锁！" },
-                { name: "蒸排骨", spicy: 1, sweet: 1, savory: 4, hammer: "这道蒸排骨，肉质鲜嫩，骨髓香浓，豉汁的咸香与肉的鲜美完美融合。一口咬下，肉香四溢，回味悠长，那种满足感简直无可替代，今天就让这道经典粤菜征服你！" },
-                { name: "西贡焗龙虾", spicy: 1, sweet: 1, savory: 5, hammer: "这只西贡焗龙虾，肉质紧实鲜甜，芝士焗制的香气扑鼻。一口咬下，龙虾的鲜美与芝士的浓香在口中交融，这种奢华的享受，绝对值得你为之一掷千金！" },
-                { name: "清蒸鱼", spicy: 1, sweet: 1, savory: 4, hammer: "这条清蒸鱼，肉质细嫩如豆腐，鱼香四溢。浇上滚烫的油，香葱和姜丝的香气瞬间迸发，鱼肉的鲜美被完美保留，这才是粤菜最为人称道的'原汁原味'！" },
-                { name: "干炒牛河", spicy: 1, sweet: 1, savory: 4, hammer: "这盘干炒牛河，河粉宽滑有弹性，牛肉嫩滑多汁，豉油的香气与'镬气'完美融合。一口下去，那种独特的'镬气'香味让人欲罢不能，这才是真正的广式风味！" },
-                { name: "糯米鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这个糯米鸡，荷叶的清香与糯米的香甜相得益彰，咸鲜的馅料藏在软糯的米饭中，一口咬下，层次丰富的味道在口中绽放，这种传统美食的魅力，实在令人着迷！" },
-                { name: "蚝油牛肉", spicy: 1, sweet: 2, savory: 4, hammer: "这道蚝油牛肉，牛肉鲜嫩多汁，蚝油的鲜香与牛肉的鲜美完美融合。一口咬下，牛肉的嫩滑和蚝油的浓香在口中交织，这种简单而不失深度的美味，绝对能征服你的味蕾！" },
-                { name: "白灼虾", spicy: 1, sweet: 1, savory: 3, hammer: "这盘白灼虾，虾肉鲜甜弹牙，蘸上特制的酱汁，鲜味瞬间提升到新高度。这种简单的烹饪方式恰恰展现了食材的本真味道，正是粤菜的精髓所在，绝对值得一试！" },
-                { name: "菠萝咕噜肉", spicy: 1, sweet: 4, savory: 3, hammer: "这道菠萝咕噜肉，外酥里嫩的猪肉与甜酸爽口的菠萝完美结合，甜中带酸，口感丰富。一口咬下，酥脆的外壳与多汁的内馅形成强烈对比，这种欲罢不能的美味，绝对能征服你的味蕾！" },
-                { name: "豉汁蒸凤爪", spicy: 1, sweet: 1, savory: 4, hammer: "这道豉汁蒸凤爪，凤爪软糯弹牙，豉汁的香气与凤爪的胶原蛋白完美融合。咬上一口，那种Q弹爽滑的口感与豉汁的浓香交织在一起，这种独特的美食体验，绝对值得你尝试！" },
-                { name: "咸蛋黄炒蟹", spicy: 1, sweet: 1, savory: 5, hammer: "这道咸蛋黄炒蟹，蟹肉鲜美，咸蛋黄的香气四溢，两者完美融合，创造出一种难以言喻的美味。一口下去，满口是咸蛋黄的浓香和蟹肉的鲜甜，这种奢华的享受，绝对值得你为之倾倒！" },
-                { name: "荷叶蒸鸡", spicy: 1, sweet: 1, savory: 3, hammer: "这道荷叶蒸鸡，荷叶的清香与鸡肉的鲜嫩完美融合，一口咬下，鸡肉的鲜甜和荷叶的清香在口中交织，回味悠长。这种古法烹饪的魅力，让人不禁感叹中华美食的博大精深！" },
-                { name: "红烧乳鸽", spicy: 1, sweet: 3, savory: 4, hammer: "这只红烧乳鸽，皮脆肉嫩，色泽红亮，浓郁的酱香与鸽肉的鲜美完美融合。一口咬下，外脆内嫩，肉香四溢，这种满足感无可替代，绝对是你今天的最佳选择！" },
-                { name: "龙虾云吞面", spicy: 1, sweet: 1, savory: 4, hammer: "这碗龙虾云吞面，面条筋道爽滑，云吞鲜美多汁，汤底清澈见底却又鲜味十足。再加上鲜甜的龙虾肉，每一口都是对味蕾的极致享受，这种奢华的美味，值得你为之一试！" },
-                { name: "椒盐排骨", spicy: 2, sweet: 1, savory: 4, hammer: "这道椒盐排骨，外酥里嫩，椒盐的香气与排骨的鲜香完美融合。一口咬下，酥脆的外皮与多汁的肉质形成强烈对比，这种欲罢不能的美味，绝对能征服最挑剔的味蕾！" },
-                { name: "蜜汁叉烧", spicy: 1, sweet: 4, savory: 4, hammer: "这盘蜜汁叉烧，色泽红亮，肥瘦相间，甜咸适口，入口即化。那蜜汁烧制的外表焦香可口，里面却依然多汁鲜嫩，每一口都是对舌尖的极致享受，这才是真正的广式叉烧！" },
-                { name: "咸鱼茄子煲", spicy: 1, sweet: 1, savory: 5, hammer: "这煲咸鱼茄子，咸鱼的浓香与茄子的软糯完美结合，香气四溢，回味无穷。一口下去，咸鱼的鲜香和茄子的香甜在口中交融，这种难以言喻的美味，绝对值得你一试！" },
-                { name: "沙茶牛肉", spicy: 2, sweet: 1, savory: 4, hammer: "这道沙茶牛肉，牛肉鲜嫩多汁，沙茶酱的独特香气与牛肉的鲜美完美融合。一口下去，沙茶的浓香和牛肉的鲜美在口中交织，这种无法抗拒的美味，绝对能征服你的味蕾！" },
-                { name: "香煎官燕", spicy: 1, sweet: 2, savory: 3, hammer: "这道香煎官燕，外表金黄酥脆，内里软糯甜美，口感丰富，回味悠长。每一口都是对高级食材的完美诠释，这种奢华的美食体验，绝对值得你为之一试！" },
-                { name: "龙虾泡饭", spicy: 1, sweet: 1, savory: 5, hammer: "这碗龙虾泡饭，龙虾的鲜甜与米饭的软糯完美结合，汤汁的鲜美渗透到每一粒米饭中。一口下去，满满的海鲜鲜香充盈口腔，这种极致的满足感，值得你亲自体验！" },
-                { name: "脆皮烧肉", spicy: 1, sweet: 1, savory: 5, hammer: "这盘脆皮烧肉，皮脆肉嫩，肥瘦相间，入口即化。咬上一口，先是脆皮的酥脆，然后是肉的鲜嫩多汁，最后是肥肉的香甜在口中散开，这种层次分明的美味，绝对是烧肉中的极品！" },
-                { name: "瑶柱蒸水蛋", spicy: 1, sweet: 1, savory: 3, hammer: "这碗瑶柱蒸水蛋，蛋羹如丝般细滑，瑶柱的鲜香点缀其中，清淡却不失滋味。一口下去，蛋的滑嫩和瑶柱的鲜香在口中交融，这种简单而不失深度的美味，正是粤菜的精髓所在！" },
-                { name: "酿豆腐", spicy: 1, sweet: 1, savory: 4, hammer: "这道酿豆腐，外表是软嫩的豆腐，内里却藏着鲜美的肉馅，浇上特制的汁水，香气四溢。一口咬下，豆腐的嫩滑和肉馅的鲜香在口中交织，这种层次丰富的美味，绝对值得你一试！" },
-                { name: "蚝油生菜", spicy: 1, sweet: 1, savory: 3, hammer: "这道蚝油生菜，生菜脆嫩多汁，蚝油的鲜香渗透其中，清爽不失滋味。一口咬下，生菜的清脆和蚝油的浓香形成绝妙的对比，这种简单而不失深度的美味，正是粤菜的魅力所在！" },
-                { name: "咖喱鱼蛋", spicy: 2, sweet: 1, savory: 3, hammer: "这盘咖喱鱼蛋，鱼蛋弹牙爽口，咖喱香浓但不辛辣，回味无穷。每一口都是小时候的味道，这种街头美食的魅力，让人忍不住一颗接一颗，根本停不下来！" },
-                { name: "肠粉", spicy: 1, sweet: 1, savory: 3, hammer: "这盘肠粉，薄如蝉翼，滑如凝脂，浇上特制酱汁，香气四溢。一口咬下，肠粉的软滑和酱汁的鲜香在口中交融，这种简单而不失深度的美味，正是广东人引以为傲的早餐！" },
-                { name: "盐焗鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只盐焗鸡，皮脆肉嫩，咸香适口，鸡肉的鲜美被完美保留并提升。咬上一口，那种盐焗特有的香气伴随着鸡肉的鲜香在口中扩散，这种传统美食的魅力，实在令人着迷！" },
-                { name: "鲍汁扣鹅掌", spicy: 1, sweet: 2, savory: 5, hammer: "这道鲍汁扣鹅掌，鹅掌软糯弹牙，鲍汁浓郁深沉，两者完美融合，创造出一种难以言喻的美味。一口咬下，满口是鲍汁的浓香和鹅掌的胶质感，这种奢华的享受，值得你亲自体验！" },
-                { name: "荷包蛋炒饭", spicy: 1, sweet: 1, savory: 3, hammer: "这盘荷包蛋炒饭，米饭粒粒分明，香气扑鼻，荷包蛋的蛋黄流出与饭粒融合，增添了丝丝甜意。这种家常的美味，简单而不失深度，正是舌尖上最真实的温暖与满足！" },
-                { name: "XO酱炒萝卜糕", spicy: 2, sweet: 1, savory: 4, hammer: "这盘XO酱炒萝卜糕，萝卜糕外酥里嫩，与XO酱的海鲜鲜香完美融合。一口咬下，萝卜糕的香糯和XO酱的鲜辣在口中交织，这种简单而不失深度的美味，绝对能让你欲罢不能！" },
-                { name: "艇仔粥", spicy: 1, sweet: 1, savory: 4, hammer: "这碗艇仔粥，粥底绵软细腻，各种海鲜和肉类的鲜美融入其中，香气四溢。一口下去，满口是大海和肉类的鲜香，回味无穷，这种暖心又暖胃的美食，绝对是雨天的最佳选择！" },
-                { name: "香茅烤鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只香茅烤鸡，皮脆肉嫩，香茅的清香与鸡肉的鲜美完美融合。咬上一口，外脆内嫩，香茅的独特香气与鸡肉的鲜美在口中交织，这种东南亚风味的美食，绝对能征服你的味蕾！" },
-                { name: "南乳焖猪手", spicy: 1, sweet: 2, savory: 5, hammer: "这道南乳焖猪手，猪手软糯入味，南乳的香气浓郁深沉，回味无穷。一口咬下，猪手的胶质和南乳的浓香在口中交融，这种满足感无可替代，绝对是你今天的最佳选择！" },
-                { name: "豉油皇炒面", spicy: 1, sweet: 1, savory: 3, hammer: "这盘豉油皇炒面，面条爽滑有弹性，豉油的香气与'镬气'完美融合。一口下去，那种独特的'镬气'香味让人欲罢不能，简单而不失深度，正是粤式炒面的精髓所在！" },
-                { name: "蜜汁烧鸭", spicy: 1, sweet: 3, savory: 4, hammer: "这只蜜汁烧鸭，皮脆肉嫩，蜜汁的甜香与烧鸭的咸鲜完美融合。咬上一口，先是皮的酥脆，然后是肉的鲜嫩，最后是蜜汁的甜香在口中扩散，这种层次分明的美味，绝对是烧味中的极品！" },
-                { name: "菜胆扣鲍片", spicy: 1, sweet: 1, savory: 5, hammer: "这道菜胆扣鲍片，鲍片软糯有嚼劲，菜胆清甜可口，鲍汁浓郁深沉，三者完美融合。一口下去，满口是鲍汁的鲜香，鲍片的滑嫩和菜胆的清爽，这种高级料理的魅力，值得你为之倾倒！" },
-                { name: "蜜汁叉烧扣肉", spicy: 1, sweet: 3, savory: 5, hammer: "这道蜜汁叉烧扣肉将两种经典粤式烧味完美结合，甜咸适口，肥瘦结合，入口即化。咬上一口，叉烧的甜香和扣肉的浓郁在口中交融，这种创意与传统的完美结合，绝对能让你体验前所未有的味觉享受！" },
-                { name: "香茅蒸鱼", spicy: 1, sweet: 1, savory: 4, hammer: "这道香茅蒸鱼，鱼肉嫩滑如豆腐，香茅的清香与鱼肉的鲜美完美结合。一口下去，鱼肉的鲜甜和香茅的清香在口中交织，这种简单而不失深度的美味，正是粤菜的精髓所在！" },
-                { name: "瑶柱扒菜心", spicy: 1, sweet: 1, savory: 3, hammer: "这道瑶柱扒菜心，菜心清脆爽口，瑶柱的鲜香渗透其中，清爽不失滋味。一口咬下，菜心的清甜和瑶柱的鲜香形成绝妙的对比，这种简单而不失深度的美味，正是粤菜的魅力所在！" },
-                { name: "鲍汁烩燕窝", spicy: 1, sweet: 2, savory: 4, hammer: "这道鲍汁烩燕窝，燕窝清甜软糯，鲍汁浓郁深沉，两者完美融合，创造出一种难以言喻的美味。一口下去，满口是鲍汁的浓香和燕窝的清甜，这种奢华的享受，值得你亲自体验！" },
-                { name: "黄焖鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这道黄焖鸡，鸡肉软嫩入味，汤汁浓郁鲜香，香气四溢。一口下去，鸡肉的鲜美和调料的香气在口中交融，回味无穷，这种满足感无可替代，绝对是你今天的最佳选择！" },
-                { name: "瑶柱鸡粥", spicy: 1, sweet: 1, savory: 3, hammer: "这碗瑶柱鸡粥，粥质绵软细腻，瑶柱和鸡肉的鲜香融入其中，回味悠长。一口下去，满口是瑶柱的鲜香和鸡肉的鲜美，这种暖心又暖胃的美食，绝对是你舒适生活的绝佳选择！" },
-                { name: "梅菜蒸鲈鱼", spicy: 1, sweet: 1, savory: 4, hammer: "这道梅菜蒸鲈鱼，鲈鱼肉质细嫩，梅菜咸香可口，两者相得益彰。一口下去，鲈鱼的鲜甜和梅菜的咸香在口中交织，这种家常而不失深度的美味，正是粤菜的精髓所在！" },
-                { name: "豉汁蒸排骨", spicy: 1, sweet: 1, savory: 4, hammer: "这道豉汁蒸排骨，排骨肉质鲜嫩多汁，豉汁的香气浓郁深沉，两者完美融合。一口咬下，排骨的鲜美和豉汁的香气在口中交织，这种简单而不失深度的美味，正是粤菜的魅力所在！" },
-                { name: "香菇滑鸡", spicy: 1, sweet: 1, savory: 3, hammer: "这道香菇滑鸡，鸡肉嫩滑如豆腐，香菇鲜香浓郁，两者完美结合。一口下去，鸡肉的鲜美和香菇的香气在口中交融，这种简单而不失深度的美味，正是粤菜的精髓所在！" },
-                { name: "豉油鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只豉油鸡，皮脆肉嫩，豉油的香气与鸡肉的鲜美完美融合。咬上一口，鸡皮的酥脆和鸡肉的鲜嫩，加上豉油的香气，这种层次分明的美味，绝对是烧味中的上乘之选！" },
-                { name: "咸蛋黄焗南瓜", spicy: 1, sweet: 2, savory: 4, hammer: "这道咸蛋黄焗南瓜，南瓜甜软可口，咸蛋黄香气四溢，两者完美融合。一口咬下，南瓜的甜软和咸蛋黄的浓香在口中交织，这种简单而不失深度的美味，正是粤菜的魅力所在！" }
-            ],
-            "西北菜": [
-                { name: "羊肉泡馍", spicy: 2, sweet: 1, savory: 5, hammer: "这碗羊肉泡馍，馍块吸饱了浓郁的羊肉汤汁，羊肉软烂鲜香，粉条爽滑可口，香菜和辣椒的点缀让整体风味更加丰富。这不是一碗简单的面食，而是千年古都的灵魂，每一口都是厚重的历史和文化！" },
-                { name: "兰州拉面", spicy: 2, sweet: 1, savory: 4, hammer: "这碗兰州拉面，面条劲道有嚼劲，清汤底鲜美醇厚，萝卜片清脆爽口，牛肉和辣油的点缀让整体风味更加丰富。一口面，一口汤，这是中国面食文化的巅峰之作，今天你绝对要尝一尝！" },
-                { name: "手抓羊肉", spicy: 2, sweet: 1, savory: 5, hammer: "这盘手抓羊肉，色泽诱人，肉质肥嫩多汁，羊肉的鲜香与各种香料的芳香完美融合。用手撕下一块，蘸上孜然粉，那种原始而又纯粹的美味，会让你体验到西北游牧民族的豪迈与粗犷！" },
-                { name: "牛肉面", spicy: 2, sweet: 1, savory: 4, hammer: "这碗牛肉面，面条筋道有嚼劲，牛肉软烂入味，汤底浓郁鲜香，香菜和辣椒的点缀让整体风味更加丰富。一口下去，满口是牛肉的鲜美和面条的劲道，这种满足感无可替代！" },
-                { name: "烤全羊", spicy: 2, sweet: 1, savory: 5, hammer: "这只烤全羊，外皮金黄酥脆，内里肉质鲜嫩多汁，香料的味道渗透到每一寸肉里。撕下一块，那种原始而又纯粹的美味，会让你感受到草原的辽阔和游牧民族的热情好客！" },
-                { name: "锅盔", spicy: 1, sweet: 1, savory: 3, hammer: "这个锅盔，外皮金黄酥脆，内里松软有嚼劲，表面撒上的芝麻和葱花增添了风味。咬上一口，那种独特的焦香和面香在口中交融，回味无穷，这是西北人民智慧的结晶，今天你绝对不能错过！" },
-                { name: "臊子面", spicy: 3, sweet: 1, savory: 4, hammer: "这碗臊子面，面条劲道有嚼劲，臊子酸辣可口，汤底浓郁鲜香，豆芽和木耳的清脆爽口让整体口感更加丰富。一口下去，酸辣鲜香，回味悠长，这种满足感无可替代！" },
-                { name: "羊肉串", spicy: 3, sweet: 1, savory: 5, hammer: "这串羊肉串，肉质鲜嫩多汁，外表烤得焦香四溢，撒上孜然和辣椒粉，香气扑鼻。咬上一口，肉汁迸发，香料的味道与羊肉的鲜香完美融合，这种简单而又纯粹的美味，让人欲罢不能！" },
-                { name: "灌汤包", spicy: 1, sweet: 1, savory: 4, hammer: "这笼灌汤包，皮薄如纸，内里汤汁丰富，肉馅鲜美可口。一口咬下，小心烫口的汤汁在口中迸发，肉馅的鲜美随即而来，这种层次分明的美味，绝对是你早餐的最佳选择！" },
-                { name: "羊杂割", spicy: 3, sweet: 1, savory: 5, hammer: "这碗羊杂割，各种羊杂碎在浓郁的汤底中翻滚，香气四溢。一口下去，满口是羊肉的鲜香和各种香料的芳香，回味悠长，这种原始而又纯粹的美味，会让你体验到西北独特的饮食文化！" },
-                { name: "羊肉粉汤", spicy: 2, sweet: 1, savory: 4, hammer: "这碗羊肉粉汤，粉条软滑爽口，羊肉鲜嫩多汁，汤底浓郁鲜香，香菜和辣椒的点缀让整体风味更加丰富。一口下去，满口是羊肉的鲜香和粉条的爽滑，这种满足感无可替代！" },
-                { name: "烤羊腿", spicy: 2, sweet: 1, savory: 5, hammer: "这只烤羊腿，外皮金黄酥脆，内里肉质鲜嫩多汁，香料的味道渗透到每一寸肉里。切下一片，那种原始而又纯粹的美味，会让你感受到草原的辽阔和游牧民族的热情好客！" },
-                { name: "羊肉汤", spicy: 1, sweet: 1, savory: 5, hammer: "这碗羊肉汤，汤底乳白浓郁，羊肉软烂入味，粉条和豆腐的搭配让口感更加丰富。一口汤，一口肉，那种满足感和幸福感，简直无法言喻，这绝对是冬日里最温暖的选择！" },
-                { name: "醪糟汤圆", spicy: 1, sweet: 4, savory: 1, hammer: "这碗醪糟汤圆，醪糟甜酒香气扑鼻，汤圆软糯可口，两者完美融合。一口下去，醪糟的甜酒香和汤圆的软糯在口中交织，这种甜蜜的享受，绝对是你甜点的不二之选！" },
-                { name: "羊肉饸饹", spicy: 2, sweet: 1, savory: 4, hammer: "这碗羊肉饸饹，饸饹条软滑爽口，羊肉鲜嫩多汁，汤底浓郁鲜香，香菜和辣椒的点缀让整体风味更加丰富。一口下去，满口是羊肉的鲜香和饸饹的爽滑，这种满足感无可替代！" },
-                { name: "椒麻鸡", spicy: 4, sweet: 1, savory: 4, hammer: "这只椒麻鸡，皮脆肉嫩，麻辣鲜香，香料的味道渗透到每一寸肉里。撕下一块，那种麻辣与鸡肉鲜美的完美结合，会让你感受到舌尖上的极致享受，今天你绝对不能错过！" },
-                { name: "烤包子", spicy: 2, sweet: 1, savory: 3, hammer: "这个烤包子，外皮金黄酥脆，内里馅料丰富鲜美，独特的烤制工艺让它与众不同。咬上一口，那种焦香与馅料的鲜美在口中交融，回味无穷，这是西北独特的美食，今天你绝对要尝一尝！" },
-                { name: "羊肉焖饼", spicy: 2, sweet: 1, savory: 4, hammer: "这道羊肉焖饼，饼香浓郁，羊肉酥烂入味，汤汁浓郁鲜香，一口下去，饼香与羊肉的鲜美完美融合，回味悠长，这种满足感无可替代，绝对是你今天的最佳选择！" },
-                { name: "油泼扯面", spicy: 3, sweet: 1, savory: 3, hammer: "这碗油泼扯面，面条手工制作，筋道有嚼劲，泼上热油，撒上辣椒面，香气四溢。一口下去，面条的劲道和油泼辣子的香辣在口中交织，这种简单而又纯粹的美味，让人欲罢不能！" },
-                { name: "葫芦鸡", spicy: 2, sweet: 1, savory: 4, hammer: "这道葫芦鸡，鸡肉软嫩多汁，葫芦的清香与鸡肉的鲜美完美融合。一口下去，满口是鸡肉的鲜香和葫芦的清香，回味悠长，这种独特的美食体验，绝对值得你一试！" },
-                { name: "羊肉面皮", spicy: 2, sweet: 1, savory: 4, hammer: "这碗羊肉面皮，面皮软滑爽口，羊肉鲜嫩多汁，汤底浓郁鲜香，香菜和辣椒的点缀让整体风味更加丰富。一口下去，满口是羊肉的鲜香和面皮的爽滑，这种满足感无可替代！" },
-                { name: "肉夹馍", spicy: 1, sweet: 1, savory: 4, hammer: "这个肉夹馍，馍饼酥脆外焦里嫩，肉馅软烂入味，肥瘦相间，香气四溢。一口咬下，馍香与肉香的完美结合，回味悠长，这种传统美食的魅力，让人忍不住一个接一个！" },
-                { name: "搅团", spicy: 1, sweet: 1, savory: 3, hammer: "这碗搅团，团子软糯有嚼劲，配料丰富多样，香气四溢。一口下去，团子的软糯和配料的鲜香在口中交织，回味悠长，这种传统美食的魅力，让人忍不住一碗接一碗！" },
-                { name: "张掖大酥饼", spicy: 1, sweet: 2, savory: 3, hammer: "这个张掖大酥饼，外皮金黄酥脆，层次分明，内里馅料丰富，香气四溢。咬上一口，酥脆的外皮与香甜的馅料在口中交融，回味无穷，这是西北传统糕点的代表作，今天你绝对不能错过！" },
-                { name: "酿皮", spicy: 2, sweet: 1, savory: 3, hammer: "这碗酿皮，皮条爽滑有嚼劲，配料丰富多样，调料酸辣可口，香气四溢。一口下去，皮条的爽滑和调料的酸辣在口中交织，回味悠长，这种传统美食的魅力，让人欲罢不能！" },
-                { name: "羊肉烩面", spicy: 2, sweet: 1, savory: 4, hammer: "这碗羊肉烩面，面条软硬适中，羊肉软烂入味，蔬菜爽口鲜香，汤底浓郁可口。一口面，一口肉，一口蔬菜，一口汤，层次丰富，回味无穷，这绝对是你今天的最佳选择！" },
-                { name: "牛奶鸡蛋醪糟", spicy: 1, sweet: 4, savory: 1, hammer: "这碗牛奶鸡蛋醪糟，牛奶醇香，鸡蛋嫩滑，醪糟甜香，三者完美融合。一口下去，满口是牛奶的醇香，鸡蛋的嫩滑和醪糟的甜香，这种甜蜜的享受，绝对是你甜点的不二之选！" },
-                { name: "黄河大鲤鱼", spicy: 1, sweet: 1, savory: 4, hammer: "这条黄河大鲤鱼，鱼肉鲜嫩多汁，调料香气四溢，鱼香浓郁。一口下去，满口是鱼肉的鲜美和调料的香气，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "炒疙瘩", spicy: 2, sweet: 1, savory: 3, hammer: "这碗炒疙瘩，疙瘩软硬适中，配料丰富多样，调料香气四溢。一口下去，疙瘩的软糯和配料的鲜香在口中交织，回味悠长，这种家常美食的魅力，让人忍不住一碗接一碗！" },
-                { name: "凉州排骨", spicy: 2, sweet: 2, savory: 4, hammer: "这道凉州排骨，排骨酥烂入味，调料香气四溢，甜中带咸，口感丰富。一口咬下，肉香四溢，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "河捞", spicy: 1, sweet: 1, savory: 4, hammer: "这碗河捞，各种食材在汤底中翻滚，香气四溢，鲜味十足。一口下去，满口是各种食材的鲜美和汤底的浓香，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "拨鱼儿", spicy: 1, sweet: 1, savory: 3, hammer: "这碗拨鱼儿，面条劲道有嚼劲，鱼肉鲜嫩多汁，汤底浓郁鲜香，香菜和葱花的点缀让整体风味更加丰富。一口下去，满口是鱼肉的鲜美和面条的劲道，这种满足感无可替代！" },
-                { name: "羊肉蒸饺", spicy: 1, sweet: 1, savory: 4, hammer: "这盘羊肉蒸饺，皮薄馅大，羊肉馅鲜美多汁，香气四溢。一口咬下，满口是羊肉的鲜香和面皮的软糯，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "蕨菜炒肉", spicy: 2, sweet: 1, savory: 3, hammer: "这道蕨菜炒肉，蕨菜清香爽口，肉片鲜嫩多汁，调料香气四溢。一口下去，蕨菜的清香和肉片的鲜美在口中交织，回味悠长，这种家常美食的魅力，让人忍不住一盘接一盘！" },
-                { name: "洋芋搅团", spicy: 1, sweet: 1, savory: 3, hammer: "这碗洋芋搅团，洋芋泥软糯可口，配料丰富多样，调料香气四溢。一口下去，洋芋泥的软糯和配料的鲜香在口中交织，回味悠长，这种家常美食的魅力，让人忍不住一碗接一碗！" },
-                { name: "灰豆子", spicy: 1, sweet: 1, savory: 3, hammer: "这碗灰豆子，豆子软烂入味，肉丁鲜香可口，调料香气四溢。一口下去，豆子的软糯和肉丁的鲜香在口中交织，回味悠长，这种家常美食的魅力，让人忍不住一碗接一碗！" },
-                { name: "血条", spicy: 2, sweet: 1, savory: 4, hammer: "这道血条，血条软糯有嚼劲，调料香辣可口，香气四溢。一口下去，血条的软糯和调料的香辣在口中交织，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "烩菜", spicy: 1, sweet: 1, savory: 4, hammer: "这碗烩菜，各种食材在锅中翻滚，香气四溢，鲜味十足。一口下去，满口是各种食材的鲜美和汤汁的浓香，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "羊肉泡", spicy: 3, sweet: 1, savory: 5, hammer: "这碗羊肉泡，羊肉软烂入味，汤底浓郁辣香，香菜和辣椒的点缀让整体风味更加丰富。一口下去，满口是羊肉的鲜香和辣椒的香辣，这种满足感无可替代，绝对是你今天的最佳选择！" },
-                { name: "搓鱼面", spicy: 1, sweet: 1, savory: 3, hammer: "这碗搓鱼面，面条手工制作，形如鱼儿，汤底浓郁鲜香，配料丰富多样。一口下去，面条的劲道和汤底的鲜香在口中交织，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "贴饼子", spicy: 1, sweet: 1, savory: 3, hammer: "这个贴饼子，饼皮金黄酥脆，内里柔软有嚼劲，香气四溢。咬上一口，那种焦香与面香在口中交融，回味无穷，这是西北人民智慧的结晶，今天你绝对不能错过！" },
-                { name: "暖锅", spicy: 2, sweet: 1, savory: 4, hammer: "这锅暖锅，各种食材在汤底中翻滚，香气四溢，鲜味十足。一口下去，满口是各种食材的鲜美和汤底的浓香，回味悠长，这种传统美食的魅力，在寒冷的冬日里显得尤为珍贵！" },
-                { name: "红枣枸杞小米粥", spicy: 1, sweet: 3, savory: 1, hammer: "这碗红枣枸杞小米粥，小米绵软甜香，红枣甜而不腻，枸杞点缀其中，香气四溢。一口下去，满口是小米的绵软，红枣的甜香和枸杞的清爽，这种滋补又温暖的美食，绝对是你早餐的最佳选择！" },
-                { name: "蛋醪", spicy: 1, sweet: 4, savory: 1, hammer: "这碗蛋醪，醪糟甜香，鸡蛋嫩滑，两者完美融合。一口下去，醪糟的甜香和鸡蛋的嫩滑在口中交织，这种甜蜜的享受，绝对是你甜点的不二之选！" },
-                { name: "洋芋擦擦", spicy: 1, sweet: 1, savory: 3, hammer: "这道洋芋擦擦，洋芋丝金黄酥脆，香气四溢，回味无穷。一口咬下，那种香脆的口感让人欲罢不能，这种简单而又纯粹的美味，是西北人民智慧的结晶，今天你绝对不能错过！" },
-                { name: "杂粮煎饼", spicy: 1, sweet: 1, savory: 3, hammer: "这个杂粮煎饼，表皮金黄酥脆，内里柔软有嚼劲，各种杂粮的香气交织在一起，回味无穷。咬上一口，那种焦香与杂粮的香气在口中交融，这种健康又美味的食物，绝对值得你一试！" },
-                { name: "烧土豆", spicy: 1, sweet: 1, savory: 3, hammer: "这道烧土豆，土豆外焦里嫩，香气四溢，回味无穷。咬上一口，那种焦香与土豆的香甜在口中交融，这种简单而又纯粹的美味，是西北人民智慧的结晶，今天你绝对不能错过！" },
-                { name: "揪片子", spicy: 1, sweet: 1, savory: 3, hammer: "这碗揪片子，面片软硬适中，汤底浓郁鲜香，配料丰富多样。一口下去，面片的劲道和汤底的鲜香在口中交织，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" }
-            ],
-            "江浙菜": [
-                { name: "东坡肉", spicy: 1, sweet: 3, savory: 5, hammer: "这道东坡肉，肥而不腻，瘦而不柴，色泽红亮，入口即化。那浓郁的酱香与肉香完美融合，伴随着一口软糯的米饭，简直就是人间美味的极致体验！今天，就让这道千年经典征服你的味蕾吧！" },
-                { name: "西湖醋鱼", spicy: 1, sweet: 2, savory: 4, hammer: "这条西湖醋鱼，鱼肉白嫩如雪，表皮金黄酥脆，浇上特制的甜醋汁，酸甜适口。一口咬下，鱼肉的鲜美与醋汁的酸甜在口中交融，那种层次分明的味道，绝对是你今天的最佳选择！" },
-                { name: "龙井虾仁", spicy: 1, sweet: 1, savory: 3, hammer: "这道龙井虾仁，虾仁鲜嫩多汁，龙井茶的清香与虾肉的鲜甜完美融合。一口下去，满口是虾肉的鲜甜和茶叶的清香，回味悠长，这种独特的美食体验，绝对值得你一试！" },
-                { name: "宋嫂鱼羹", spicy: 1, sweet: 1, savory: 4, hammer: "这碗宋嫂鱼羹，鱼肉嫩滑如豆腐，汤底浓郁鲜香，葱姜的香气与鱼肉的鲜美完美融合。一口下去，满口是鱼肉的鲜香和汤底的浓郁，这种满足感无可替代，绝对是你今天的最佳选择！" },
-                { name: "糖醋排骨", spicy: 1, sweet: 4, savory: 3, hammer: "这道糖醋排骨，色泽红亮，外酥里嫩，酸甜适口，香气四溢。咬上一口，酥脆的外皮，软嫩的肉质，酸甜的汁水在口中迸发，这种层次丰富的美味，绝对是下饭的不二之选！" },
-                { name: "清蒸鲈鱼", spicy: 1, sweet: 1, savory: 4, hammer: "这条清蒸鲈鱼，鱼肉雪白如玉，鲜嫩多汁，葱姜的香气与鱼肉的鲜美完美融合。一口下去，满口是鱼肉的鲜美和调料的香气，回味悠长，这种简单而又纯粹的美味，正是江浙菜的精髓所在！" },
-                { name: "松鼠桂鱼", spicy: 1, sweet: 4, savory: 3, hammer: "这道松鼠桂鱼，外形如松鼠，鱼肉酥脆，浇上甜酸的汤汁，色泽红亮，香气四溢。一口咬下，酥脆的外皮与嫩滑的鱼肉形成对比，甜酸的汤汁让整个口感更加丰富，这是一道视觉与味觉的双重盛宴！" },
-                { name: "叫花鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只叫花鸡，荷叶的清香与鸡肉的鲜美完美融合，肉质鲜嫩多汁，入口即化。撕下一块，那种独特的烤制香气与鸡肉的鲜美在口中交织，这种原始而又纯粹的美味，绝对值得你一试！" },
-                { name: "三鲜豆腐羹", spicy: 1, sweet: 1, savory: 3, hammer: "这碗三鲜豆腐羹，豆腐嫩滑如脂，海鲜鲜美多汁，蔬菜爽口清香，汤底浓郁鲜美。一口下去，各种食材的鲜美在口中交融，回味悠长，这种满足感无可替代！" },
-                { name: "蜜汁火方", spicy: 1, sweet: 5, savory: 3, hammer: "这道蜜汁火方，外酥里嫩，甜而不腻，香气四溢。咬上一口，酥脆的外皮与松软的内里形成对比，蜜汁的甜香在口中扩散，这种层次丰富的美味，绝对是甜品的不二之选！" },
-                { name: "油爆虾", spicy: 2, sweet: 1, savory: 4, hammer: "这道油爆虾，虾肉鲜嫩多汁，外壳酥脆，调料香气四溢。一口咬下，虾肉的鲜美与调料的香气在口中交融，回味悠长，这种满足感无可替代，绝对是你今天的最佳选择！" },
-                { name: "粢毛肉圆", spicy: 1, sweet: 1, savory: 4, hammer: "这道粢毛肉圆，外皮软糯有嚼劲，内馅鲜香多汁，汤底浓郁鲜美。一口咬下，满口是皮的软糯和馅的鲜香，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "太湖三白", spicy: 1, sweet: 1, savory: 4, hammer: "这道太湖三白，白鱼、白虾和银鱼的鲜美在清淡的汤底中交融，清香不失鲜美，回味悠长。一口下去，满口是海鲜的鲜甜，这种简单而又纯粹的美味，正是江南水乡的精髓所在！" },
-                { name: "宁波汤圆", spicy: 1, sweet: 4, savory: 1, hammer: "这碗宁波汤圆，外皮软糯Q弹，内馅甜香浓郁，汤底清甜可口。咬上一口，馅料的甜香立刻在口中迸发，与软糯的外皮完美融合，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "阳澄湖大闸蟹", spicy: 1, sweet: 1, savory: 5, hammer: "这只阳澄湖大闸蟹，蟹肉鲜美多汁，蟹黄浓郁，蘸上特制的姜醋汁，香气四溢。一口下去，蟹肉的鲜美与姜醋的酸香在口中交织，这种季节性的奢华享受，绝对值得你为之等待一年！" },
-                { name: "腌笃鲜", spicy: 1, sweet: 1, savory: 5, hammer: "这碗腌笃鲜，咸肉的香气与鲜肉的甜美完美融合，笋子的清香点缀其中，汤底浓郁鲜美。一口下去，满口是肉的鲜香和笋的清爽，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "梅干菜扣肉", spicy: 1, sweet: 2, savory: 5, hammer: "这道梅干菜扣肉，肥瘦相间的五花肉与梅干菜的咸香完美融合，肉质软烂入味，梅干菜香气四溢。一口下去，肉的鲜美和梅干菜的香气在口中交织，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "南京盐水鸭", spicy: 1, sweet: 1, savory: 4, hammer: "这只南京盐水鸭，皮薄肉嫩，咸香适口，鸭肉的鲜美被完美保留。撕下一块，那种独特的盐水鸭香气在口中扩散，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "苏式月饼", spicy: 1, sweet: 4, savory: 1, hammer: "这个苏式月饼，外皮酥软，内馅甜香适口，层次丰富，回味悠长。咬上一口，外皮的酥软与内馅的甜香在口中交融，这种传统美食的魅力，在每年的中秋节显得尤为珍贵！" },
-                { name: "秋山白", spicy: 1, sweet: 2, savory: 2, hammer: "这道秋山白，原料新鲜，工艺精湛，香气四溢，回味悠长。一口咬下，那种独特的风味在口中扩散，这种传统美食的魅力，绝对会让你对江南美食刮目相看！" },
-                { name: "杭儿酥", spicy: 1, sweet: 4, savory: 1, hammer: "这块杭儿酥，外表金黄酥脆，内里松软甜香，层次丰富，回味悠长。咬上一口，酥脆的外皮与松软的内里形成对比，甜香的味道在口中扩散，这种传统点心的魅力，绝对会让你欲罢不能！" },
-                { name: "小笼包", spicy: 1, sweet: 1, savory: 4, hammer: "这笼小笼包，皮薄如纸，馅大汁多，肉馅鲜美多汁，香气四溢。一口咬下，小心烫口的汤汁在口中迸发，肉馅的鲜美随即而来，这种层次分明的美味，绝对是你早餐的最佳选择！" },
-                { name: "响油鳝糊", spicy: 1, sweet: 1, savory: 4, hammer: "这碗响油鳝糊，鳝鱼肉质鲜嫩，调料香气四溢，浇上滚烫的油，发出诱人的响声。一口下去，满口是鳝鱼的鲜美和调料的香气，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "南京鸭血粉丝汤", spicy: 1, sweet: 1, savory: 4, hammer: "这碗南京鸭血粉丝汤，鸭血软嫩，粉丝爽滑，汤底鲜美浓郁，香葱和香菜的点缀让整体风味更加丰富。一口下去，满口是鸭血的软糯和粉丝的爽滑，这种满足感无可替代！" },
-                { name: "清炒虾仁", spicy: 1, sweet: 1, savory: 3, hammer: "这道清炒虾仁，虾仁鲜嫩多汁，翠绿的青豆点缀其中，清香不失鲜美，回味悠长。一口下去，满口是虾仁的鲜甜，这种简单而又纯粹的美味，正是江浙菜的精髓所在！" },
-                { name: "油面筋塞肉", spicy: 1, sweet: 1, savory: 4, hammer: "这道油面筋塞肉，面筋外酥里嫩，内馅鲜香多汁，汤汁浓郁鲜美。一口咬下，面筋的酥脆和馅料的鲜美在口中交融，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "盐水豆花", spicy: 1, sweet: 1, savory: 2, hammer: "这碗盐水豆花，豆花细嫩如脂，调料清香适口，清淡不失风味。一口下去，满口是豆花的细嫩和调料的清香，回味悠长，这种简单而又纯粹的美味，正是江南水乡的精髓所在！" },
-                { name: "锅贴", spicy: 1, sweet: 1, savory: 4, hammer: "这盘锅贴，底部金黄酥脆，馅料鲜香多汁，香气四溢。咬上一口，酥脆的底部与鲜美的馅料形成对比，汁水在口中迸发，这种层次丰富的美味，绝对是你早餐的最佳选择！" },
-                { name: "油氽小龙虾", spicy: 3, sweet: 1, savory: 4, hammer: "这盘油氽小龙虾，虾肉鲜嫩多汁，调料香辣可口，香气四溢。剥开虾壳，虾肉的鲜美和调料的香辣在口中交织，这种满足感无可替代，绝对是你夜宵的最佳选择！" },
-                { name: "葱油饼", spicy: 1, sweet: 1, savory: 3, hammer: "这个葱油饼，表皮金黄酥脆，内里柔软多层，葱香四溢，回味无穷。咬上一口，那种多层的口感和浓郁的葱香在口中交融，这种传统小吃的魅力，让人忍不住一个接一个！" },
-                { name: "茶叶蛋", spicy: 1, sweet: 1, savory: 3, hammer: "这个茶叶蛋，蛋白入味，蛋黄松软，茶叶和香料的香气渗透到每一处。剥开蛋壳，那种大理石纹路的美丽外表和浓郁的香气扑面而来，这种简单而又深沉的美味，绝对值得你一试！" },
-                { name: "蛋黄豆腐", spicy: 1, sweet: 1, savory: 3, hammer: "这道蛋黄豆腐，外表金黄，内里嫩滑，蛋黄的香气与豆腐的鲜美完美融合。一口下去，满口是蛋黄的香气和豆腐的细嫩，回味悠长，这种简单而又纯粹的美味，正是江浙菜的精髓所在！" },
-                { name: "水晶肴肉", spicy: 1, sweet: 1, savory: 4, hammer: "这道水晶肴肉，肉质软糯入味，汁水晶莹透亮，香气四溢。一口咬下，肉的鲜美和汁水的清香在口中交织，回味悠长，这种传统美食的魅力，在炎热的夏天显得尤为珍贵！" },
-                { name: "梅干菜肉饼", spicy: 1, sweet: 1, savory: 4, hammer: "这个梅干菜肉饼，外皮金黄酥脆，内馅鲜香多汁，梅干菜的咸香与肉馅的鲜美完美融合。咬上一口，那种层次丰富的口感和浓郁的香气在口中交融，这种传统小吃的魅力，让人忍不住一个接一个！" },
-                { name: "扬州炒饭", spicy: 1, sweet: 1, savory: 3, hammer: "这盘扬州炒饭，米粒颗颗分明，各种配料色香味俱全，香气四溢。一口下去，各种食材的香气在口中交织，回味悠长，这种简单而又深沉的美味，绝对值得你一试！" },
-                { name: "干菜冬笋老鸭煲", spicy: 1, sweet: 1, savory: 4, hammer: "这煲干菜冬笋老鸭煲，鸭肉软烂入味，冬笋清脆爽口，干菜香气四溢，汤底浓郁鲜美。一口汤，一口肉，一口冬笋，层次丰富，回味无穷，这绝对是你今天的最佳选择！" },
-                { name: "青椒土豆丝", spicy: 2, sweet: 1, savory: 2, hammer: "这道青椒土豆丝，土豆丝脆嫩可口，青椒清香爽口，调料香气四溢。一口下去，土豆的脆嫩和青椒的清香在口中交织，回味悠长，这种家常美食的魅力，让人忍不住一盘接一盘！" },
-                { name: "千张包肉", spicy: 1, sweet: 1, savory: 4, hammer: "这道千张包肉，千张皮软糯有嚼劲，内馅鲜香多汁，汤汁浓郁鲜美。一口咬下，千张皮的软糯和馅料的鲜美在口中交融，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "红烧鳝段", spicy: 1, sweet: 2, savory: 4, hammer: "这道红烧鳝段，鳝段鲜嫩多汁，汤汁浓郁红亮，香气四溢。一口下去，满口是鳝段的鲜美和汤汁的浓香，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "笋干烧肉", spicy: 1, sweet: 2, savory: 4, hammer: "这道笋干烧肉，肉质软烂入味，笋干香气四溢，汤汁浓郁红亮。一口下去，肉的鲜美和笋干的香气在口中交织，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "茶香鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只茶香鸡，鸡肉鲜嫩多汁，茶叶的清香与鸡肉的鲜美完美融合。撕下一块，那种茶香与鸡肉鲜美的完美结合，会让你感受到舌尖上的极致享受，今天你绝对不能错过！" },
-                { name: "无锡肉骨头", spicy: 1, sweet: 2, savory: 4, hammer: "这道无锡肉骨头，肉质软烂入味，骨髓鲜美多汁，汤汁浓郁红亮，香气四溢。一口肉，一口汤，满口是肉的鲜美和汤的浓香，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "桂花糯米藕", spicy: 1, sweet: 4, savory: 1, hammer: "这道桂花糯米藕，藕脆嫩可口，糯米软糯甜香，桂花香气四溢。一口咬下，藕的脆嫩，糯米的软糯和桂花的香气在口中交织，这种传统甜品的魅力，绝对会让你欲罢不能！" },
-                { name: "蟹黄豆腐", spicy: 1, sweet: 1, savory: 5, hammer: "这道蟹黄豆腐，豆腐嫩滑如脂，蟹黄鲜美浓郁，汤汁鲜香四溢。一口下去，豆腐的嫩滑和蟹黄的鲜美在口中交融，这种奢华的享受，在秋天的时候显得尤为珍贵！" },
-                { name: "醉蟹", spicy: 1, sweet: 1, savory: 4, hammer: "这道醉蟹，蟹肉鲜美多汁，黄酒的香气与蟹肉的鲜美完美融合。一口下去，满口是蟹肉的鲜美和黄酒的醇香，回味悠长，这种季节性的美食，绝对值得你为之等待一年！" },
-                { name: "百叶包肉", spicy: 1, sweet: 1, savory: 4, hammer: "这道百叶包肉，百叶软糯有嚼劲，内馅鲜香多汁，汤汁浓郁鲜美。一口咬下，百叶的软糯和馅料的鲜美在口中交融，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "红烧甲鱼", spicy: 1, sweet: 2, savory: 4, hammer: "这道红烧甲鱼，甲鱼肉质鲜嫩，汤汁浓郁红亮，香气四溢。一口下去，满口是甲鱼的鲜美和汤汁的浓香，回味悠长，这种高级料理的魅力，绝对会让你对江浙菜刮目相看！" },
-                { name: "南瓜小米粥", spicy: 1, sweet: 3, savory: 1, hammer: "这碗南瓜小米粥，南瓜甜香，小米绵软，两者完美融合。一口下去，满口是南瓜的甜香和小米的绵软，这种温暖又健康的美食，绝对是你早餐的最佳选择！" },
-                { name: "苔条鲫鱼汤", spicy: 1, sweet: 1, savory: 4, hammer: "这碗苔条鲫鱼汤，鲫鱼鲜嫩多汁，苔条清香爽口，汤底清澈见底却又鲜味十足。一口鱼，一口苔条，一口汤，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-                { name: "酱爆鱿鱼须", spicy: 2, sweet: 1, savory: 4, hammer: "这道酱爆鱿鱼须，鱿鱼须鲜嫩有嚼劲，酱料香气四溢，回味无穷。一口咬下，鱿鱼须的鲜美和酱料的香气在口中交织，这种海鲜美食的魅力，绝对会让你欲罢不能！" },
-                { name: "茶叶熏鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只茶叶熏鸡，外皮金黄，肉质鲜嫩，茶叶的香气渗透到每一寸肉里。撕下一块，那种茶香与鸡肉鲜美的完美结合，会让你感受到舌尖上的极致享受，今天你绝对不能错过！" },
-                { name: "干丝", spicy: 1, sweet: 1, savory: 3, hammer: "这道干丝，豆腐丝细嫩如发，调料香气四溢，清爽不失滋味。一口下去，满口是豆腐丝的细嫩和调料的清香，回味悠长，这种传统小吃的魅力，在炎热的夏天显得尤为珍贵！" },
-                { name: "苏式红烧肉", spicy: 1, sweet: 3, savory: 5, hammer: "这道苏式红烧肉，肥而不腻，瘦而不柴，色泽红亮，入口即化。那浓郁的酱香与肉香完美融合，伴随着一口软糯的米饭，简直就是人间美味的极致体验！今天，就让这道经典征服你的味蕾吧！" }
-            ],
-            "日料": [
-                { name: "寿司", spicy: 1, sweet: 1, savory: 4, hammer: "这盘寿司，米饭软糯带微酸，新鲜的海鲜搭配起来鲜甜可口，蘸上一点芥末和酱油，香气四溢。一口咬下，米饭的软糯和海鲜的鲜美在口中交融，这种简单而又纯粹的美味，正是日本料理的精髓所在！" },
-                { name: "刺身", spicy: 1, sweet: 1, savory: 4, hammer: "这盘刺身，鱼肉晶莹剔透，鲜美多汁，蘸上一点芥末和酱油，香气四溢。一口咬下，海鲜的原始鲜美在口中绽放，回味悠长，这种简单而又纯粹的美味，正是海洋的馈赠！" },
-                { name: "天妇罗", spicy: 1, sweet: 1, savory: 3, hammer: "这盘天妇罗，外皮金黄酥脆，内里食材鲜美多汁，蘸上特制的汁水，香气四溢。一口咬下，外皮的酥脆和内里的鲜美形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-                { name: "拉面", spicy: 1, sweet: 1, savory: 4, hammer: "这碗拉面，面条劲道有嚼劲，汤底浓郁鲜香，叉烧肉和温泉蛋的点缀让整体风味更加丰富。一口面，一口汤，一口叉烧，层次丰富，回味无穷，这绝对是你今天的最佳选择！" },
-                { name: "烤鳗鱼饭", spicy: 1, sweet: 3, savory: 4, hammer: "这碗烤鳗鱼饭，鳗鱼烤得外焦里嫩，裹上甜咸适口的酱汁，配上一口软糯的米饭，香气四溢。一口下去，鳗鱼的鲜美和酱汁的甜咸在口中交织，这种满足感无可替代！" },
-                { name: "寿喜烧", spicy: 1, sweet: 2, savory: 4, hammer: "这锅寿喜烧，牛肉薄如纸，在热气腾腾的锅中翻滚，吸收了所有的精华。夹起一片，蘸上生鸡蛋，那种牛肉的鲜美和鸡蛋的嫩滑在口中交融，这种极致的美食体验，绝对值得你一试！" },
-                { name: "味增汤", spicy: 1, sweet: 1, savory: 3, hammer: "这碗味增汤，汤底浓郁鲜美，豆腐嫩滑，海带和葱花的点缀让整体风味更加丰富。一口下去，满口是味增的独特风味和各种食材的鲜美，这种暖心又暖胃的美食，绝对是你寒冷冬日的最佳选择！" },
-                { name: "章鱼烧", spicy: 1, sweet: 1, savory: 3, hammer: "这盘章鱼烧，外皮金黄酥脆，内里软糯可口，章鱼鲜嫩多汁，浇上特制的酱汁和柴鱼片，香气四溢。一口咬下，外酥里嫩的口感和章鱼的鲜美在口中交织，这种街头小吃的魅力，让人忍不住一个接一个！" },
-                { name: "寿司卷", spicy: 1, sweet: 1, savory: 3, hammer: "这个寿司卷，米饭软糯，内里食材丰富多样，海苔包裹得恰到好处，香气四溢。一口咬下，各种食材的鲜美在口中交织，回味悠长，这种层次丰富的美味，绝对值得你一试！" },
-                { name: "鸡肉串", spicy: 1, sweet: 1, savory: 3, hammer: "这串鸡肉串，鸡肉烤得外焦里嫩，撒上特制的调料，香气四溢。一口咬下，鸡肉的鲜嫩和调料的香气在口中交织，回味悠长，这种简单而又纯粹的美味，正是日本料理的魅力所在！" },
-                { name: "炸猪排", spicy: 1, sweet: 1, savory: 4, hammer: "这份炸猪排，外皮金黄酥脆，内里肉质鲜嫩多汁，裹上特制的酱汁，香气四溢。一口咬下，外皮的酥脆和肉质的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-                { name: "烤鸡肉串", spicy: 1, sweet: 1, savory: 3, hammer: "这串烤鸡肉串，鸡肉烤得外焦里嫩，撒上特制的调料，香气四溢。一口咬下，鸡肉的鲜嫩和调料的香气在口中交织，回味悠长，这种简单而又纯粹的美味，正是日本料理的魅力所在！" },
-                { name: "日式咖喱饭", spicy: 2, sweet: 2, savory: 3, hammer: "这碗日式咖喱饭，咖喱浓郁香甜，米饭软糯可口，肉类和蔬菜的点缀让整体风味更加丰富。一口下去，咖喱的香甜和米饭的软糯在口中交融，这种满足感无可替代，绝对是你今天的最佳选择！" },
-                { name: "冷面", spicy: 1, sweet: 1, savory: 3, hammer: "这碗冷面，面条爽滑有嚼劲，汤底清爽可口，各种配料的点缀让整体风味更加丰富。一口下去，面条的爽滑和汤底的清爽在口中交织，这种消暑的美食，在炎热的夏天显得尤为珍贵！" },
-                { name: "温泉蛋", spicy: 1, sweet: 1, savory: 3, hammer: "这个温泉蛋，蛋白熟而蛋黄仍保持半流状，口感独特，鲜美无比。一口下去，蛋黄的香浓在口中爆发，回味悠长，这种简单而又纯粹的美味，正是日本料理的精髓所在！" },
-                { name: "石锅拌饭", spicy: 2, sweet: 1, savory: 3, hammer: "这碗石锅拌饭，米饭在滚烫的石锅中变得焦香四溢，各种配料丰富多样，浇上特制的酱汁，香气四溢。一口下去，米饭的焦香和各种配料的鲜美在口中交织，这种满足感无可替代！" },
-                { name: "烤鱼干", spicy: 1, sweet: 1, savory: 4, hammer: "这条烤鱼干，鱼肉烤得外焦里嫩，撒上特制的调料，香气四溢。一口咬下，鱼肉的鲜美和调料的香气在口中交织，回味悠长，这种简单而又纯粹的美味，正是日本料理的魅力所在！" },
-                { name: "铁板烧", spicy: 1, sweet: 1, savory: 4, hammer: "这份铁板烧，食材鲜美多汁，在滚烫的铁板上发出诱人的滋滋声，香气四溢。一口下去，食材的鲜美和特制酱汁的香气在口中交织，这种现场制作的美食体验，绝对值得你一试！" },
-                { name: "炸鸡块", spicy: 1, sweet: 1, savory: 3, hammer: "这盘炸鸡块，外皮金黄酥脆，内里鸡肉鲜嫩多汁，香气四溢。一口咬下，外皮的酥脆和鸡肉的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-                { name: "鱼生盖饭", spicy: 1, sweet: 1, savory: 4, hammer: "这碗鱼生盖饭，新鲜的鱼肉切成薄片铺在米饭上，撒上各种配料，浇上特制的酱汁，香气四溢。一口下去，鱼肉的鲜美和米饭的软糯在口中交织，这种简单而又纯粹的美味，正是日本料理的精髓所在！" },
-                { name: "茶碗蒸", spicy: 1, sweet: 1, savory: 3, hammer: "这碗茶碗蒸，蛋液蒸得细嫩如脂，内里藏着各种食材的惊喜，香气四溢。一口下去，蛋液的细嫩和各种食材的鲜美在口中交织，这种层次丰富的美味，绝对值得你一试！" },
-                { name: "烤鳗鱼", spicy: 1, sweet: 3, savory: 4, hammer: "这条烤鳗鱼，外皮烤得焦香四溢，内里肉质鲜嫩多汁，裹上甜咸适口的酱汁，香气四溢。一口下去，鳗鱼的鲜美和酱汁的甜咸在口中交织，这种满足感无可替代！" },
-                { name: "日式炒面", spicy: 1, sweet: 1, savory: 3, hammer: "这盘日式炒面，面条爽滑有嚼劲，各种配料丰富多样，调料香气四溢。一口下去，面条的爽滑和各种配料的鲜美在口中交织，回味悠长，这种满足感无可替代！" },
-                { name: "乌冬面", spicy: 1, sweet: 1, savory: 3, hammer: "这碗乌冬面，面条粗大爽滑，汤底浓郁鲜香，各种配料的点缀让整体风味更加丰富。一口面，一口汤，一口配料，层次丰富，回味无穷，这绝对是你今天的最佳选择！" },
-                { name: "烤饭团", spicy: 1, sweet: 1, savory: 3, hammer: "这个烤饭团，外皮烤得焦香四溢，内里米饭软糯可口，中间藏着各种馅料的惊喜，香气四溢。一口咬下，外皮的焦香和内里的软糯形成对比，馅料的鲜美点缀其中，这种层次丰富的美味，绝对值得你一试！" },
-                { name: "鲑鱼茶泡饭", spicy: 1, sweet: 1, savory: 3, hammer: "这碗鲑鱼茶泡饭，鲑鱼鲜嫩多汁，米饭软糯可口，茶汤清香爽口，三者完美融合。一口下去，鲑鱼的鲜美和茶汤的清香在口中交织，这种简单而又纯粹的美味，正是日本料理的精髓所在！" },
-                { name: "鳗鱼寿司", spicy: 1, sweet: 2, savory: 4, hammer: "这个鳗鱼寿司，鳗鱼烤得外焦里嫩，裹上甜咸适口的酱汁，配上一口软糯的米饭，香气四溢。一口下去，鳗鱼的鲜美和米饭的软糯在口中交织，这种满足感无可替代！" },
-                { name: "炸虾", spicy: 1, sweet: 1, savory: 3, hammer: "这份炸虾，外皮金黄酥脆，内里虾肉鲜嫩多汁，香气四溢。一口咬下，外皮的酥脆和虾肉的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-                { name: "寿司卷", spicy: 1, sweet: 1, savory: 3, hammer: "这个寿司卷，米饭软糯，内里食材丰富多样，海苔包裹得恰到好处，香气四溢。一口咬下，各种食材的鲜美在口中交织，回味悠长，这种层次丰富的美味，绝对值得你一试！" },
-                { name: "烤牛舌", spicy: 1, sweet: 1, savory: 4, hammer: "这份烤牛舌，牛舌烤得外焦里嫩，撒上特制的调料，香气四溢。一口咬下，牛舌的鲜嫩和调料的香气在口中交织，回味悠长，这种简单而又纯粹的美味，正是日本料理的魅力所在！" },
-                { name: "炸豆腐", spicy: 1, sweet: 1, savory: 2, hammer: "这份炸豆腐，外皮金黄酥脆，内里豆腐嫩滑如脂，蘸上特制的汁水，香气四溢。一口咬下，外皮的酥脆和内里的嫩滑形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-                { name: "烤秋刀鱼", spicy: 1, sweet: 1, savory: 4, hammer: "这条烤秋刀鱼，鱼肉烤得外焦里嫩，撒上盐和柠檬汁，香气四溢。一口咬下，鱼肉的鲜美和柠檬的清香在口中交织，回味悠长，这种简单而又纯粹的美味，正是日本料理的精髓所在！" },
-                { name: "烤鸡肉串", spicy: 1, sweet: 1, savory: 3, hammer: "这串烤鸡肉串，鸡肉烤得外焦里嫩，撒上特制的调料，香气四溢。一口咬下，鸡肉的鲜嫩和调料的香气在口中交织，回味悠长，这种简单而又纯粹的美味，正是日本料理的魅力所在！" },
-                { name: "鲷鱼烧", spicy: 1, sweet: 4, savory: 1, hammer: "这个鲷鱼烧，外皮金黄酥脆，内里馅料甜香可口，形状可爱，香气四溢。一口咬下，外皮的酥脆和内里的甜香在口中交织，这种传统点心的魅力，让人忍不住一个接一个！" },
-                { name: "烤饭团", spicy: 1, sweet: 1, savory: 3, hammer: "这个烤饭团，外皮烤得焦香四溢，内里米饭软糯可口，中间藏着各种馅料的惊喜，香气四溢。一口咬下，外皮的焦香和内里的软糯形成对比，馅料的鲜美点缀其中，这种层次丰富的美味，绝对值得你一试！" },
-                { name: "日式蛋包饭", spicy: 1, sweet: 1, savory: 3, hammer: "这份日式蛋包饭，蛋皮嫩滑如丝，内里炒饭香气四溢，浇上特制的酱汁，色香味俱全。一口下去，蛋皮的嫩滑和炒饭的香气在口中交织，这种满足感无可替代！" },
-                { name: "火锅", spicy: 2, sweet: 1, savory: 4, hammer: "这锅火锅，汤底浓郁鲜香，各种食材新鲜可口，香气四溢。涮上一片肉，蘸上特制的酱料，那种食材的鲜美和汤底的浓香在口中交织，这种社交性的美食体验，绝对值得你和朋友们一起尝试！" },
-                { name: "烤肉饭", spicy: 1, sweet: 1, savory: 4, hammer: "这碗烤肉饭，肉片烤得外焦里嫩，裹上特制的酱汁，配上一口软糯的米饭，香气四溢。一口下去，肉片的鲜美和米饭的软糯在口中交织，这种满足感无可替代！" },
-                { name: "盖浇饭", spicy: 1, sweet: 1, savory: 3, hammer: "这碗盖浇饭，米饭软糯可口，上面浇上各种食材和特制的酱汁，香气四溢。一口下去，米饭的软糯和食材的鲜美在口中交织，这种满足感无可替代，绝对是你今天的最佳选择！" },
-                { name: "海鲜火锅", spicy: 1, sweet: 1, savory: 4, hammer: "这锅海鲜火锅，汤底浓郁鲜香，各种海鲜新鲜可口，香气四溢。涮上一片海鲜，蘸上特制的酱料，那种海鲜的鲜美和汤底的浓香在口中交织，这种奢华的美食体验，绝对值得你一试！" },
-                { name: "炸猪排盖饭", spicy: 1, sweet: 1, savory: 4, hammer: "这碗炸猪排盖饭，猪排炸得外酥里嫩，裹上特制的酱汁，配上一口软糯的米饭，香气四溢。一口下去，猪排的酥脆和米饭的软糯在口中交织，这种满足感无可替代！" },
-                { name: "煎饺", spicy: 1, sweet: 1, savory: 3, hammer: "这盘煎饺，底部金黄酥脆，馅料鲜香多汁，香气四溢。咬上一口，酥脆的底部与鲜美的馅料形成对比，汁水在口中迸发，这种层次丰富的美味，绝对是你早餐的最佳选择！" },
-                { name: "关东煮", spicy: 1, sweet: 1, savory: 3, hammer: "这碗关东煮，各种食材在浓郁的汤底中煮得入味，香气四溢。夹起一块，那种食材的鲜美和汤底的浓香在口中交织，这种暖心又暖胃的美食，在寒冷的冬日里显得尤为珍贵！" },
-                { name: "日式炒乌冬面", spicy: 1, sweet: 1, savory: 3, hammer: "这盘日式炒乌冬面，面条粗大爽滑，各种配料丰富多样，调料香气四溢。一口下去，面条的爽滑和各种配料的鲜美在口中交织，回味悠长，这种满足感无可替代！" },
-                { name: "海鲜饭", spicy: 1, sweet: 1, savory: 4, hammer: "这碗海鲜饭，米饭软糯，海鲜鲜美多汁，蔬菜清脆爽口，各种食材的完美融合。一口下去，满口是海鲜的鲜美和米饭的软糯，这种海洋的馈赠，绝对值得你一试！" },
-                { name: "寿喜烧", spicy: 1, sweet: 2, savory: 4, hammer: "这锅寿喜烧，牛肉薄如纸，在热气腾腾的锅中翻滚，吸收了所有的精华。夹起一片，蘸上生鸡蛋，那种牛肉的鲜美和鸡蛋的嫩滑在口中交融，这种极致的美食体验，绝对值得你一试！" },
-                { name: "天妇罗盖饭", spicy: 1, sweet: 1, savory: 3, hammer: "这碗天妇罗盖饭，天妇罗炸得外酥里嫩，裹上特制的酱汁，配上一口软糯的米饭，香气四溢。一口下去，天妇罗的酥脆和米饭的软糯在口中交织，这种满足感无可替代！" },
-                { name: "烤肉", spicy: 1, sweet: 1, savory: 4, hammer: "这盘烤肉，肉片烤得外焦里嫩，撒上特制的调料，香气四溢。一口咬下，肉的鲜美和调料的香气在口中交织，回味悠长，这种简单而又纯粹的美味，正是日本料理的魅力所在！" },
-                { name: "蛋炒饭", spicy: 1, sweet: 1, savory: 3, hammer: "这盘蛋炒饭，米饭粒粒分明，鸡蛋的香气与米饭完美融合，各种配料点缀其中，香气四溢。一口下去，米饭的香气和鸡蛋的嫩滑在口中交织，这种家常美食的魅力，让人忍不住一口接一口！" },
-                { name: "海鲜汤", spicy: 1, sweet: 1, savory: 4, hammer: "这碗海鲜汤，汤底浓郁鲜美，各种海鲜的鲜甜融入其中，香气四溢。一口汤，一口海鲜，满口是大海的鲜美，回味悠长，这种满足感无可替代！" }
-            ],
-        "韩料": [
-            { name: "石锅拌饭", spicy: 2, sweet: 1, savory: 3, hammer: "这碗石锅拌饭，米饭在滚烫的石锅中变得焦香四溢，上面铺满了五颜六色的蔬菜和肉类，淋上特制的辣酱，香气扑鼻。拌匀后，焦脆的锅巴和各种食材完美融合，这种层次丰富的口感，绝对值得你为之尖叫！" },
-            { name: "部队锅", spicy: 3, sweet: 1, savory: 4, hammer: "这锅部队锅，汤底浓郁辣香，各种食材在锅中翻滚，泡面的软糯，香肠的鲜美，豆腐的嫩滑，再加上半熟的鸡蛋，每一口都是惊喜。这不是简单的火锅，而是一场味蕾的狂欢，今天你绝对要尝一尝！" },
-            { name: "泡菜", spicy: 4, sweet: 1, savory: 3, hammer: "这盘泡菜，酸辣爽口，脆嫩多汁，每一口都能感受到发酵的独特风味。这不仅是一道配菜，更是韩国饮食文化的象征，那种让人欲罢不能的酸爽感，绝对能征服你的味蕾！" },
-            { name: "年糕火锅", spicy: 4, sweet: 1, savory: 3, hammer: "这锅年糕火锅，红彤彤的汤底中，年糕软糯有嚼劲，蔬菜和肉类的鲜美与辣酱的香辣完美融合。一口年糕，一口汤，辣得过瘾，香得醉人，这种满足感无法言喻！" },
-            { name: "烤肉", spicy: 1, sweet: 1, savory: 4, hammer: "这盘烤肉，肉片鲜嫩多汁，在滚烫的铁板上发出诱人的滋滋声。裹上生菜叶，蘸上特制的酱料，一口下去，肉的鲜美和酱料的香气在口中交织，这种DIY的美食体验，绝对是聚会的最佳选择！" },
-            { name: "冷面", spicy: 2, sweet: 1, savory: 3, hammer: "这碗冷面，面条细长而富有韧性，冰凉的汤底清爽可口，梨丝和黄瓜的点缀让整体风味更加丰富。一口下去，面条的爽滑和汤底的酸甜在口中交织，在炎炎夏日，还有什么比这更能消暑的美食呢？" },
-            { name: "紫菜包饭", spicy: 1, sweet: 1, savory: 3, hammer: "这卷紫菜包饭，紫菜脆嫩，米饭软糯，内里蔬菜和肉类的搭配让每一口都充满惊喜。蘸上特制的酱料，香气四溢，这种简单而又丰富的美食，正是韩国料理的魅力所在！" },
-            { name: "韩式炸鸡", spicy: 2, sweet: 2, savory: 3, hammer: "这盘韩式炸鸡，外皮金黄酥脆，内里鸡肉鲜嫩多汁，裹上特制的酱汁，香甜可口。一口咬下，外皮的酥脆和内里的鲜嫩形成强烈对比，这种层次丰富的美味，绝对是下酒的绝佳选择！" },
-            { name: "海鲜豆腐汤", spicy: 3, sweet: 1, savory: 4, hammer: "这碗海鲜豆腐汤，汤底浓郁辣香，豆腐嫩滑如脂，各种海鲜的鲜美融入其中，香气四溢。一口豆腐，一口海鲜，一口汤，层次丰富，回味无穷，这绝对是你今天的最佳选择！" },
-            { name: "拌冷粉", spicy: 3, sweet: 1, savory: 3, hammer: "这碗拌冷粉，粉条爽滑有嚼劲，各种蔬菜的清脆和辣酱的香辣完美融合。一口下去，粉条的爽滑和辣酱的香辣在口中交织，这种清爽又过瘾的美食，在炎热的夏天显得尤为珍贵！" },
-            { name: "参鸡汤", spicy: 1, sweet: 1, savory: 4, hammer: "这碗参鸡汤，汤底浓郁鲜香，鸡肉软烂入味，人参的香气与鸡肉的鲜美完美融合。一口汤，一口肉，滋补又美味，这种暖心又暖胃的美食，在寒冷的冬日里显得尤为珍贵！" },
-            { name: "炒年糕", spicy: 3, sweet: 1, savory: 3, hammer: "这盘炒年糕，年糕软糯有嚼劲，辣酱的香辣与年糕的软糯完美融合，各种配料的点缀让整体风味更加丰富。一口下去，年糕的软糯和辣酱的香辣在口中交织，这种满足感无可替代！" },
-            { name: "韩式拌饭", spicy: 2, sweet: 1, savory: 3, hammer: "这碗韩式拌饭，米饭软糯可口，上面铺满了五颜六色的蔬菜和肉类，淋上特制的辣酱，香气扑鼻。拌匀后，各种食材的鲜美与辣酱的香辣完美融合，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "泡菜汤", spicy: 3, sweet: 1, savory: 3, hammer: "这碗泡菜汤，汤底酸辣可口，泡菜的发酵风味与各种食材的鲜美完美融合，香气四溢。一口汤，一口泡菜，酸辣过瘾，回味无穷，这种传统美食的魅力，绝对会让你欲罢不能！" },
-            { name: "辣白菜", spicy: 4, sweet: 1, savory: 3, hammer: "这盘辣白菜，酸辣爽口，脆嫩多汁，辣椒的香辣与白菜的清爽完美融合。每一口都能感受到发酵的独特风味，这种让人欲罢不能的酸爽感，绝对能征服你的味蕾！" },
-            { name: "海鲜煎饼", spicy: 2, sweet: 1, savory: 3, hammer: "这张海鲜煎饼，外皮金黄酥脆，内里海鲜鲜美多汁，葱香四溢。一口咬下，外皮的酥脆和海鲜的鲜美形成强烈对比，这种层次丰富的美味，绝对是下酒的绝佳选择！" },
-            { name: "泡菜饼", spicy: 3, sweet: 1, savory: 3, hammer: "这张泡菜饼，外皮金黄酥脆，内里泡菜酸辣可口，香气四溢。一口咬下，外皮的酥脆和泡菜的酸辣形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "酱汤", spicy: 2, sweet: 1, savory: 4, hammer: "这碗酱汤，汤底浓郁鲜香，豆瓣酱的香气与各种食材的鲜美完美融合，香气四溢。一口汤，一口豆腐，一口蔬菜，层次丰富，回味无穷，这种传统美食的魅力，绝对会让你欲罢不能！" },
-            { name: "韩式烤肉", spicy: 1, sweet: 1, savory: 4, hammer: "这盘韩式烤肉，肉片鲜嫩多汁，在滚烫的铁板上发出诱人的滋滋声。裹上生菜叶，蘸上特制的酱料，一口下去，肉的鲜美和酱料的香气在口中交织，这种DIY的美食体验，绝对是聚会的最佳选择！" },
-            { name: "辣炒年糕", spicy: 4, sweet: 1, savory: 3, hammer: "这盘辣炒年糕，年糕软糯有嚼劲，辣酱的香辣与年糕的软糯完美融合，各种配料的点缀让整体风味更加丰富。一口下去，年糕的软糯和辣酱的香辣在口中交织，这种满足感无可替代！" },
-            { name: "海鲜煎饼", spicy: 2, sweet: 1, savory: 3, hammer: "这张海鲜煎饼，外皮金黄酥脆，内里海鲜鲜美多汁，葱香四溢。一口咬下，外皮的酥脆和海鲜的鲜美形成强烈对比，这种层次丰富的美味，绝对是下酒的绝佳选择！" },
-            { name: "韩式炸酱面", spicy: 1, sweet: 1, savory: 4, hammer: "这碗韩式炸酱面，面条爽滑有嚼劲，炸酱浓郁鲜香，各种蔬菜的点缀让整体风味更加丰富。一口下去，面条的爽滑和炸酱的浓香在口中交织，这种满足感无可替代！" },
-            { name: "韩式泡面", spicy: 4, sweet: 1, savory: 3, hammer: "这碗韩式泡面，面条劲道有嚼劲，汤底辣香浓郁，各种配料丰富多样，香气四溢。一口面，一口汤，辣得过瘾，香得醉人，这种方便又美味的选择，绝对能满足你的口腹之欲！" },
-            { name: "章鱼火锅", spicy: 3, sweet: 1, savory: 4, hammer: "这锅章鱼火锅，汤底浓郁辣香，章鱼鲜嫩多汁，各种蔬菜清脆爽口，香气四溢。一口章鱼，一口蔬菜，一口汤，层次丰富，回味无穷，这种海鲜美食的魅力，绝对会让你欲罢不能！" },
-            { name: "大酱汤", spicy: 2, sweet: 1, savory: 4, hammer: "这碗大酱汤，汤底浓郁鲜香，大酱的香气与各种食材的鲜美完美融合，香气四溢。一口汤，一口豆腐，一口蔬菜，层次丰富，回味无穷，这种传统美食的魅力，绝对会让你欲罢不能！" },
-            { name: "韩式牛排", spicy: 1, sweet: 1, savory: 4, hammer: "这份韩式牛排，牛肉鲜嫩多汁，外表煎得金黄酥脆，内里仍保持粉嫩，香气四溢。一口咬下，牛肉的鲜美在口中爆发，回味悠长，这种奢华的享受，绝对值得你为之尖叫！" },
-            { name: "泡菜焗饭", spicy: 3, sweet: 1, savory: 3, hammer: "这碗泡菜焗饭，米饭软糯可口，泡菜酸辣爽口，芝士浓郁香醇，三者完美融合。一口下去，米饭的软糯，泡菜的酸辣和芝士的香醇在口中交织，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "烤五花肉", spicy: 1, sweet: 1, savory: 4, hammer: "这盘烤五花肉，肉片鲜嫩多汁，烤得表皮微焦，肥瘦相间，香气四溢。裹上生菜叶，蘸上特制的酱料，一口下去，肉的鲜美和酱料的香气在口中交织，这种满足感无可替代！" },
-            { name: "韩式炒饭", spicy: 2, sweet: 1, savory: 3, hammer: "这盘韩式炒饭，米饭粒粒分明，各种配料丰富多样，调料香气四溢。一口下去，米饭的香气和各种配料的鲜美在口中交织，这种简单而又深沉的美味，绝对值得你一试！" },
-            { name: "韩式米肠", spicy: 1, sweet: 1, savory: 3, hammer: "这盘韩式米肠，外皮紧实有嚼劲，内里米饭软糯可口，香气四溢。一口咬下，外皮的紧实和内里的软糯形成对比，回味悠长，这种传统小吃的魅力，让人忍不住一个接一个！" },
-            { name: "辣炒鱿鱼", spicy: 4, sweet: 1, savory: 3, hammer: "这盘辣炒鱿鱼，鱿鱼鲜嫩有嚼劲，辣酱的香辣与鱿鱼的鲜美完美融合，香气四溢。一口下去，鱿鱼的鲜美和辣酱的香辣在口中交织，这种满足感无可替代，绝对是你今天的最佳选择！" },
-            { name: "泡菜五花肉", spicy: 3, sweet: 1, savory: 4, hammer: "这道泡菜五花肉，五花肉鲜嫩多汁，泡菜酸辣爽口，两者在烹饪中的完美融合，香气四溢。一口下去，肉的鲜美和泡菜的酸辣在口中交织，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "韩式拌面", spicy: 3, sweet: 1, savory: 3, hammer: "这碗韩式拌面，面条爽滑有嚼劲，辣酱的香辣与各种配料的鲜美完美融合，香气四溢。一口下去，面条的爽滑和辣酱的香辣在口中交织，这种满足感无可替代！" },
-            { name: "辣炒章鱼", spicy: 4, sweet: 1, savory: 4, hammer: "这盘辣炒章鱼，章鱼鲜嫩有嚼劲，辣酱的香辣与章鱼的鲜美完美融合，香气四溢。一口下去，章鱼的鲜美和辣酱的香辣在口中交织，这种满足感无可替代，绝对是你今天的最佳选择！" },
-            { name: "泡菜豆腐汤", spicy: 3, sweet: 1, savory: 3, hammer: "这碗泡菜豆腐汤，汤底酸辣可口，豆腐嫩滑如脂，泡菜的发酵风味与豆腐的鲜美完美融合，香气四溢。一口豆腐，一口泡菜，一口汤，层次丰富，回味无穷，这种传统美食的魅力，绝对会让你欲罢不能！" },
-            { name: "韩式拌杂菜", spicy: 3, sweet: 1, savory: 3, hammer: "这盘韩式拌杂菜，各种蔬菜脆嫩多汁，辣酱的香辣与蔬菜的清香完美融合，香气四溢。一口下去，各种蔬菜的鲜美和辣酱的香辣在口中交织，这种健康又美味的选择，绝对能满足你的味蕾！" },
-            { name: "韩式牛肉汤", spicy: 2, sweet: 1, savory: 4, hammer: "这碗韩式牛肉汤，汤底浓郁鲜香，牛肉软烂入味，香气四溢。一口牛肉，一口汤，满口是牛肉的鲜美和汤底的浓香，这种暖心又暖胃的美食，在寒冷的冬日里显得尤为珍贵！" },
-            { name: "韩式烤牛肉", spicy: 1, sweet: 1, savory: 4, hammer: "这盘韩式烤牛肉，牛肉鲜嫩多汁，外表煎得金黄焦香，内里仍保持粉嫩，香气四溢。裹上生菜叶，蘸上特制的酱料，一口下去，牛肉的鲜美和酱料的香气在口中交织，这种满足感无可替代！" },
-            { name: "辣炒鸡", spicy: 4, sweet: 1, savory: 3, hammer: "这盘辣炒鸡，鸡肉鲜嫩多汁，辣酱的香辣与鸡肉的鲜美完美融合，香气四溢。一口下去，鸡肉的鲜美和辣酱的香辣在口中交织，这种满足感无可替代，绝对是你今天的最佳选择！" },
-            { name: "韩式炸串", spicy: 2, sweet: 1, savory: 3, hammer: "这串韩式炸串，外皮金黄酥脆，内里食材鲜美多汁，蘸上特制的酱料，香气四溢。一口咬下，外皮的酥脆和内里的鲜美形成强烈对比，这种层次丰富的美味，绝对是下酒的绝佳选择！" },
-            { name: "韩式石锅饭", spicy: 2, sweet: 1, savory: 3, hammer: "这碗韩式石锅饭，米饭在滚烫的石锅中变得焦香四溢，各种配料的点缀让整体风味更加丰富，香气扑鼻。一口下去，米饭的焦香和各种配料的鲜美在口中交织，这种满足感无可替代！" },
-            { name: "韩式豆腐汤", spicy: 2, sweet: 1, savory: 3, hammer: "这碗韩式豆腐汤，汤底浓郁鲜香，豆腐嫩滑如脂，各种配料的点缀让整体风味更加丰富，香气四溢。一口豆腐，一口汤，满口是豆腐的嫩滑和汤底的鲜香，这种暖心又暖胃的美食，绝对能满足你的味蕾！" },
-            { name: "韩式海鲜汤", spicy: 3, sweet: 1, savory: 4, hammer: "这碗韩式海鲜汤，汤底浓郁辣香，各种海鲜鲜美多汁，香气四溢。一口海鲜，一口汤，满口是海鲜的鲜美和汤底的辣香，这种满足感无可替代，绝对是你今天的最佳选择！" },
-            { name: "韩式烤鱼", spicy: 2, sweet: 1, savory: 4, hammer: "这条韩式烤鱼，鱼肉鲜嫩多汁，外表烤得金黄焦香，内里仍保持鲜嫩，香气四溢。一口咬下，鱼肉的鲜美在口中爆发，回味悠长，这种美食体验，绝对值得你一试！" },
-            { name: "韩式海鲜锅", spicy: 3, sweet: 1, savory: 4, hammer: "这锅韩式海鲜锅，汤底浓郁辣香，各种海鲜在锅中翻滚，香气四溢。一口海鲜，一口蔬菜，一口汤，层次丰富，回味无穷，这种海鲜美食的魅力，绝对会让你欲罢不能！" },
-            { name: "韩式炒年糕", spicy: 3, sweet: 1, savory: 3, hammer: "这盘韩式炒年糕，年糕软糯有嚼劲，辣酱的香辣与年糕的软糯完美融合，各种配料的点缀让整体风味更加丰富。一口下去，年糕的软糯和辣酱的香辣在口中交织，这种满足感无可替代！" },
-            { name: "韩式泡菜锅", spicy: 4, sweet: 1, savory: 3, hammer: "这锅韩式泡菜锅，汤底酸辣可口，泡菜的发酵风味与各种食材的鲜美完美融合，香气四溢。一口泡菜，一口肉，一口豆腐，一口汤，层次丰富，回味无穷，这种传统美食的魅力，绝对会让你欲罢不能！" },
-            { name: "韩式冷面", spicy: 2, sweet: 1, savory: 3, hammer: "这碗韩式冷面，面条细长而富有韧性，冰凉的汤底清爽可口，梨丝和牛肉的点缀让整体风味更加丰富。一口下去，面条的爽滑和汤底的酸甜在口中交织，在炎炎夏日，还有什么比这更能消暑的美食呢？" },
-            { name: "韩式烤猪五花", spicy: 1, sweet: 1, savory: 4, hammer: "这盘韩式烤猪五花，肉片鲜嫩多汁，烤得表皮微焦，肥瘦相间，香气四溢。裹上生菜叶，蘸上特制的酱料，一口下去，肉的鲜美和酱料的香气在口中交织，这种满足感无可替代！" }
-        ],
-        "西餐": [
-            { name: "牛排", spicy: 1, sweet: 1, savory: 5, hammer: "这块牛排，外表煎得金黄焦香，内里仍保持粉嫩多汁，撒上海盐和黑胡椒，香气四溢。一刀切下，肉汁缓缓流出，第一口咬下，那种无与伦比的鲜嫩和浓郁的肉香，绝对是对味蕾的极致犒赏！" },
-            { name: "意大利面", spicy: 1, sweet: 1, savory: 4, hammer: "这盘意大利面，面条恰到好处的硬度，浓郁的酱汁完美包裹每一根面条，香浓的芝士点缀其上，香气扑鼻。一口下去，面条的劲道和酱汁的浓香在口中交织，这种满足感无可替代！" },
-            { name: "披萨", spicy: 1, sweet: 1, savory: 4, hammer: "这个披萨，饼底薄脆可口，上面铺满了各种食材和浓郁的芝士，烤得金黄焦香，香气四溢。一口咬下，酥脆的饼底和丰富的馅料形成对比，芝士的香气在口中蔓延，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "汉堡", spicy: 1, sweet: 1, savory: 4, hammer: "这个汉堡，牛肉饼鲜嫩多汁，面包烤得金黄松软，各种蔬菜和酱料的搭配让整体风味更加丰富，香气四溢。一口咬下，各种食材的完美融合，回味悠长，这种快餐的魅力，绝对会让你欲罢不能！" },
-            { name: "三文鱼", spicy: 1, sweet: 1, savory: 4, hammer: "这块三文鱼，鱼肉粉嫩多汁，外表煎得金黄焦香，内里仍保持鲜嫩，香气四溢。一口咬下，鱼肉的鲜美在口中爆发，回味悠长，这种高级食材的魅力，绝对会让你对西餐刮目相看！" },
-            { name: "焗烤意面", spicy: 1, sweet: 1, savory: 4, hammer: "这盘焗烤意面，面条恰到好处的硬度，浓郁的酱汁完美包裹每一根面条，上面铺满了金黄酥脆的芝士，香气扑鼻。一口下去，面条的劲道和酱汁的浓香在口中交织，芝士的香气点缀其中，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "炸鱼薯条", spicy: 1, sweet: 1, savory: 3, hammer: "这份炸鱼薯条，鱼肉外酥里嫩，薯条金黄酥脆，配上塔塔酱，香气四溢。一口鱼肉，一口薯条，酥脆的外表和嫩滑的内里形成强烈对比，这种英式快餐的魅力，绝对会让你欲罢不能！" },
-            { name: "烤羊排", spicy: 1, sweet: 1, savory: 5, hammer: "这份烤羊排，肉质鲜嫩多汁，外表烤得金黄焦香，内里仍保持粉嫩，香气四溢。一口咬下，肉的鲜美和草本香料的香气在口中交织，回味悠长，这种高级料理的魅力，绝对会让你对西餐刮目相看！" },
-            { name: "沙拉", spicy: 1, sweet: 1, savory: 2, hammer: "这盘沙拉，各种蔬菜新鲜脆嫩，淋上特制的酱料，香气四溢。一口下去，蔬菜的清脆和酱料的香气在口中交织，这种健康又美味的选择，绝对能满足你的味蕾！" },
-            { name: "法式烤鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只法式烤鸡，外皮金黄酥脆，内里肉质鲜嫩多汁，香草的香气与鸡肉的鲜美完美融合，香气四溢。一口咬下，外皮的酥脆和内里的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "法式蜗牛", spicy: 1, sweet: 1, savory: 3, hammer: "这盘法式蜗牛，蜗牛肉质鲜嫩，浸泡在大蒜黄油中，香气四溢。一口咬下，蜗牛的鲜美和大蒜黄油的香气在口中交织，回味悠长，这种法国传统美食的魅力，绝对会让你对西餐刮目相看！" },
-            { name: "意式烩饭", spicy: 1, sweet: 1, savory: 4, hammer: "这盘意式烩饭，米粒熬得软糯但依然保持颗粒感，各种食材和酱汁的搭配让整体风味更加丰富，香气四溢。一口下去，米粒的软糯和各种食材的鲜美在口中交织，这种满足感无可替代！" },
-            { name: "烤鸭胸", spicy: 1, sweet: 1, savory: 4, hammer: "这份烤鸭胸，肉质鲜嫩多汁，外表煎得金黄焦香，内里仍保持粉嫩，香气四溢。一口咬下，鸭胸的鲜美在口中爆发，回味悠长，这种高级料理的魅力，绝对会让你对西餐刮目相看！" },
-            { name: "法式洋葱汤", spicy: 1, sweet: 1, savory: 3, hammer: "这碗法式洋葱汤，洋葱熬得软烂入味，汤底浓郁鲜香，上面铺满了金黄酥脆的面包片和芝士，香气四溢。一口汤，一口面包，洋葱的甜香和芝士的浓香在口中交织，这种传统美食的魅力，绝对会让你欲罢不能！" },
-            { name: "意式肉丸", spicy: 1, sweet: 1, savory: 4, hammer: "这盘意式肉丸，肉丸鲜嫩多汁，浸泡在浓郁的番茄酱汁中，香气四溢。一口咬下，肉丸的鲜美和番茄酱汁的酸甜在口中交织，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-            { name: "希腊沙拉", spicy: 1, sweet: 1, savory: 2, hammer: "这盘希腊沙拉，各种蔬菜新鲜脆嫩，橄榄油和酸奶酪的搭配让整体风味更加丰富，香气四溢。一口下去，蔬菜的清脆和酸奶酪的香气在口中交织，这种地中海风味的美食，绝对值得你一试！" },
-            { name: "烤全鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只烤全鸡，外皮金黄酥脆，内里肉质鲜嫩多汁，各种香料的香气与鸡肉的鲜美完美融合，香气四溢。一口咬下，外皮的酥脆和内里的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "烤牛排", spicy: 1, sweet: 1, savory: 5, hammer: "这块烤牛排，肉质鲜嫩多汁，外表烤得金黄焦香，内里仍保持粉嫩，香气四溢。一口咬下，牛肉的鲜美在口中爆发，回味悠长，这种简单而又纯粹的美味，正是西餐的精髓所在！" },
-            { name: "西班牙海鲜饭", spicy: 1, sweet: 1, savory: 4, hammer: "这盘西班牙海鲜饭，米饭熬得软糯但依然保持颗粒感，各种海鲜的鲜美与藏红花的香气完美融合，香气四溢。一口下去，米饭的软糯和海鲜的鲜美在口中交织，这种地中海风味的美食，绝对值得你一试！" },
-            { name: "法式鹅肝", spicy: 1, sweet: 1, savory: 5, hammer: "这份法式鹅肝，外表煎得金黄焦香，内里仍保持柔嫩，香气四溢。一口咬下，鹅肝的柔嫩和浓郁的肝香在口中交织，回味悠长，这种奢华的享受，绝对值得你为之尖叫！" },
-            { name: "意式千层面", spicy: 1, sweet: 1, savory: 4, hammer: "这盘意式千层面，层次分明，酱汁浓郁，芝士香气四溢。一口咬下，面皮的软糯，肉酱的鲜美和芝士的香气在口中交织，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "法式煎蛋卷", spicy: 1, sweet: 1, savory: 3, hammer: "这个法式煎蛋卷，外表金黄松软，内里各种食材的搭配让整体风味更加丰富，香气四溢。一口咬下，蛋卷的松软和各种食材的鲜美在口中交织，这种简单而又深沉的美味，绝对值得你一试！" },
-            { name: "意式炖牛肉", spicy: 1, sweet: 1, savory: 4, hammer: "这盘意式炖牛肉，牛肉炖得软烂入味，各种香料和红酒的香气与牛肉的鲜美完美融合，香气四溢。一口咬下，牛肉的鲜美和各种香料的香气在口中交织，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-            { name: "烤全羊", spicy: 1, sweet: 1, savory: 5, hammer: "这只烤全羊，外皮金黄酥脆，内里肉质鲜嫩多汁，各种香料的香气与羊肉的鲜美完美融合，香气四溢。撕下一块，羊肉的鲜美和各种香料的香气在口中交织，这种原始而又纯粹的美味，绝对值得你一试！" },
-            { name: "法式鸭腿", spicy: 1, sweet: 1, savory: 4, hammer: "这只法式鸭腿，外皮金黄酥脆，内里肉质鲜嫩多汁，各种香料的香气与鸭肉的鲜美完美融合，香气四溢。一口咬下，外皮的酥脆和内里的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "意式焗饭", spicy: 1, sweet: 1, savory: 4, hammer: "这盘意式焗饭，米饭熬得软糯但依然保持颗粒感，各种食材和酱汁的搭配让整体风味更加丰富，上面铺满了金黄酥脆的芝士，香气四溢。一口下去，米饭的软糯和各种食材的鲜美在口中交织，芝士的香气点缀其中，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "法式蒜香蜗牛", spicy: 1, sweet: 1, savory: 3, hammer: "这盘法式蒜香蜗牛，蜗牛肉质鲜嫩，浸泡在大蒜黄油中，香气四溢。一口咬下，蜗牛的鲜美和大蒜黄油的香气在口中交织，回味悠长，这种法国传统美食的魅力，绝对会让你对西餐刮目相看！" },
-            { name: "意式海鲜汤", spicy: 1, sweet: 1, savory: 4, hammer: "这碗意式海鲜汤，汤底浓郁鲜香，各种海鲜的鲜美融入其中，香气四溢。一口汤，一口海鲜，满口是大海的鲜美，回味悠长，这种地中海风味的美食，绝对值得你一试！" },
-            { name: "法式烤鹌鹑", spicy: 1, sweet: 1, savory: 4, hammer: "这只法式烤鹌鹑，外皮金黄酥脆，内里肉质鲜嫩多汁，各种香料的香气与鹌鹑的鲜美完美融合，香气四溢。一口咬下，外皮的酥脆和内里的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "意式烤鱼", spicy: 1, sweet: 1, savory: 4, hammer: "这条意式烤鱼，鱼肉鲜嫩多汁，外表烤得金黄焦香，内里仍保持鲜嫩，香气四溢。一口咬下，鱼肉的鲜美和各种香料的香气在口中交织，回味悠长，这种地中海风味的美食，绝对值得你一试！" },
-            { name: "法式牛扒", spicy: 1, sweet: 1, savory: 5, hammer: "这块法式牛扒，肉质鲜嫩多汁，外表煎得金黄焦香，内里仍保持粉嫩，香气四溢。一口咬下，牛肉的鲜美在口中爆发，回味悠长，这种高级料理的魅力，绝对会让你对西餐刮目相看！" },
-            { name: "意式海鲜面", spicy: 1, sweet: 1, savory: 4, hammer: "这盘意式海鲜面，面条恰到好处的硬度，浓郁的酱汁完美包裹每一根面条，各种海鲜的鲜美点缀其中，香气四溢。一口下去，面条的劲道和酱汁的浓香在口中交织，海鲜的鲜美点缀其中，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "法式焗蜗牛", spicy: 1, sweet: 1, savory: 3, hammer: "这盘法式焗蜗牛，蜗牛肉质鲜嫩，浸泡在大蒜黄油中，上面铺满了金黄酥脆的面包屑，香气四溢。一口咬下，蜗牛的鲜美和大蒜黄油的香气在口中交织，面包屑的酥脆点缀其中，这种法国传统美食的魅力，绝对会让你对西餐刮目相看！" },
-            { name: "意式牛肉烩饭", spicy: 1, sweet: 1, savory: 4, hammer: "这盘意式牛肉烩饭，米粒熬得软糯但依然保持颗粒感，牛肉的鲜美与各种香料的香气完美融合，香气四溢。一口下去，米粒的软糯和牛肉的鲜美在口中交织，这种满足感无可替代！" },
-            { name: "法式煎鹅肝", spicy: 1, sweet: 1, savory: 5, hammer: "这份法式煎鹅肝，外表煎得金黄焦香，内里仍保持柔嫩，香气四溢。一口咬下，鹅肝的柔嫩和浓郁的肝香在口中交织，回味悠长，这种奢华的享受，绝对值得你为之尖叫！" },
-            { name: "意式海鲜饭", spicy: 1, sweet: 1, savory: 4, hammer: "这盘意式海鲜饭，米饭熬得软糯但依然保持颗粒感，各种海鲜的鲜美与香料的香气完美融合，香气四溢。一口下去，米饭的软糯和海鲜的鲜美在口中交织，这种地中海风味的美食，绝对值得你一试！" },
-            { name: "法式烤鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只法式烤鸡，外皮金黄酥脆，内里肉质鲜嫩多汁，各种香料的香气与鸡肉的鲜美完美融合，香气四溢。一口咬下，外皮的酥脆和内里的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "意式焗龙虾", spicy: 1, sweet: 1, savory: 5, hammer: "这只意式焗龙虾，龙虾肉质鲜嫩多汁，浸泡在大蒜黄油中，上面铺满了金黄酥脆的面包屑，香气四溢。一口咬下，龙虾的鲜美和大蒜黄油的香气在口中交织，面包屑的酥脆点缀其中，这种奢华的享受，绝对值得你为之尖叫！" },
-            { name: "法式牛肉汤", spicy: 1, sweet: 1, savory: 4, hammer: "这碗法式牛肉汤，汤底浓郁鲜香，牛肉炖得软烂入味，各种香料的香气与牛肉的鲜美完美融合，香气四溢。一口汤，一口肉，满口是牛肉的鲜美和各种香料的香气，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-            { name: "意式烤蔬菜", spicy: 1, sweet: 1, savory: 2, hammer: "这盘意式烤蔬菜，各种蔬菜烤得外焦里嫩，淋上橄榄油和香醋，香气四溢。一口下去，蔬菜的清甜和橄榄油的香气在口中交织，这种简单而又深沉的美味，绝对值得你一试！" },
-            { name: "法式蔬菜汤", spicy: 1, sweet: 1, savory: 2, hammer: "这碗法式蔬菜汤，各种蔬菜熬得软烂入味，汤底浓郁鲜香，香气四溢。一口下去，满口是各种蔬菜的清甜和汤底的鲜香，这种健康又美味的选择，绝对能满足你的味蕾！" },
-            { name: "意式鱼汤", spicy: 1, sweet: 1, savory: 4, hammer: "这碗意式鱼汤，汤底浓郁鲜香，各种鱼类和海鲜的鲜美融入其中，香气四溢。一口汤，一口鱼，满口是海洋的鲜美，回味悠长，这种地中海风味的美食，绝对值得你一试！" },
-            { name: "法式羊排", spicy: 1, sweet: 1, savory: 5, hammer: "这份法式羊排，肉质鲜嫩多汁，外表烤得金黄焦香，内里仍保持粉嫩，香气四溢。一口咬下，羊肉的鲜美和各种香料的香气在口中交织，回味悠长，这种高级料理的魅力，绝对会让你对西餐刮目相看！" },
-            { name: "意式烤羊排", spicy: 1, sweet: 1, savory: 5, hammer: "这份意式烤羊排，肉质鲜嫩多汁，外表烤得金黄焦香，内里仍保持粉嫩，香气四溢。一口咬下，羊肉的鲜美和各种香料的香气在口中交织，回味悠长，这种简单而又纯粹的美味，正是西餐的精髓所在！" },
-            { name: "法式海鲜汤", spicy: 1, sweet: 1, savory: 4, hammer: "这碗法式海鲜汤，汤底浓郁鲜香，各种海鲜的鲜美融入其中，香气四溢。一口汤，一口海鲜，满口是大海的鲜美，回味悠长，这种满足感无可替代！" },
-            { name: "意式海鲜汤", spicy: 1, sweet: 1, savory: 4, hammer: "这碗意式海鲜汤，汤底浓郁鲜香，各种海鲜的鲜美融入其中，香气四溢。一口汤，一口海鲜，满口是大海的鲜美，回味悠长，这种地中海风味的美食，绝对值得你一试！" },
-            { name: "法式牛尾汤", spicy: 1, sweet: 1, savory: 4, hammer: "这碗法式牛尾汤，汤底浓郁鲜香，牛尾炖得软烂入味，各种香料的香气与牛尾的鲜美完美融合，香气四溢。一口汤，一口肉，满口是牛尾的鲜美和各种香料的香气，回味悠长，这种传统美食的魅力，绝对会让你欲罢不能！" },
-            { name: "意式烤鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只意式烤鸡，外皮金黄酥脆，内里肉质鲜嫩多汁，各种香料的香气与鸡肉的鲜美完美融合，香气四溢。一口咬下，外皮的酥脆和内里的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "法式烤鸭", spicy: 1, sweet: 1, savory: 4, hammer: "这只法式烤鸭，外皮金黄酥脆，内里肉质鲜嫩多汁，各种香料的香气与鸭肉的鲜美完美融合，香气四溢。一口咬下，外皮的酥脆和内里的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "意式烤鸭", spicy: 1, sweet: 1, savory: 4, hammer: "这只意式烤鸭，外皮金黄酥脆，内里肉质鲜嫩多汁，各种香料的香气与鸭肉的鲜美完美融合，香气四溢。一口咬下，外皮的酥脆和内里的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "法式烤全鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只法式烤全鸡，外皮金黄酥脆，内里肉质鲜嫩多汁，各种香料的香气与鸡肉的鲜美完美融合，香气四溢。一口咬下，外皮的酥脆和内里的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" },
-            { name: "意式烤全鸡", spicy: 1, sweet: 1, savory: 4, hammer: "这只意式烤全鸡，外皮金黄酥脆，内里肉质鲜嫩多汁，各种香料的香气与鸡肉的鲜美完美融合，香气四溢。一口咬下，外皮的酥脆和内里的鲜嫩形成强烈对比，这种层次丰富的美味，绝对值得你一试！" }
-        ]
-    };
+        // 内娱男星库 (包含热门、实力、顶流等)
+        const stars = [
+            { name: "肖战", img: "https://randomuser.me/api/portraits/men/1.jpg" },
+            { name: "王一博", img: "https://randomuser.me/api/portraits/men/2.jpg" },
+            { name: "易烊千玺", img: "https://randomuser.me/api/portraits/men/3.jpg" },
+            { name: "成毅", img: "https://randomuser.me/api/portraits/men/4.jpg" },
+            { name: "龚俊", img: "https://randomuser.me/api/portraits/men/5.jpg" },
+            { name: "陈哲远", img: "https://randomuser.me/api/portraits/men/6.jpg" },
+            { name: "许凯", img: "https://randomuser.me/api/portraits/men/7.jpg" },
+            { name: "檀健次", img: "https://randomuser.me/api/portraits/men/8.jpg" },
+            { name: "王鹤棣", img: "https://randomuser.me/api/portraits/men/9.jpg" },
+            { name: "张凌赫", img: "https://randomuser.me/api/portraits/men/10.jpg" },
+            { name: "胡歌", img: "https://randomuser.me/api/portraits/men/11.jpg" },
+            { name: "靳东", img: "https://randomuser.me/api/portraits/men/12.jpg" },
+            { name: "张颂文", img: "https://randomuser.me/api/portraits/men/13.jpg" },
+            { name: "张译", img: "https://randomuser.me/api/portraits/men/14.jpg" },
+            { name: "雷佳音", img: "https://randomuser.me/api/portraits/men/15.jpg" },
+            { name: "朱一龙", img: "https://randomuser.me/api/portraits/men/16.jpg" },
+            { name: "刘宇宁", img: "https://randomuser.me/api/portraits/men/17.jpg" },
+            { name: "李现", img: "https://randomuser.me/api/portraits/men/18.jpg" },
+            { name: "杨洋", img: "https://randomuser.me/api/portraits/men/19.jpg" },
+            { name: "任嘉伦", img: "https://randomuser.me/api/portraits/men/20.jpg" },
+            { name: "罗云熙", img: "https://randomuser.me/api/portraits/men/21.jpg" },
+            { name: "白敬亭", img: "https://randomuser.me/api/portraits/men/22.jpg" },
+            { name: "魏大勋", img: "https://randomuser.me/api/portraits/men/23.jpg" },
+            { name: "于适", img: "https://randomuser.me/api/portraits/men/24.jpg" },
+            { name: "王嘉尔", img: "https://randomuser.me/api/portraits/men/25.jpg" },
+            { name: "华晨宇", img: "https://randomuser.me/api/portraits/men/26.jpg" },
+            { name: "蔡徐坤", img: "https://randomuser.me/api/portraits/men/27.jpg" },
+            { name: "鹿晗", img: "https://randomuser.me/api/portraits/men/28.jpg" },
+            { name: "吴磊", img: "https://randomuser.me/api/portraits/men/29.jpg" },
+            { name: "宋威龙", img: "https://randomuser.me/api/portraits/men/30.jpg" },
+            { name: "丁程鑫", img: "https://randomuser.me/api/portraits/men/31.jpg" },
+            { name: "刘耀文", img: "https://randomuser.me/api/portraits/men/32.jpg" },
+            { name: "王俊凯", img: "https://randomuser.me/api/portraits/men/33.jpg" },
+            { name: "张艺兴", img: "https://randomuser.me/api/portraits/men/34.jpg" },
+            { name: "黄晓明", img: "https://randomuser.me/api/portraits/men/35.jpg" },
+            { name: "沈腾", img: "https://randomuser.me/api/portraits/men/36.jpg" },
+            { name: "徐峥", img: "https://randomuser.me/api/portraits/men/37.jpg" },
+            { name: "黄渤", img: "https://randomuser.me/api/portraits/men/38.jpg" },
+            { name: "张若昀", img: "https://randomuser.me/api/portraits/men/39.jpg" },
+            { name: "陈飞宇", img: "https://randomuser.me/api/portraits/men/40.jpg" },
+            { name: "彭昱畅", img: "https://randomuser.me/api/portraits/men/41.jpg" },
+            { name: "陈星旭", img: "https://randomuser.me/api/portraits/men/42.jpg" },
+            { name: "林一", img: "https://randomuser.me/api/portraits/men/43.jpg" },
+            { name: "侯明昊", img: "https://randomuser.me/api/portraits/men/44.jpg" },
+            { name: "陈哲远", img: "https://randomuser.me/api/portraits/men/45.jpg" },
+            { name: "毕雯珺", img: "https://randomuser.me/api/portraits/men/46.jpg" },
+            { name: "范丞丞", img: "https://randomuser.me/api/portraits/men/47.jpg" },
+            { name: "王鹤润", img: "https://randomuser.me/api/portraits/men/48.jpg" },
+            { name: "张晚意", img: "https://randomuser.me/api/portraits/men/49.jpg" },
+            { name: "曾舜晞", img: "https://randomuser.me/api/portraits/men/50.jpg" }
+            // 提示：你可以继续在这里添加更多明星对象
+        ];
 
-// 主要应用逻辑
-document.addEventListener('DOMContentLoaded', function() {
-    // 初始化
-    initApp();
-    
-    // 设置事件监听器
-    setEventListeners();
-});
+        const card = document.getElementById('card');
+        const drawBtn = document.getElementById('drawBtn');
+        const starImg = document.getElementById('starImg');
+        const starName = document.getElementById('starName');
 
-// 初始化应用
-function initApp() {
-    // 检查是否首次使用
-    const isFirstTime = !localStorage.getItem('foodPreferences');
-    
-    if (isFirstTime) {
-        // 显示欢迎页面
-        showScreen('welcome-screen');
-    } else {
-        // 直接显示主页面
-        showScreen('main-screen');
-        loadRecentRecommendations();
-    }
-    
-    // 加载历史记录
-    loadHistory();
-    
-    // 初始化用户模型（如果不存在）
-    if (!localStorage.getItem('userModel')) {
-        initUserModel();
-    }
-}
-
-// 初始化用户饮食模型
-function initUserModel() {
-    const userModel = {
-        // 菜系偏好权重，默认都是1
-        cuisineWeights: {},
-        // 口味参数学习
-        tasteModel: {
-            spicy: { preferred: 3, variance: 1 },  // 默认中等辣度，方差为1
-            sweet: { preferred: 3, variance: 1 },  // 默认中等甜度，方差为1
-            savory: { preferred: 3, variance: 1 }, // 默认中等重口度，方差为1
-        },
-        // 菜品偏好记录
-        dishPreferences: {},
-        // 用户决策历史
-        decisions: [],
-        // 模型置信度
-        confidence: 0.1, // 初始置信度低
-        // 上次更新时间
-        lastUpdate: new Date().getTime()
-    };
-    
-    // 初始化各菜系权重
-    Object.keys(foodDatabase).forEach(cuisine => {
-        userModel.cuisineWeights[cuisine] = 1;
-    });
-    
-    localStorage.setItem('userModel', JSON.stringify(userModel));
-}
-
-// 设置所有事件监听器
-function setEventListeners() {
-    // 欢迎页面
-    document.getElementById('start-btn').addEventListener('click', function() {
-        showScreen('preferences-screen');
-    });
-    
-    // 偏好设置页面
-    // 菜系偏好选择
-    const preferenceItems = document.querySelectorAll('.preference-item');
-    preferenceItems.forEach(item => {
-        item.addEventListener('click', function() {
-            // 菜系可以多选
-            if (this.dataset.preference === 'cuisine') {
-                this.classList.toggle('selected');
-            } else {
-                // 其他类型的可能单选
-                document.querySelectorAll(`.preference-item[data-preference="${this.dataset.preference}"]`).forEach(i => {
-                    i.classList.remove('selected');
-                });
-                this.classList.add('selected');
-            }
-        });
-    });
-    
-    // 保存偏好
-    document.getElementById('save-preferences-btn').addEventListener('click', function() {
-        const preferences = {
-            cuisine: [],
-            spicy: parseInt(document.getElementById('spicy-slider').value),
-            sweet: parseInt(document.getElementById('sweet-slider').value),
-            savory: parseInt(document.getElementById('savory-slider').value),
-            lastUpdate: new Date().getTime()
-        };
-        
-        // 获取选中的菜系
-        document.querySelectorAll('.preference-item[data-preference="cuisine"].selected').forEach(item => {
-            preferences.cuisine.push(item.dataset.value);
-        });
-        
-        // 如果没有选择任何菜系，提示并返回
-        if (preferences.cuisine.length === 0) {
-            showToast('请至少选择一种菜系');
-            return;
-        }
-        
-        // 保存偏好到本地存储
-        localStorage.setItem('foodPreferences', JSON.stringify(preferences));
-        
-        // 更新用户模型
-        updateUserModelFromPreferences(preferences);
-        
-        // 初始化历史记录
-        if (!localStorage.getItem('foodHistory')) {
-            localStorage.setItem('foodHistory', JSON.stringify([]));
-        }
-        
-        // 显示主页面
-        showScreen('main-screen');
-        showToast('偏好设置已保存');
-    });
-    
-    // 主页面
-    document.getElementById('decide-btn').addEventListener('click', function() {
-        startDecision();
-    });
-    
-    document.getElementById('try-new-btn').addEventListener('click', function() {
-        startDecision(true);
-    });
-    
-    // 结果页面
-    document.getElementById('accept-btn').addEventListener('click', function() {
-        // 获取所有推荐的菜品
-        const dishElements = document.querySelectorAll('.result-item');
-        const acceptedDishes = [];
-        
-        dishElements.forEach(element => {
-            const foodName = element.querySelector('.food-name').innerText;
-            const category = element.querySelector('.food-category').innerText;
-            const hammer = element.querySelector('.food-description').innerText;
+        drawBtn.addEventListener('click', () => {
+            // 禁用按钮防止连点
+            drawBtn.disabled = true;
             
-            acceptedDishes.push({
-                name: foodName,
-                category: category,
-                hammer: hammer
-            });
-        });
-        
-        // 保存用户决策（接受）到用户模型
-        updateUserModelFromDecision(acceptedDishes, true);
-        
-        // 保存到历史记录
-        saveToHistory(acceptedDishes);
-        
-        // 返回主页
-        showScreen('main-screen');
-        loadRecentRecommendations();
-        showToast('已保存到历史记录');
-    });
-    
-    document.getElementById('retry-btn').addEventListener('click', function() {
-        // 获取当前推荐的菜品
-        const dishElements = document.querySelectorAll('.result-item');
-        const rejectedDishes = [];
-        
-        dishElements.forEach(element => {
-            const foodName = element.querySelector('.food-name').innerText;
-            const category = element.querySelector('.food-category').innerText;
+            // 重置卡片状态
+            card.classList.remove('flipped');
             
-            rejectedDishes.push({
-                name: foodName,
-                category: category
-            });
-        });
-        
-        // 保存用户决策（拒绝）到用户模型
-        updateUserModelFromDecision(rejectedDishes, false);
-        
-        // 重新开始决策
-        startDecision();
-    });
-    
-    // 历史记录页面
-    document.getElementById('clear-history-btn').addEventListener('click', function() {
-        if (confirm('确定要清空历史记录吗？')) {
-            localStorage.setItem('foodHistory', JSON.stringify([]));
-            loadHistory();
-            showToast('历史记录已清空');
-        }
-    });
-    
-    // 设置页面
-    document.getElementById('edit-preferences-btn').addEventListener('click', function() {
-        // 加载当前偏好
-        loadCurrentPreferences();
-        showScreen('preferences-screen');
-    });
-    
-    // 主题选择
-    const themeOptions = document.querySelectorAll('.theme-option');
-    themeOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            document.querySelectorAll('.theme-option').forEach(o => o.classList.remove('selected'));
-            this.classList.add('selected');
-            
-            // 更改主题色
-            document.documentElement.style.setProperty('--primary-color', this.dataset.primary);
-            document.documentElement.style.setProperty('--secondary-color', this.dataset.secondary);
-            
-            // 保存主题偏好
-            localStorage.setItem('themeColors', JSON.stringify({
-                primary: this.dataset.primary,
-                secondary: this.dataset.secondary
-            }));
-            
-            showToast('主题已更新');
-        });
-    });
-    
-    // 重置应用
-    document.getElementById('reset-app-btn').addEventListener('click', function() {
-        if (confirm('确定要重置应用吗？这将清空所有偏好设置和历史记录。')) {
-            localStorage.clear();
-            showToast('应用已重置');
+            // 模拟翻牌动画延迟
             setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        }
-    });
-    
-    // 导航
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // 移除所有活跃状态
-            navItems.forEach(i => i.classList.remove('active'));
-            // 添加当前活跃状态
-            this.classList.add('active');
-            
-            // 显示对应的屏幕
-            const screenId = this.dataset.screen;
-            showScreen(screenId);
+                // 随机选择明星
+                const randomIndex = Math.floor(Math.random() * stars.length);
+                const selectedStar = stars[randomIndex];
+                
+                starImg.src = selectedStar.img;
+                starName.textContent = selectedStar.name;
+                
+                // 触发翻转
+                card.classList.add('flipped');
+                
+                // 重新启用按钮
+                drawBtn.disabled = false;
+            }, 500); // 留出一点时间让动画生效
         });
-    });
-    
-    // 加载主题设置（如果有）
-    const savedTheme = localStorage.getItem('themeColors');
-    if (savedTheme) {
-        const theme = JSON.parse(savedTheme);
-        document.documentElement.style.setProperty('--primary-color', theme.primary);
-        document.documentElement.style.setProperty('--secondary-color', theme.secondary);
-        
-        // 更新UI
-        document.querySelectorAll('.theme-option').forEach(option => {
-            if (option.dataset.primary === theme.primary) {
-                option.classList.add('selected');
-            } else {
-                option.classList.remove('selected');
-            }
-        });
-    }
-}
-
-// 显示指定的页面
-function showScreen(screenId) {
-    const screens = document.querySelectorAll('.screen');
-    screens.forEach(screen => {
-        screen.classList.remove('active');
-    });
-    
-    document.getElementById(screenId).classList.add('active');
-}
-
-// 显示提示框
-function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.innerText = message;
-    toast.classList.add('show');
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 2000);
-}
-
-// 加载当前的偏好设置到UI
-function loadCurrentPreferences() {
-    const preferences = JSON.parse(localStorage.getItem('foodPreferences')) || {
-        cuisine: [],
-        spicy: 3,
-        sweet: 3,
-        savory: 3
-    };
-    
-    // 设置菜系选择
-    document.querySelectorAll('.preference-item[data-preference="cuisine"]').forEach(item => {
-        if (preferences.cuisine.includes(item.dataset.value)) {
-            item.classList.add('selected');
-        } else {
-            item.classList.remove('selected');
-        }
-    });
-    
-    // 设置口味滑块
-    document.getElementById('spicy-slider').value = preferences.spicy;
-    document.getElementById('sweet-slider').value = preferences.sweet;
-    document.getElementById('savory-slider').value = preferences.savory;
-}
-
-// 开始决策过程
-function startDecision(tryNew = false) {
-    showScreen('deciding-screen');
-    
-    // 显示进度条动画
-    const progressBar = document.getElementById('decision-progress');
-    progressBar.style.width = '0%';
-    
-    // 模拟决策过程
-    let progress = 0;
-    const interval = setInterval(() => {
-        progress += 5;
-        progressBar.style.width = progress + '%';
-        
-        if (progress >= 100) {
-            clearInterval(interval);
-            
-            // 延迟一下，让用户感受到决策过程
-            setTimeout(() => {
-                // 获取推荐组合（1-3道菜）
-                const recommendations = getRecommendationSet(tryNew);
-                
-                // 显示结果
-                displayRecommendations(recommendations);
-                
-                // 显示结果页面
-                showScreen('result-screen');
-            }, 500);
-        }
-    }, 50);
-}
-
-// 获取多道菜的推荐组合（1-3道菜）
-function getRecommendationSet(tryNew = false) {
-    // 获取用户模型
-    const userModel = JSON.parse(localStorage.getItem('userModel'));
-    
-    // 获取用户偏好
-    const preferences = JSON.parse(localStorage.getItem('foodPreferences')) || {
-        cuisine: Object.keys(foodDatabase),
-        spicy: 3,
-        sweet: 3,
-        savory: 3
-    };
-    
-    // 确定要推荐的菜系
-    let cuisines = preferences.cuisine;
-    if (cuisines.length === 0) {
-        cuisines = Object.keys(foodDatabase);
-    }
-    
-    // 应用菜系权重
-    const weightedCuisines = [];
-    cuisines.forEach(cuisine => {
-        const weight = userModel.cuisineWeights[cuisine] || 1;
-        for (let i = 0; i < Math.round(weight * 10); i++) {
-            weightedCuisines.push(cuisine);
-        }
-    });
-    
-    // 随机决定推荐几道菜 (1-3道)
-    // 根据用户历史选择模式，决定推荐几道菜
-    let dishCount;
-    const historyRandom = Math.random();
-    
-    // 如果用户模型有足够数据，使用其决策趋势
-    if (userModel.decisions.length > 5) {
-        const acceptedCounts = userModel.decisions
-            .filter(d => d.accepted)
-            .map(d => d.dishes.length);
-        
-        if (acceptedCounts.length > 0) {
-            // 计算平均接受的菜品数量
-            const avgCount = acceptedCounts.reduce((sum, count) => sum + count, 0) / acceptedCounts.length;
-            
-            // 有70%概率按照用户倾向推荐，30%随机
-            if (Math.random() < 0.7) {
-                dishCount = Math.max(1, Math.min(3, Math.round(avgCount)));
-            } else {
-                dishCount = Math.random() < 0.2 ? 1 : (Math.random() < 0.6 ? 2 : 3);
-            }
-        } else {
-            dishCount = Math.random() < 0.2 ? 1 : (Math.random() < 0.6 ? 2 : 3);
-        }
-    } else {
-        // 没有足够数据时使用默认逻辑
-        dishCount = Math.random() < 0.2 ? 1 : (Math.random() < 0.6 ? 2 : 3);
-    }
-    
-    // 获取历史记录
-    const history = JSON.parse(localStorage.getItem('foodHistory')) || [];
-    const recentMeals = history.slice(0, 5);
-    const recentDishes = new Set();
-    
-    recentMeals.forEach(meal => {
-        meal.dishes.forEach(dish => {
-            recentDishes.add(dish.name);
-        });
-    });
-    
-    // 准备所有可能的菜品，按匹配度排序
-    const allCandidateFoods = [];
-    
-    weightedCuisines.forEach(cuisine => {
-        if (foodDatabase[cuisine]) {
-            foodDatabase[cuisine].forEach(food => {
-                // 计算与用户口味模型的匹配度
-                let matchScore = 0;
-                
-                // 计算口味与用户模型的匹配程度
-                const spicyScore = gaussianScore(food.spicy, userModel.tasteModel.spicy.preferred, userModel.tasteModel.spicy.variance);
-                const sweetScore = gaussianScore(food.sweet, userModel.tasteModel.sweet.preferred, userModel.tasteModel.sweet.variance);
-                const savoryScore = gaussianScore(food.savory, userModel.tasteModel.savory.preferred, userModel.tasteModel.savory.variance);
-                
-                // 总匹配度 (高分更好)
-                matchScore = (spicyScore + sweetScore + savoryScore) / 3;
-                
-                // 如果用户之前对该菜品有明确偏好，调整分数
-                if (userModel.dishPreferences[food.name]) {
-                    const preference = userModel.dishPreferences[food.name];
-                    // 用户喜欢这道菜，增加分数
-                    if (preference > 0) {
-                        matchScore += preference * 0.2; // 最多增加20%
-                    }
-                    // 用户不喜欢这道菜，减少分数
-                    else if (preference < 0) {
-                        matchScore += preference * 0.3; // 最多减少30%
-                    }
-                }
-                
-                // 如果是最近吃过的菜，降低分数
-                if (recentDishes.has(food.name)) {
-                    matchScore *= 0.7; // 降低30%
-                }
-                
-                // 如果是"尝鲜"模式，对匹配度高的降低一定权重，增加探索性
-                if (tryNew) {
-                    // 反转分数，让不太匹配的有更高机会
-                    matchScore = 1 - (matchScore * 0.5); // 不要完全反转，保留一些匹配性
-                }
-                
-                allCandidateFoods.push({
-                    name: food.name,
-                    category: cuisine,
-                    hammer: food.hammer,
-                    spicy: food.spicy,
-                    sweet: food.sweet,
-                    savory: food.savory,
-                    matchScore: matchScore,
-                    recentlyEaten: recentDishes.has(food.name)
-                });
-            });
-        }
-    });
-    
-    // 按匹配度排序（降序，高分优先）
-    allCandidateFoods.sort((a, b) => b.matchScore - a.matchScore);
-    
-    // 选取推荐的菜品组合，考虑多样性和合理搭配
-    const selectedDishes = [];
-    
-    // 如果只推荐一道菜，直接选择最匹配的
-    if (dishCount === 1) {
-        // 从前20%中随机选择一个
-        const topIndex = Math.max(1, Math.floor(allCandidateFoods.length * 0.2));
-        const randomIndex = Math.floor(Math.random() * topIndex);
-        selectedDishes.push(allCandidateFoods[randomIndex]);
-    } else {
-        // 多道菜的情况，需要考虑搭配
-        
-        // 1. 先选择一个主菜（匹配度最高的）
-        const mainDishIndex = Math.floor(Math.random() * Math.min(5, allCandidateFoods.length));
-        const mainDish = allCandidateFoods[mainDishIndex];
-        selectedDishes.push(mainDish);
-        
-        // 从候选中移除已选
-        const remainingCandidates = allCandidateFoods.filter(dish => dish.name !== mainDish.name);
-        
-        // 2. 选择其他菜品，考虑多样性（不同菜系、不同口味特点）
-        for (let i = 1; i < dishCount && remainingCandidates.length > 0; i++) {
-            // 计算与已选菜品的多样性分数
-            remainingCandidates.forEach(dish => {
-                let diversityScore = 0;
-                
-                // 不同菜系加分
-                if (selectedDishes.some(selected => selected.category !== dish.category)) {
-                    diversityScore += 0.2;
-                }
-                
-                // 不同辣度加分
-                const spicyDiff = Math.abs(selectedDishes[0].spicy - dish.spicy);
-                diversityScore += spicyDiff * 0.1;
-                
-                // 不同甜度加分
-                const sweetDiff = Math.abs(selectedDishes[0].sweet - dish.sweet);
-                diversityScore += sweetDiff * 0.1;
-                
-                // 结合原始匹配度和多样性分数
-                dish.combinedScore = dish.matchScore * 0.7 + diversityScore * 0.3;
-            });
-            
-            // 按结合分数排序
-            remainingCandidates.sort((a, b) => b.combinedScore - a.combinedScore);
-            
-            // 从前20%中随机选择
-            const topIndex = Math.max(1, Math.floor(remainingCandidates.length * 0.2));
-            const randomIndex = Math.floor(Math.random() * topIndex);
-            selectedDishes.push(remainingCandidates[randomIndex]);
-            
-            // 移除已选
-            const selectedName = remainingCandidates[randomIndex].name;
-            const index = remainingCandidates.findIndex(dish => dish.name === selectedName);
-            if (index !== -1) {
-                remainingCandidates.splice(index, 1);
-            }
-        }
-    }
-    
-    return selectedDishes;
-}
-
-// 使用高斯分布计算匹配分数
-function gaussianScore(value, mean, variance) {
-    // 高斯函数: e^(-(x-μ)²/(2σ²))
-    return Math.exp(-Math.pow(value - mean, 2) / (2 * variance * variance));
-}
-
-// 显示推荐的菜品组合
-function displayRecommendations(recommendations) {
-    const resultContainer = document.querySelector('.result-card');
-    resultContainer.innerHTML = ''; // 清空之前的内容
-    
-    recommendations.forEach((item, index) => {
-        const dishElement = document.createElement('div');
-        dishElement.className = 'result-item';
-        dishElement.style.padding = '15px 0';
-        if (index > 0) {
-            dishElement.style.borderTop = '1px dashed #eee';
-        }
-        
-        dishElement.innerHTML = `
-            <div class="food-category" style="font-size: 0.9rem; color: #888; background-color: #f1f1f1; padding: 5px 10px; border-radius: 15px; display: inline-block; margin-bottom: 10px;">${item.category}</div>
-            <div class="food-name" style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color); margin-bottom: 10px; text-shadow: 0 2px 4px rgba(255, 107, 107, 0.2);">${item.name}</div>
-            <div class="food-description" style="font-size: 1rem; line-height: 1.6; color: #555; margin-bottom: 10px;">${item.hammer}</div>
-        `;
-        
-        resultContainer.appendChild(dishElement);
-    });
-    
-    // 如果是多道菜，添加搭配理由
-    if (recommendations.length > 1) {
-        const reasonElement = document.createElement('div');
-        reasonElement.className = 'recommendation-reason';
-        reasonElement.style.marginTop = '20px';
-        reasonElement.style.padding = '15px';
-        reasonElement.style.backgroundColor = '#f8f8f8';
-        reasonElement.style.borderRadius = '10px';
-        reasonElement.style.fontSize = '0.9rem';
-        reasonElement.style.color = '#666';
-        
-        reasonElement.innerHTML = `
-            <p><strong>为什么推荐这个组合？</strong></p>
-            <p>${generateCombinationReason(recommendations)}</p>
-        `;
-        
-        resultContainer.appendChild(reasonElement);
-    }
-}
-
-// 生成组合理由
-function generateCombinationReason(dishes) {
-    if (dishes.length === 1) {
-        return `这道${dishes[0].name}非常适合你当前的口味偏好，绝对是不二之选！`;
-    }
-    
-    // 计算组合特点
-    const cuisines = [...new Set(dishes.map(d => d.category))];
-    const avgSpicy = dishes.reduce((sum, d) => sum + d.spicy, 0) / dishes.length;
-    const avgSweet = dishes.reduce((sum, d) => sum + d.sweet, 0) / dishes.length;
-    const avgSavory = dishes.reduce((sum, d) => sum + d.savory, 0) / dishes.length;
-    
-    // 口味描述
-    let tasteDesc = '';
-    if (avgSpicy > 3.5) tasteDesc += '麻辣鲜香';
-    else if (avgSpicy < 2) tasteDesc += '清淡爽口';
-    else tasteDesc += '香气四溢';
-    
-    if (avgSweet > 3.5) tasteDesc += '、甜而不腻';
-    if (avgSavory > 4) tasteDesc += '、回味无穷';
-    
-    // 生成理由
-    let reason = '';
-    
-    // 如果是同一菜系
-    if (cuisines.length === 1) {
-        reason = `这${dishes.length}道${cuisines[0]}风味的组合${tasteDesc}，相辅相成，`;
-    } else {
-        reason = `这${dishes.length}道来自${cuisines.join('和')}的美食${tasteDesc}，风味互补，`;
-    }
-    
-    // 随机添加一些搭配理由
-    const reasons = [
-        "让你的味蕾得到全方位的满足！",
-        "绝对是今天的绝佳选择！",
-        "完美平衡了口味与营养！",
-        "充分照顾到了你的口味偏好！",
-        "创造出一场不可思议的味觉盛宴！",
-        "一定能解决你的选择困难症！"
-    ];
-    
-    return reason + reasons[Math.floor(Math.random() * reasons.length)];
-}
-
-// 从用户的偏好设置更新用户模型
-function updateUserModelFromPreferences(preferences) {
-    const userModel = JSON.parse(localStorage.getItem('userModel'));
-    
-    // 更新口味模型
-    userModel.tasteModel.spicy.preferred = preferences.spicy;
-    userModel.tasteModel.sweet.preferred = preferences.sweet;
-    userModel.tasteModel.savory.preferred = preferences.savory;
-    
-    // 对于用户明确选择的菜系，增加权重
-    Object.keys(userModel.cuisineWeights).forEach(cuisine => {
-        // 重置权重
-        userModel.cuisineWeights[cuisine] = 0.5;
-    });
-    
-    // 为选中的菜系设置更高权重
-    preferences.cuisine.forEach(cuisine => {
-        userModel.cuisineWeights[cuisine] = 1.5;
-    });
-    
-    // 更新时间戳
-    userModel.lastUpdate = new Date().getTime();
-    
-    localStorage.setItem('userModel', JSON.stringify(userModel));
-}
-
-// 从用户决策更新用户模型
-function updateUserModelFromDecision(dishes, accepted) {
-    const userModel = JSON.parse(localStorage.getItem('userModel'));
-    
-    // 对每一道菜更新偏好
-    dishes.forEach(dish => {
-        // 查找数据库中的菜品
-        let foodItem = null;
-        Object.keys(foodDatabase).forEach(cuisine => {
-            const found = foodDatabase[cuisine].find(f => f.name === dish.name);
-            if (found) {
-                foodItem = found;
-            }
-        });
-        
-        if (!foodItem) return; // 如果找不到菜品，跳过
-        
-        // 更新菜品偏好
-        if (!userModel.dishPreferences[dish.name]) {
-            userModel.dishPreferences[dish.name] = 0;
-        }
-        
-        // 接受或拒绝的程度调整（增量）
-        const increment = accepted ? 0.2 : -0.3;
-        userModel.dishPreferences[dish.name] = Math.min(Math.max(userModel.dishPreferences[dish.name] + increment, -1), 1);
-        
-        // 更新菜系权重
-        if (!userModel.cuisineWeights[dish.category]) {
-            userModel.cuisineWeights[dish.category] = 1;
-        }
-        
-        // 调整菜系权重
-        const cuisineIncrement = accepted ? 0.1 : -0.15;
-        userModel.cuisineWeights[dish.category] = Math.min(Math.max(userModel.cuisineWeights[dish.category] + cuisineIncrement, 0.1), 2);
-        
-        // 如果用户接受了，更新口味模型
-        if (accepted) {
-            // 逐渐调整口味模型，使用滑动窗口方法
-            const learningRate = Math.min(0.1 + (userModel.confidence * 0.2), 0.3); // 随着置信度增加，学习率增加
-            
-            // 辣度更新
-            userModel.tasteModel.spicy.preferred = 
-                (1 - learningRate) * userModel.tasteModel.spicy.preferred + learningRate * foodItem.spicy;
-            
-            // 甜度更新
-            userModel.tasteModel.sweet.preferred = 
-                (1 - learningRate) * userModel.tasteModel.sweet.preferred + learningRate * foodItem.sweet;
-            
-            // 重口度更新
-            userModel.tasteModel.savory.preferred = 
-                (1 - learningRate) * userModel.tasteModel.savory.preferred + learningRate * foodItem.savory;
-            
-            // 随着用户接受更多的食物，增加模型的方差（容许度），让用户有机会接触更多样的口味
-            if (accepted) {
-                const maxVariance = 2; // 最大方差值
-                userModel.tasteModel.spicy.variance = Math.min(userModel.tasteModel.spicy.variance + 0.05, maxVariance);
-                userModel.tasteModel.sweet.variance = Math.min(userModel.tasteModel.sweet.variance + 0.05, maxVariance);
-                userModel.tasteModel.savory.variance = Math.min(userModel.tasteModel.savory.variance + 0.05, maxVariance);
-            }
-        }
-    });
-    
-    // 记录本次决策
-    userModel.decisions.push({
-        dishes: dishes.map(d => ({ name: d.name, category: d.category })),
-        accepted: accepted,
-        timestamp: new Date().getTime()
-    });
-    
-    // 限制决策历史记录的长度
-    if (userModel.decisions.length > 30) {
-        userModel.decisions.shift();
-    }
-    
-    // 更新模型置信度
-    userModel.confidence = Math.min(userModel.confidence + 0.01, 0.9);
-    
-    // 更新时间戳
-    userModel.lastUpdate = new Date().getTime();
-    
-    localStorage.setItem('userModel', JSON.stringify(userModel));
-}
-
-// 保存到历史记录
-function saveToHistory(dishes) {
-    const history = JSON.parse(localStorage.getItem('foodHistory')) || [];
-    
-    history.unshift({
-        dishes: dishes,
-        date: new Date().toISOString()
-    });
-    
-    // 限制历史记录最多保存50条
-    if (history.length > 50) {
-        history.pop();
-    }
-    
-    localStorage.setItem('foodHistory', JSON.stringify(history));
-    
-    // 更新历史记录显示
-    loadHistory();
-}
-
-// 加载历史记录
-function loadHistory() {
-    const history = JSON.parse(localStorage.getItem('foodHistory')) || [];
-    const historyList = document.getElementById('history-list');
-    
-    if (history.length === 0) {
-        historyList.innerHTML = '<div class="empty-history">暂无历史记录</div>';
-        return;
-    }
-    
-    let html = '';
-    history.forEach(item => {
-        const date = new Date(item.date);
-        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-        
-        let dishesText = item.dishes.map(dish => dish.name).join('、');
-        
-        html += `
-            <div class="history-item">
-                <div class="history-food">${dishesText}</div>
-                <div class="history-date">${formattedDate}</div>
-            </div>
-        `;
-    });
-    
-    historyList.innerHTML = html;
-}
-
-// 加载最近推荐
-function loadRecentRecommendations() {
-    const history = JSON.parse(localStorage.getItem('foodHistory')) || [];
-    const recentList = document.getElementById('recent-recommendations');
-    
-    if (history.length === 0) {
-        recentList.innerHTML = '<div class="empty-history">暂无推荐记录</div>';
-        return;
-    }
-    
-    let html = '';
-    // 只显示最近3条
-    const recentHistory = history.slice(0, 3);
-    
-    recentHistory.forEach(item => {
-        const date = new Date(item.date);
-        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-        
-        let dishesText = item.dishes.map(dish => dish.name).join('、');
-        
-        html += `
-            <div class="history-item">
-                <div class="history-food">${dishesText}</div>
-                <div class="history-date">${formattedDate}</div>
-            </div>
-        `;
-    });
-    
-    recentList.innerHTML = html;
-}
-</script>
+    </script>
 </body>
 </html>
