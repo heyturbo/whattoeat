@@ -9,14 +9,17 @@
         /* ========== 基础重置与变量 ========== */
         :root {
             --imperial-gold: #D4AF37;
+            --bright-gold: #FFD700;
             --deep-gold: #B8860B;
             --royal-red: #8B0000;
+            --vermillion: #E34234;
             --crimson: #DC143C;
             --sakura-pink: #FFB7C5;
             --pearl-white: #FAF0E6;
             --midnight-purple: #1a0a2e;
             --jade-green: #00A86B;
             --lacquer-black: #0D0D0D;
+            --washi-cream: #F5E6D3;
         }
 
         * {
@@ -25,83 +28,267 @@
             box-sizing: border-box;
         }
 
-        /* ========== 主体背景 - 多层渐变 ========== */
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* ========== 主体背景 - 极致华丽多层渐变 ========== */
         body {
             min-height: 100vh;
             font-family: 'Noto Serif SC', serif;
-            overflow-x: hidden;
             background:
-                /* 顶层金色光芒 */
-                radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.3) 0%, transparent 50%),
-                /* 底部红色渐变 */
-                radial-gradient(ellipse at 50% 100%, rgba(139, 0, 0, 0.4) 0%, transparent 50%),
-                /* 左侧紫色光晕 */
-                radial-gradient(ellipse at 0% 50%, rgba(75, 0, 130, 0.3) 0%, transparent 40%),
-                /* 右侧紫色光晕 */
-                radial-gradient(ellipse at 100% 50%, rgba(75, 0, 130, 0.3) 0%, transparent 40%),
-                /* 基础深色背景 */
-                linear-gradient(180deg, #1a0a2e 0%, #0D0D0D 50%, #1a0015 100%);
+                /* 金色神圣光芒从顶部 */
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 215, 0, 0.4) 0%, transparent 50%),
+                /* 左上角红色光晕 */
+                radial-gradient(ellipse at 0% 0%, rgba(139, 0, 0, 0.5) 0%, transparent 40%),
+                /* 右上角紫色光晕 */
+                radial-gradient(ellipse at 100% 0%, rgba(75, 0, 130, 0.4) 0%, transparent 40%),
+                /* 底部深红渐变 */
+                radial-gradient(ellipse 120% 60% at 50% 120%, rgba(139, 0, 0, 0.6) 0%, transparent 50%),
+                /* 中心金色聚光 */
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 40%),
+                /* 基础渐变 */
+                linear-gradient(180deg, #0a0512 0%, #1a0a2e 30%, #2d0a1a 60%, #1a0515 100%);
             position: relative;
         }
 
-        /* ========== 动态背景图案层 ========== */
-        body::before {
-            content: '';
+        /* ========== 青海波纹背景 ========== */
+        .seigaiha-bg {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-image:
-                /* 日式云纹图案 */
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M25 50 Q37.5 25 50 50 T75 50' fill='none' stroke='%23D4AF3715' stroke-width='1'/%3E%3C/svg%3E"),
-                /* 菱形格纹 */
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cpath d='M25 0 L50 25 L25 50 L0 25Z' fill='none' stroke='%23D4AF3708' stroke-width='0.5'/%3E%3C/svg%3E");
-            background-size: 200px 200px, 100px 100px;
-            animation: patternFloat 60s linear infinite;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 50'%3E%3Cpath d='M0 50 Q25 0 50 50 Q75 0 100 50' fill='none' stroke='%23D4AF3712' stroke-width='1'/%3E%3Cpath d='M-25 50 Q0 0 25 50' fill='none' stroke='%23D4AF3708' stroke-width='1'/%3E%3Cpath d='M75 50 Q100 0 125 50' fill='none' stroke='%23D4AF3708' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: 100px 50px;
+            animation: seigaihaMove 30s linear infinite;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
         }
 
-        @keyframes patternFloat {
-            0% { background-position: 0 0, 0 0; }
-            100% { background-position: 200px 200px, -100px 100px; }
+        @keyframes seigaihaMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 50px; }
         }
 
-        /* ========== 金箔粒子效果容器 ========== */
-        .gold-particles {
+        /* ========== 麻叶纹背景层 ========== */
+        .asanoha-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cpolygon points='40,0 80,20 80,60 40,80 0,60 0,20' fill='none' stroke='%23D4AF3708' stroke-width='0.5'/%3E%3Cline x1='40' y1='0' x2='40' y2='80' stroke='%23D4AF3708' stroke-width='0.5'/%3E%3Cline x1='0' y1='20' x2='80' y2='60' stroke='%23D4AF3708' stroke-width='0.5'/%3E%3Cline x1='80' y1='20' x2='0' y2='60' stroke='%23D4AF3708' stroke-width='0.5'/%3E%3C/svg%3E");
+            background-size: 80px 80px;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== 七宝纹装饰层 ========== */
+        .shippo-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='%238B000015' stroke-width='1'/%3E%3Ccircle cx='0' cy='30' r='28' fill='none' stroke='%238B000010' stroke-width='1'/%3E%3Ccircle cx='60' cy='30' r='28' fill='none' stroke='%238B000010' stroke-width='1'/%3E%3Ccircle cx='30' cy='0' r='28' fill='none' stroke='%238B000010' stroke-width='1'/%3E%3Ccircle cx='30' cy='60' r='28' fill='none' stroke='%238B000010' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ========== 金屏风边框 ========== */
+        .kinbyobu-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 12px solid transparent;
+            border-image: linear-gradient(135deg,
+                #D4AF37 0%, #FFD700 10%, #B8860B 20%,
+                #D4AF37 30%, #FFD700 40%, #B8860B 50%,
+                #D4AF37 60%, #FFD700 70%, #B8860B 80%,
+                #D4AF37 90%, #FFD700 100%) 1;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .kinbyobu-frame::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 2px solid rgba(139, 0, 0, 0.5);
+            pointer-events: none;
+        }
+
+        /* 角落装饰菊纹 */
+        .corner-kiku {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            z-index: 101;
+            pointer-events: none;
+        }
+
+        .corner-kiku::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #FFD700 0%, #D4AF37 40%, #B8860B 70%, transparent 71%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .corner-kiku::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: conic-gradient(from 0deg, transparent 0deg, #D4AF37 10deg, transparent 20deg,
+                transparent 20deg, #D4AF37 30deg, transparent 40deg,
+                transparent 40deg, #D4AF37 50deg, transparent 60deg,
+                transparent 60deg, #D4AF37 70deg, transparent 80deg,
+                transparent 80deg, #D4AF37 90deg, transparent 100deg,
+                transparent 100deg, #D4AF37 110deg, transparent 120deg,
+                transparent 120deg, #D4AF37 130deg, transparent 140deg,
+                transparent 140deg, #D4AF37 150deg, transparent 160deg,
+                transparent 160deg, #D4AF37 170deg, transparent 180deg,
+                transparent 180deg, #D4AF37 190deg, transparent 200deg,
+                transparent 200deg, #D4AF37 210deg, transparent 220deg,
+                transparent 220deg, #D4AF37 230deg, transparent 240deg,
+                transparent 240deg, #D4AF37 250deg, transparent 260deg,
+                transparent 260deg, #D4AF37 270deg, transparent 280deg,
+                transparent 280deg, #D4AF37 290deg, transparent 300deg,
+                transparent 300deg, #D4AF37 310deg, transparent 320deg,
+                transparent 320deg, #D4AF37 330deg, transparent 340deg,
+                transparent 340deg, #D4AF37 350deg, transparent 360deg);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: kikuRotate 20s linear infinite;
+        }
+
+        .corner-kiku.top-left { top: 15px; left: 15px; }
+        .corner-kiku.top-right { top: 15px; right: 15px; }
+        .corner-kiku.bottom-left { bottom: 15px; left: 15px; }
+        .corner-kiku.bottom-right { bottom: 15px; right: 15px; }
+
+        @keyframes kikuRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* ========== 御簾（みす）帘幕效果 ========== */
+        .misu-curtain {
+            position: fixed;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .misu-curtain.left {
+            left: 0;
+            background:
+                repeating-linear-gradient(0deg,
+                    rgba(139, 0, 0, 0.3) 0px,
+                    rgba(139, 0, 0, 0.3) 2px,
+                    transparent 2px,
+                    transparent 8px),
+                linear-gradient(90deg, rgba(139, 0, 0, 0.4) 0%, transparent 100%);
+        }
+
+        .misu-curtain.right {
+            right: 0;
+            background:
+                repeating-linear-gradient(0deg,
+                    rgba(139, 0, 0, 0.3) 0px,
+                    rgba(139, 0, 0, 0.3) 2px,
+                    transparent 2px,
+                    transparent 8px),
+                linear-gradient(-90deg, rgba(139, 0, 0, 0.4) 0%, transparent 100%);
+        }
+
+        .misu-curtain::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(180deg,
+                #D4AF37 0%, #B8860B 30%, #8B6914 60%, #D4AF37 100%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .misu-tassel {
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 60px;
+            background: linear-gradient(180deg, #D4AF37 0%, #8B0000 30%, #DC143C 100%);
+            border-radius: 0 0 10px 10px;
+            animation: tasselSway 3s ease-in-out infinite;
+        }
+
+        .misu-curtain.left .misu-tassel { right: 20px; }
+        .misu-curtain.right .misu-tassel { left: 20px; }
+
+        @keyframes tasselSway {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        /* ========== 金箔粒子效果 ========== */
+        .kinpaku-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 20;
             overflow: hidden;
         }
 
-        .gold-particle {
+        .kinpaku {
             position: absolute;
-            background: linear-gradient(135deg, #D4AF37, #FFD700, #B8860B);
-            border-radius: 50%;
-            animation: floatParticle 15s infinite ease-in-out;
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+            background: linear-gradient(135deg, #FFD700, #D4AF37, #B8860B, #FFD700);
+            animation: kinpakuFall linear infinite;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
         }
 
-        @keyframes floatParticle {
-            0%, 100% {
-                transform: translateY(100vh) rotate(0deg) scale(1);
+        .kinpaku.square {
+            clip-path: polygon(10% 0%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0% 90%, 0% 10%);
+        }
+
+        .kinpaku.diamond {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        @keyframes kinpakuFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg) scale(1);
                 opacity: 0;
             }
             10% { opacity: 1; }
             90% { opacity: 1; }
             100% {
-                transform: translateY(-100px) rotate(720deg) scale(0.5);
+                transform: translateY(calc(100vh + 100px)) rotate(720deg) scale(0.3);
                 opacity: 0;
             }
         }
 
-        /* ========== 樱花飘落效果 ========== */
+        /* ========== 樱花吹雪效果 ========== */
         .sakura-container {
             position: fixed;
             top: 0;
@@ -109,601 +296,1011 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 2;
+            z-index: 21;
             overflow: hidden;
         }
 
-        .sakura {
+        .sakura-petal {
             position: absolute;
-            top: -50px;
-            animation: sakuraFall linear infinite;
+            top: -30px;
+            width: 15px;
+            height: 15px;
+            background: radial-gradient(ellipse at 30% 30%, #FFE4E9, #FFB7C5, #FF91A4);
+            border-radius: 150% 0 150% 0;
+            box-shadow: 0 0 10px rgba(255, 183, 197, 0.6);
+            animation: sakuraFubuki linear infinite;
         }
 
-        .sakura::before {
-            content: '🌸';
-            font-size: 20px;
-            filter: drop-shadow(0 0 5px rgba(255, 183, 197, 0.8));
-        }
-
-        @keyframes sakuraFall {
+        @keyframes sakuraFubuki {
             0% {
-                transform: translateY(-50px) rotate(0deg) translateX(0);
-                opacity: 1;
+                transform: translateY(-30px) translateX(0) rotate(0deg) scale(1);
+                opacity: 0;
             }
+            5% { opacity: 1; }
+            95% { opacity: 0.8; }
             100% {
-                transform: translateY(100vh) rotate(720deg) translateX(100px);
-                opacity: 0.3;
+                transform: translateY(calc(100vh + 30px)) translateX(150px) rotate(1080deg) scale(0.5);
+                opacity: 0;
             }
         }
 
-        /* ========== 主容器 ========== */
-        .main-container {
-            position: relative;
-            z-index: 10;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-
-        /* ========== 顶部皇室徽章区域 ========== */
-        .imperial-header {
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .imperial-crest {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-            position: relative;
-            animation: crownGlow 3s ease-in-out infinite;
-        }
-
-        .imperial-crest::before {
-            content: '👑';
-            font-size: 60px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 1))
-                    drop-shadow(0 0 40px rgba(212, 175, 55, 0.5));
-        }
-
-        .imperial-crest::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 3px solid transparent;
-            border-image: linear-gradient(45deg, #D4AF37, #FFD700, #B8860B, #D4AF37) 1;
-            animation: borderRotate 4s linear infinite;
-        }
-
-        @keyframes crownGlow {
-            0%, 100% { filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.8)); }
-            50% { filter: drop-shadow(0 0 60px rgba(255, 215, 0, 1)); }
-        }
-
-        @keyframes borderRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* ========== 标题样式 ========== */
-        .main-title {
-            font-family: 'Ma Shan Zheng', cursive;
-            font-size: 3rem;
-            background: linear-gradient(180deg,
-                #FFD700 0%,
-                #D4AF37 25%,
-                #B8860B 50%,
-                #D4AF37 75%,
-                #FFD700 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: none;
-            position: relative;
-            letter-spacing: 0.3em;
-            animation: titleShimmer 3s ease-in-out infinite;
-        }
-
-        .main-title::before,
-        .main-title::after {
-            content: '◆';
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1rem;
-            background: linear-gradient(135deg, #D4AF37, #FFD700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: diamondPulse 2s ease-in-out infinite;
-        }
-
-        .main-title::before { left: -30px; }
-        .main-title::after { right: -30px; animation-delay: 1s; }
-
-        @keyframes titleShimmer {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.3); }
-        }
-
-        @keyframes diamondPulse {
-            0%, 100% { opacity: 0.5; transform: translateY(-50%) scale(1); }
-            50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
-        }
-
-        .sub-title {
-            font-size: 1rem;
-            color: var(--sakura-pink);
-            letter-spacing: 0.5em;
-            margin-top: 10px;
-            text-shadow: 0 0 20px rgba(255, 183, 197, 0.5);
-            animation: subtitleFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes subtitleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        /* ========== 装饰分隔线 ========== */
-        .ornate-divider {
-            width: 80%;
-            max-width: 400px;
-            height: 30px;
-            margin: 20px auto;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .ornate-divider::before {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--imperial-gold), transparent);
-        }
-
-        .ornate-divider-symbol {
-            font-size: 1.5rem;
-            margin: 0 15px;
-            animation: symbolRotate 8s linear infinite;
-        }
-
-        @keyframes symbolRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* ========== 牌子展示区域 ========== */
-        .cards-stage {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            padding: 40px 20px;
-            margin: 20px 0;
-        }
-
-        /* 舞台光效 */
-        .stage-spotlight {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: spotlightPulse 4s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        @keyframes spotlightPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-        }
-
-        /* ========== 翻牌卡片 ========== */
-        .flip-card-container {
-            width: 200px;
-            height: 280px;
-            perspective: 2000px;
-            margin: 0 auto;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .flip-card {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .flip-card.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .flip-card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        /* ========== 牌子背面 - 极致华丽 ========== */
-        .flip-card-back {
-            background:
-                /* 中心菊花纹样 */
-                radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.3) 0%, transparent 30%),
-                /* 多层渐变 */
-                linear-gradient(135deg,
-                    #1a0a2e 0%,
-                    #2d1b4e 20%,
-                    #4a1a3d 40%,
-                    #2d1b4e 60%,
-                    #1a0a2e 80%,
-                    #0d0520 100%);
-            border: 4px solid transparent;
-            background-clip: padding-box;
-            position: relative;
-            box-shadow:
-                0 0 30px rgba(212, 175, 55, 0.5),
-                0 0 60px rgba(139, 0, 0, 0.3),
-                inset 0 0 30px rgba(212, 175, 55, 0.2),
-                0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        /* 金边框 */
-        .flip-card-back::before {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            background: linear-gradient(135deg,
-                #D4AF37 0%,
-                #FFD700 25%,
-                #B8860B 50%,
-                #FFD700 75%,
-                #D4AF37 100%);
-            border-radius: 17px;
-            z-index: -1;
-            animation: borderGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes borderGlow {
-            0%, 100% { filter: brightness(1) drop-shadow(0 0 10px rgba(212, 175, 55, 0.8)); }
-            50% { filter: brightness(1.3) drop-shadow(0 0 20px rgba(255, 215, 0, 1)); }
-        }
-
-        /* 背面装饰图案 */
-        .card-back-pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image:
-                /* 中心大菊纹 */
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23D4AF3730' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23D4AF3730' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='20' fill='none' stroke='%23D4AF3730' stroke-width='0.5'/%3E%3C/svg%3E"),
-                /* 角落纹样 */
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cpath d='M0 25 Q12.5 12.5 25 25 T50 25' fill='none' stroke='%23D4AF3720' stroke-width='1'/%3E%3C/svg%3E");
-            background-size: 150px 150px, 50px 50px;
-            background-position: center, 0 0;
-            animation: patternShift 20s linear infinite;
-        }
-
-        @keyframes patternShift {
-            0% { background-position: center, 0 0; }
-            100% { background-position: center, 50px 50px; }
-        }
-
-        /* 背面中心装饰 */
-        .card-back-emblem {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .emblem-outer {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            border: 2px solid var(--imperial-gold);
-            border-radius: 50%;
-            animation: emblemRotate 10s linear infinite;
-        }
-
-        .emblem-outer::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 80px;
-            height: 80px;
-            border: 1px solid var(--imperial-gold);
-            transform: translate(-50%, -50%) rotate(45deg);
-        }
-
-        @keyframes emblemRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .emblem-inner {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: radial-gradient(circle, var(--imperial-gold) 0%, var(--deep-gold) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow:
-                0 0 20px rgba(212, 175, 55, 0.8),
-                inset 0 0 20px rgba(255, 255, 255, 0.3);
-            animation: emblemPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes emblemPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); }
-            50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(255, 215, 0, 1); }
-        }
-
-        .emblem-character {
-            font-family: 'Ma Shan Zheng', cursive;
-            font-size: 2rem;
-            color: var(--lacquer-black);
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
-        }
-
-        /* 背面角落装饰 */
-        .corner-ornament {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            font-size: 1.5rem;
-            color: var(--imperial-gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-        }
-
-        .corner-ornament.top-left { top: 10px; left: 10px; }
-        .corner-ornament.top-right { top: 10px; right: 10px; transform: scaleX(-1); }
-        .corner-ornament.bottom-left { bottom: 10px; left: 10px; transform: scaleY(-1); }
-        .corner-ornament.bottom-right { bottom: 10px; right: 10px; transform: scale(-1, -1); }
-
-        /* ========== 牌子正面 ========== */
-        .flip-card-front {
-            transform: rotateY(180deg);
-            background: linear-gradient(180deg,
-                #fdf6e3 0%,
-                #f5e6d3 30%,
-                #efe0c9 70%,
-                #e8d4b8 100%);
-            border: 4px solid var(--imperial-gold);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            box-shadow:
-                0 0 30px rgba(212, 175, 55, 0.5),
-                0 20px 40px rgba(0, 0, 0, 0.3),
-                inset 0 0 50px rgba(212, 175, 55, 0.1);
-        }
-
-        /* 正面顶部装饰 */
-        .front-top-ornament {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.2rem;
-            color: var(--imperial-gold);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-        }
-
-        /* 头像区域 */
-        .avatar-frame {
-            width: 130px;
-            height: 130px;
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        /* 华丽头像边框 */
-        .avatar-border {
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 3px solid transparent;
-            background: linear-gradient(135deg, #D4AF37, #FFD700, #B8860B, #D4AF37) border-box;
-            -webkit-mask:
-                linear-gradient(#fff 0 0) padding-box,
-                linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            border-radius: 50%;
-            animation: avatarBorderRotate 6s linear infinite;
-        }
-
-        @keyframes avatarBorderRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .avatar-glow {
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
-            animation: avatarGlowPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes avatarGlowPulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
-        }
-
-        .avatar-image {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--imperial-gold);
-            box-shadow:
-                0 0 20px rgba(212, 175, 55, 0.5),
-                inset 0 0 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* 名字区域 */
-        .celebrity-name-container {
-            position: relative;
-            padding: 10px 20px;
-            margin-top: 5px;
-        }
-
-        .name-decoration {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border: 2px solid var(--imperial-gold);
-            border-radius: 5px;
-            background: linear-gradient(135deg,
-                rgba(212, 175, 55, 0.1) 0%,
-                transparent 50%,
-                rgba(212, 175, 55, 0.1) 100%);
-        }
-
-        .name-decoration::before,
-        .name-decoration::after {
-            content: '❖';
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--imperial-gold);
-            font-size: 0.8rem;
-        }
-
-        .name-decoration::before { left: -15px; }
-        .name-decoration::after { right: -15px; }
-
-        .celebrity-name {
-            font-family: 'Ma Shan Zheng', cursive;
-            font-size: 1.6rem;
-            background: linear-gradient(180deg, #8B0000 0%, #DC143C 50%, #8B0000 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-            z-index: 1;
-            letter-spacing: 0.1em;
-        }
-
-        /* 正面底部装饰 */
-        .front-bottom-ornament {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 5px;
-        }
-
-        .front-bottom-ornament span {
-            color: var(--imperial-gold);
-            font-size: 0.8rem;
-            animation: ornamentDance 1s ease-in-out infinite;
-        }
-
-        .front-bottom-ornament span:nth-child(2) { animation-delay: 0.2s; }
-        .front-bottom-ornament span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes ornamentDance {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-
-        /* ========== 点击提示 ========== */
-        .tap-hint {
-            position: absolute;
-            bottom: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--imperial-gold);
-            font-size: 0.9rem;
-            letter-spacing: 0.2em;
-            animation: hintPulse 2s ease-in-out infinite;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-            white-space: nowrap;
-        }
-
-        @keyframes hintPulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        .tap-hint.hidden {
-            display: none;
-        }
-
-        /* ========== 翻牌特效 ========== */
-        .flip-effect {
+        /* ========== 鶴 飛翔装饰 ========== */
+        .tsuru-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 100;
-            opacity: 0;
-            transition: opacity 0.3s;
+            z-index: 15;
         }
 
-        .flip-effect.active {
+        .tsuru {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.2;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            animation: tsuruFly 25s ease-in-out infinite;
+        }
+
+        @keyframes tsuruFly {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(100px, -50px) rotate(5deg) scale(1.1); }
+            50% { transform: translate(200px, 20px) rotate(-3deg) scale(1); }
+            75% { transform: translate(100px, -30px) rotate(2deg) scale(0.9); }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+        }
+
+        /* ========== 扇子装饰 ========== */
+        .sensu-decoration {
+            position: fixed;
+            width: 120px;
+            height: 80px;
+            z-index: 16;
+            pointer-events: none;
+        }
+
+        .sensu {
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(from -90deg at 50% 100%,
+                #8B0000 0deg, #DC143C 15deg, #8B0000 30deg,
+                #D4AF37 30deg, #FFD700 35deg, #D4AF37 40deg,
+                #8B0000 40deg, #DC143C 55deg, #8B0000 70deg,
+                #D4AF37 70deg, #FFD700 75deg, #D4AF37 80deg,
+                #8B0000 80deg, #DC143C 95deg, #8B0000 110deg,
+                #D4AF37 110deg, #FFD700 115deg, #D4AF37 120deg,
+                transparent 120deg);
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
+            animation: sensuWave 5s ease-in-out infinite;
+        }
+
+        .sensu-decoration.left { top: 20%; left: 30px; transform: rotate(-30deg); }
+        .sensu-decoration.right { top: 25%; right: 30px; transform: rotate(30deg) scaleX(-1); }
+
+        @keyframes sensuWave {
+            0%, 100% { transform: rotate(-30deg); }
+            50% { transform: rotate(-25deg); }
+        }
+
+        /* ========== 和傘装饰 ========== */
+        .wagasa-container {
+            position: fixed;
+            top: 60%;
+            z-index: 14;
+            pointer-events: none;
+        }
+
+        .wagasa-container.left { left: -40px; }
+        .wagasa-container.right { right: -40px; }
+
+        .wagasa {
+            width: 150px;
+            height: 150px;
+            border-radius: 50% 50% 0 0;
+            background: conic-gradient(
+                #8B0000 0deg, #DC143C 30deg, #8B0000 60deg,
+                #FFD700 60deg, #D4AF37 90deg, #FFD700 120deg,
+                #8B0000 120deg, #DC143C 150deg, #8B0000 180deg,
+                #FFD700 180deg, #D4AF37 210deg, #FFD700 240deg,
+                #8B0000 240deg, #DC143C 270deg, #8B0000 300deg,
+                #FFD700 300deg, #D4AF37 330deg, #FFD700 360deg
+            );
+            clip-path: ellipse(50% 40% at 50% 40%);
+            opacity: 0.3;
+            animation: wagasaSpin 30s linear infinite;
+        }
+
+        @keyframes wagasaSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ========== 提灯 ========== */
+        .chochin-container {
+            position: fixed;
+            top: 80px;
+            z-index: 60;
+            animation: chochinSway 4s ease-in-out infinite;
+        }
+
+        .chochin-container.left { left: 50px; animation-delay: 0s; }
+        .chochin-container.right { right: 50px; animation-delay: 2s; }
+
+        .chochin {
+            width: 50px;
+            height: 80px;
+            position: relative;
+        }
+
+        .chochin-top {
+            width: 30px;
+            height: 10px;
+            background: linear-gradient(180deg, #1a1a1a, #333);
+            margin: 0 auto;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .chochin-body {
+            width: 50px;
+            height: 60px;
+            background: linear-gradient(90deg, #DC143C 0%, #FF4444 50%, #DC143C 100%);
+            border-radius: 50%;
+            position: relative;
+            box-shadow:
+                inset 0 0 20px rgba(255, 200, 100, 0.8),
+                0 0 30px rgba(255, 100, 50, 0.6);
+            overflow: hidden;
+        }
+
+        .chochin-body::before {
+            content: '福';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.5rem;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        .chochin-body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(0deg,
+                transparent 0px, transparent 8px,
+                rgba(0, 0, 0, 0.2) 8px, rgba(0, 0, 0, 0.2) 10px);
+        }
+
+        .chochin-bottom {
+            width: 20px;
+            height: 8px;
+            background: linear-gradient(180deg, #333, #1a1a1a);
+            margin: 0 auto;
+            border-radius: 0 0 50% 50%;
+        }
+
+        .chochin-tassel {
+            width: 4px;
+            height: 25px;
+            background: linear-gradient(180deg, #D4AF37 0%, #DC143C 50%, #8B0000 100%);
+            margin: 0 auto;
+            border-radius: 0 0 2px 2px;
+        }
+
+        @keyframes chochinSway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        /* ========== 流水纹动画 ========== */
+        .mizunagare {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            background:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 30'%3E%3Cpath d='M0 15 Q25 0 50 15 T100 15 T150 15 T200 15' fill='none' stroke='%23D4AF3730' stroke-width='2'/%3E%3C/svg%3E");
+            background-size: 200px 30px;
+            animation: mizuFlow 10s linear infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes mizuFlow {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ========== 龍装饰 ========== */
+        .ryu-decoration {
+            position: fixed;
+            font-size: 5rem;
+            opacity: 0.08;
+            z-index: 5;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.3));
+        }
+
+        .ryu-decoration.left {
+            top: 15%;
+            left: 5%;
+            animation: ryuFloat 15s ease-in-out infinite;
+        }
+
+        .ryu-decoration.right {
+            bottom: 20%;
+            right: 5%;
+            transform: scaleX(-1);
+            animation: ryuFloat 15s ease-in-out infinite reverse;
+        }
+
+        @keyframes ryuFloat {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        /* ========== 鳳凰装饰 ========== */
+        .houou-decoration {
+            position: fixed;
+            font-size: 4rem;
+            opacity: 0.1;
+            z-index: 5;
+            color: #FFD700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .houou-decoration.left {
+            top: 40%;
+            left: 8%;
+            animation: hououFly 20s ease-in-out infinite;
+        }
+
+        .houou-decoration.right {
+            top: 35%;
+            right: 8%;
+            transform: scaleX(-1);
+            animation: hououFly 20s ease-in-out infinite 10s;
+        }
+
+        @keyframes hououFly {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, -20px) rotate(5deg); }
+            50% { transform: translate(40px, 0) rotate(0deg); }
+            75% { transform: translate(20px, 20px) rotate(-5deg); }
+        }
+
+        /* ========== 主容器 ========== */
+        .main-container {
+            position: relative;
+            z-index: 30;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            padding-top: 60px;
+        }
+
+        /* ========== 顶部皇室徽章 ========== */
+        .imperial-header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        /* 十六瓣菊花纹章 */
+        .kiku-crest {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            position: relative;
+            animation: crestGlow 3s ease-in-out infinite;
+        }
+
+        .kiku-crest::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 90px;
+            height: 90px;
+            transform: translate(-50%, -50%);
+            background: conic-gradient(from 0deg,
+                #FFD700 0deg, #D4AF37 11.25deg, #FFD700 22.5deg,
+                #D4AF37 22.5deg, #B8860B 33.75deg, #D4AF37 45deg,
+                #FFD700 45deg, #D4AF37 56.25deg, #FFD700 67.5deg,
+                #D4AF37 67.5deg, #B8860B 78.75deg, #D4AF37 90deg,
+                #FFD700 90deg, #D4AF37 101.25deg, #FFD700 112.5deg,
+                #D4AF37 112.5deg, #B8860B 123.75deg, #D4AF37 135deg,
+                #FFD700 135deg, #D4AF37 146.25deg, #FFD700 157.5deg,
+                #D4AF37 157.5deg, #B8860B 168.75deg, #D4AF37 180deg,
+                #FFD700 180deg, #D4AF37 191.25deg, #FFD700 202.5deg,
+                #D4AF37 202.5deg, #B8860B 213.75deg, #D4AF37 225deg,
+                #FFD700 225deg, #D4AF37 236.25deg, #FFD700 247.5deg,
+                #D4AF37 247.5deg, #B8860B 258.75deg, #D4AF37 270deg,
+                #FFD700 270deg, #D4AF37 281.25deg, #FFD700 292.5deg,
+                #D4AF37 292.5deg, #B8860B 303.75deg, #D4AF37 315deg,
+                #FFD700 315deg, #D4AF37 326.25deg, #FFD700 337.5deg,
+                #D4AF37 337.5deg, #B8860B 348.75deg, #D4AF37 360deg);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+        }
+
+        .kiku-crest::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 1);
+        }
+
+        @keyframes crestGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8)); }
+            50% { filter: drop-shadow(0 0 40px rgba(255, 215, 0, 1)); }
+        }
+
+        /* ========== 标题样式 ========== */
+        .main-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.8rem;
+            background: linear-gradient(180deg,
+                #FFD700 0%,
+                #D4AF37 20%,
+                #B8860B 40%,
+                #D4AF37 60%,
+                #FFD700 80%,
+                #FFF8DC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.4em;
+            position: relative;
+            text-shadow: none;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            animation: titleShine 4s ease-in-out infinite;
+        }
+
+        @keyframes titleShine {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)) brightness(1); }
+            50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.8)) brightness(1.2); }
+        }
+
+        .title-decoration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .title-decoration span {
+            color: var(--imperial-gold);
+            font-size: 1.2rem;
+            animation: decorPulse 2s ease-in-out infinite;
+        }
+
+        .title-decoration span:nth-child(2) { animation-delay: 0.3s; }
+        .title-decoration span:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes decorPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .sub-title {
+            font-size: 1rem;
+            background: linear-gradient(90deg, #FFB7C5, #FF91A4, #FFB7C5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.8em;
+            margin-top: 8px;
+            animation: subtitleFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes subtitleFloat {
+            0%, 100% { transform: translateY(0); opacity: 0.8; }
+            50% { transform: translateY(-3px); opacity: 1; }
+        }
+
+        /* ========== 唐草纹分隔线 ========== */
+        .karakusa-divider {
+            width: 90%;
+            max-width: 350px;
+            height: 40px;
+            margin: 15px auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .karakusa-divider::before,
+        .karakusa-divider::after {
+            content: '';
+            flex: 1;
+            height: 3px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                #D4AF37 20%,
+                #FFD700 50%,
+                #D4AF37 80%,
+                transparent 100%);
+        }
+
+        .karakusa-center {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .karakusa-center::before {
+            content: '◆';
+            font-size: 2rem;
+            color: var(--imperial-gold);
+            animation: karakusaSpin 10s linear infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+        }
+
+        @keyframes karakusaSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ========== 舞台区域 - 固定高度防止跳动 ========== */
+        .stage-container {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            height: 420px; /* 固定高度 */
+            margin: 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 舞台背景光效 */
+        .stage-aura {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            height: 450px;
+            background:
+                radial-gradient(ellipse at center, rgba(255, 215, 0, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at center, rgba(139, 0, 0, 0.1) 0%, transparent 70%);
+            animation: stageAuraPulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes stageAuraPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+        }
+
+        /* 光环装饰 */
+        .stage-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .stage-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            animation: ringExpand 4s ease-out infinite;
+        }
+
+        .stage-ring:nth-child(1) { animation-delay: 0s; }
+        .stage-ring:nth-child(2) { animation-delay: 1s; }
+        .stage-ring:nth-child(3) { animation-delay: 2s; }
+        .stage-ring:nth-child(4) { animation-delay: 3s; }
+
+        @keyframes ringExpand {
+            0% { width: 50px; height: 50px; opacity: 1; }
+            100% { width: 400px; height: 400px; opacity: 0; }
+        }
+
+        /* ========== 牌子卡片 - 改用显示/隐藏模式 ========== */
+        .fuda-card {
+            position: absolute;
+            width: 220px;
+            height: 320px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center center;
+        }
+
+        .fuda-card:hover {
+            transform: scale(1.02);
+        }
+
+        .fuda-card.hidden {
+            opacity: 0;
+            transform: scale(0.8) rotateY(90deg);
+            pointer-events: none;
+        }
+
+        .fuda-card.visible {
+            opacity: 1;
+            transform: scale(1) rotateY(0deg);
+        }
+
+        /* ========== 牌子背面 ========== */
+        .fuda-back {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            background: linear-gradient(145deg,
+                #1a0520 0%,
+                #2d1040 20%,
+                #4a1050 40%,
+                #3d0d40 60%,
+                #2d1040 80%,
+                #1a0520 100%);
+            box-shadow:
+                0 0 50px rgba(212, 175, 55, 0.4),
+                0 0 100px rgba(139, 0, 0, 0.3),
+                inset 0 0 50px rgba(212, 175, 55, 0.15),
+                0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 金边框 */
+        .fuda-back::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(135deg,
+                #FFD700 0%, #D4AF37 15%, #B8860B 30%,
+                #D4AF37 45%, #FFD700 50%, #D4AF37 55%,
+                #B8860B 70%, #D4AF37 85%, #FFD700 100%);
+            border-radius: 18px;
+            z-index: -1;
+            animation: borderShimmer 3s linear infinite;
+        }
+
+        @keyframes borderShimmer {
+            0% { filter: brightness(1) hue-rotate(0deg); }
+            50% { filter: brightness(1.3) hue-rotate(10deg); }
+            100% { filter: brightness(1) hue-rotate(0deg); }
+        }
+
+        /* 内框装饰 */
+        .fuda-back::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            border-radius: 10px;
+            background:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='%23D4AF3720' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='35' fill='none' stroke='%23D4AF3720' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='25' fill='none' stroke='%23D4AF3720' stroke-width='0.5'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            background-position: center;
+        }
+
+        /* 闪光效果 */
+        .fuda-shimmer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                110deg,
+                transparent 20%,
+                rgba(255, 255, 255, 0.1) 40%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.1) 60%,
+                transparent 80%
+            );
+            background-size: 200% 100%;
+            animation: shimmerMove 4s ease-in-out infinite;
+            border-radius: 15px;
+            pointer-events: none;
+        }
+
+        @keyframes shimmerMove {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* 角落装饰 */
+        .fuda-corner {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            color: var(--imperial-gold);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+        }
+
+        .fuda-corner.tl { top: 15px; left: 15px; }
+        .fuda-corner.tr { top: 15px; right: 15px; transform: scaleX(-1); }
+        .fuda-corner.bl { bottom: 15px; left: 15px; transform: scaleY(-1); }
+        .fuda-corner.br { bottom: 15px; right: 15px; transform: scale(-1, -1); }
+
+        /* 中心纹章 */
+        .fuda-emblem {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130px;
+            height: 130px;
+        }
+
+        .emblem-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid var(--imperial-gold);
+            border-radius: 50%;
+            animation: emblemRotate 8s linear infinite;
+        }
+
+        .emblem-ring.outer {
+            width: 130px;
+            height: 130px;
+            border-style: dashed;
+        }
+
+        .emblem-ring.middle {
+            width: 100px;
+            height: 100px;
+            animation-direction: reverse;
+        }
+
+        .emblem-ring.inner {
+            width: 70px;
+            height: 70px;
+        }
+
+        @keyframes emblemRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .emblem-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle,
+                #FFD700 0%,
+                #D4AF37 40%,
+                #B8860B 70%,
+                #8B6914 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 0 30px rgba(255, 215, 0, 0.8),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            animation: emblemPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes emblemPulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 1), inset 0 0 30px rgba(255, 255, 255, 0.5); }
+        }
+
+        .emblem-text {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.8rem;
+            color: #2d0a1a;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        /* 点击提示 */
+        .fuda-hint {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--imperial-gold);
+            font-size: 0.85rem;
+            letter-spacing: 0.3em;
+            white-space: nowrap;
+            animation: hintBlink 2s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes hintBlink {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* ========== 结果卡片 ========== */
+        .result-card {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            border-radius: 15px;
+            overflow: hidden;
+            background: linear-gradient(180deg,
+                #FDF8F0 0%,
+                #F5E6D3 20%,
+                #EFE0C9 50%,
+                #E8D4B8 80%,
+                #DCC8A8 100%);
+            box-shadow:
+                0 0 50px rgba(212, 175, 55, 0.5),
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                inset 0 0 80px rgba(212, 175, 55, 0.1);
+        }
+
+        /* 金边框 */
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(135deg,
+                #FFD700 0%, #D4AF37 25%, #B8860B 50%, #D4AF37 75%, #FFD700 100%);
+            border-radius: 18px;
+            z-index: -1;
+            animation: resultBorderGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes resultBorderGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        /* 和纸纹理 */
+        .result-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .result-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* 顶部装饰 */
+        .result-top-decor {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--imperial-gold);
+            font-size: 0.9rem;
+        }
+
+        .result-top-decor span {
+            animation: decorFloat 2s ease-in-out infinite;
+        }
+
+        .result-top-decor span:nth-child(1) { animation-delay: 0s; }
+        .result-top-decor span:nth-child(2) { animation-delay: 0.2s; }
+        .result-top-decor span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes decorFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        /* 头像区域 */
+        .avatar-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 15px;
+        }
+
+        .avatar-glow {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: avatarGlowPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes avatarGlowPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .avatar-frame {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 4px solid transparent;
+            background: linear-gradient(135deg, #FFD700, #D4AF37, #B8860B, #FFD700) border-box;
+            -webkit-mask:
+                linear-gradient(#fff 0 0) padding-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            border-radius: 50%;
+            animation: frameRotate 8s linear infinite;
+        }
+
+        @keyframes frameRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .avatar-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--imperial-gold);
+            box-shadow:
+                0 0 25px rgba(212, 175, 55, 0.6),
+                inset 0 0 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 名字区域 */
+        .name-container {
+            position: relative;
+            padding: 12px 30px;
+            margin-top: 10px;
+        }
+
+        .name-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 3px solid var(--imperial-gold);
+            border-radius: 8px;
+            background: linear-gradient(135deg,
+                rgba(212, 175, 55, 0.15) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(212, 175, 55, 0.15) 100%);
+            box-shadow:
+                0 0 15px rgba(212, 175, 55, 0.3),
+                inset 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+
+        .name-frame::before,
+        .name-frame::after {
+            content: '❖';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--imperial-gold);
+            font-size: 1rem;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+        }
+
+        .name-frame::before { left: -20px; }
+        .name-frame::after { right: -20px; }
+
+        .celebrity-name {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.8rem;
+            background: linear-gradient(180deg,
+                #8B0000 0%,
+                #DC143C 30%,
+                #FF4444 50%,
+                #DC143C 70%,
+                #8B0000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.15em;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+        }
+
+        /* 底部装饰 */
+        .result-bottom-decor {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .result-bottom-decor span {
+            color: var(--imperial-gold);
+            font-size: 0.9rem;
+            animation: bottomDecorDance 1.5s ease-in-out infinite;
+        }
+
+        .result-bottom-decor span:nth-child(1) { animation-delay: 0s; }
+        .result-bottom-decor span:nth-child(2) { animation-delay: 0.15s; }
+        .result-bottom-decor span:nth-child(3) { animation-delay: 0.3s; }
+        .result-bottom-decor span:nth-child(4) { animation-delay: 0.45s; }
+        .result-bottom-decor span:nth-child(5) { animation-delay: 0.6s; }
+
+        @keyframes bottomDecorDance {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-4px) scale(1.1); }
+        }
+
+        /* ========== 揭晓特效 ========== */
+        .reveal-burst {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 200;
+            opacity: 0;
+        }
+
+        .reveal-burst.active {
             opacity: 1;
         }
 
-        .flip-effect-particle {
+        .burst-particle {
             position: absolute;
-            width: 10px;
-            height: 10px;
             background: linear-gradient(135deg, #FFD700, #D4AF37);
             border-radius: 50%;
-            animation: effectParticle 1s ease-out forwards;
+            animation: burstFly 1s ease-out forwards;
         }
 
-        @keyframes effectParticle {
+        @keyframes burstFly {
             0% {
                 transform: translate(0, 0) scale(1);
                 opacity: 1;
@@ -714,27 +1311,62 @@
             }
         }
 
+        .reveal-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center,
+                rgba(255, 215, 0, 0.6) 0%,
+                rgba(255, 215, 0, 0.3) 30%,
+                transparent 70%);
+            pointer-events: none;
+            z-index: 199;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .reveal-flash.active {
+            animation: flashBurst 0.8s ease-out forwards;
+        }
+
+        @keyframes flashBurst {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
         /* ========== 重新翻牌按钮 ========== */
         .reset-button {
-            margin-top: 40px;
-            padding: 15px 40px;
+            margin-top: 25px;
+            padding: 15px 45px;
             font-family: 'Noto Serif SC', serif;
             font-size: 1.1rem;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.25em;
             color: var(--imperial-gold);
             background: linear-gradient(180deg,
-                rgba(26, 10, 46, 0.9) 0%,
-                rgba(45, 27, 78, 0.9) 50%,
-                rgba(26, 10, 46, 0.9) 100%);
-            border: 2px solid var(--imperial-gold);
-            border-radius: 30px;
+                rgba(26, 5, 32, 0.95) 0%,
+                rgba(45, 16, 64, 0.95) 50%,
+                rgba(26, 5, 32, 0.95) 100%);
+            border: 3px solid transparent;
+            border-image: linear-gradient(135deg, #D4AF37, #FFD700, #B8860B, #D4AF37) 1;
+            border-radius: 0;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             box-shadow:
-                0 0 20px rgba(212, 175, 55, 0.3),
+                0 0 30px rgba(212, 175, 55, 0.3),
                 inset 0 0 20px rgba(212, 175, 55, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+
+        .reset-button.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
 
         .reset-button::before {
@@ -744,14 +1376,17 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 215, 0, 0.3) 50%,
+                transparent 100%);
+            transition: left 0.6s ease;
         }
 
         .reset-button:hover {
             transform: scale(1.05);
             box-shadow:
-                0 0 40px rgba(212, 175, 55, 0.5),
+                0 0 50px rgba(212, 175, 55, 0.5),
                 inset 0 0 30px rgba(212, 175, 55, 0.2);
         }
 
@@ -764,852 +1399,423 @@
         }
 
         /* ========== 底部装饰 ========== */
-        .footer-ornament {
+        .footer-decoration {
             margin-top: auto;
-            padding: 30px 0;
+            padding: 25px 0;
             text-align: center;
             width: 100%;
         }
 
-        .footer-waves {
+        .footer-pattern {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
         }
 
-        .wave-line {
-            width: 50px;
-            height: 20px;
-            position: relative;
-        }
-
-        .wave-line::before {
-            content: '';
-            position: absolute;
-            width: 100%;
+        .footer-line {
+            width: 60px;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--imperial-gold), transparent);
-            top: 50%;
-            animation: waveLine 2s ease-in-out infinite;
         }
 
-        .wave-line:nth-child(2)::before { animation-delay: 0.3s; }
-        .wave-line:nth-child(3)::before { animation-delay: 0.6s; }
+        .footer-symbol {
+            color: var(--imperial-gold);
+            font-size: 1.2rem;
+            animation: footerSymbolPulse 3s ease-in-out infinite;
+        }
 
-        @keyframes waveLine {
-            0%, 100% { transform: scaleX(0.5); opacity: 0.5; }
-            50% { transform: scaleX(1); opacity: 1; }
+        @keyframes footerSymbolPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
 
         .footer-text {
             color: var(--sakura-pink);
-            font-size: 0.8rem;
-            letter-spacing: 0.3em;
-            opacity: 0.6;
+            font-size: 0.75rem;
+            letter-spacing: 0.5em;
+            opacity: 0.7;
         }
 
-        /* ========== 火焰/光芒效果 ========== */
-        .aura-effect {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 220px;
-            height: 300px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .flip-card-container:hover .aura-effect {
-            opacity: 1;
-        }
-
-        .aura-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid var(--imperial-gold);
-            border-radius: 50%;
-            animation: auraExpand 2s ease-out infinite;
-        }
-
-        .aura-ring:nth-child(1) { animation-delay: 0s; }
-        .aura-ring:nth-child(2) { animation-delay: 0.5s; }
-        .aura-ring:nth-child(3) { animation-delay: 1s; }
-
-        @keyframes auraExpand {
-            0% {
-                width: 100px;
-                height: 100px;
-                opacity: 1;
-            }
-            100% {
-                width: 300px;
-                height: 300px;
-                opacity: 0;
-            }
-        }
-
-        /* ========== 揭晓时的特效 ========== */
-        .reveal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.3) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .reveal-overlay.active {
-            opacity: 1;
-            animation: revealFlash 1s ease-out;
-        }
-
-        @keyframes revealFlash {
-            0% { background: radial-gradient(circle at center, rgba(255, 215, 0, 0.8) 0%, transparent 50%); }
-            100% { background: radial-gradient(circle at center, rgba(212, 175, 55, 0.3) 0%, transparent 70%); }
-        }
-
-        /* ========== 漂浮装饰元素 ========== */
-        .floating-ornaments {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 3;
-        }
-
-        .floating-crane {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.3;
-            animation: craneFloat 20s ease-in-out infinite;
-        }
-
-        @keyframes craneFloat {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(50px, -30px) rotate(5deg); }
-            50% { transform: translate(100px, 0) rotate(0deg); }
-            75% { transform: translate(50px, 30px) rotate(-5deg); }
-        }
-
-        /* ========== 音符/音效装饰 ========== */
-        .sound-effect {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            opacity: 0;
-        }
-
-        .sound-effect.active {
-            animation: soundWave 0.8s ease-out forwards;
-        }
-
-        @keyframes soundWave {
-            0% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(2);
-            }
-        }
-
-        .sound-ring {
-            width: 50px;
-            height: 50px;
-            border: 2px solid var(--imperial-gold);
-            border-radius: 50%;
-        }
-
-        /* ========== 响应式调整 ========== */
-        @media (max-width: 400px) {
+        /* ========== 响应式 ========== */
+        @media (max-width: 380px) {
             .main-title {
                 font-size: 2.2rem;
+                letter-spacing: 0.2em;
             }
 
-            .flip-card-container {
-                width: 180px;
-                height: 250px;
+            .fuda-card {
+                width: 190px;
+                height: 280px;
             }
 
-            .imperial-crest {
+            .stage-container {
+                height: 380px;
+            }
+
+            .kiku-crest {
                 width: 80px;
                 height: 80px;
             }
 
-            .imperial-crest::before {
-                font-size: 40px;
+            .avatar-container {
+                width: 120px;
+                height: 120px;
             }
-        }
 
-        /* ========== 闪光条纹效果 ========== */
-        .shimmer-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                105deg,
-                transparent 40%,
-                rgba(255, 255, 255, 0.1) 45%,
-                rgba(255, 255, 255, 0.2) 50%,
-                rgba(255, 255, 255, 0.1) 55%,
-                transparent 60%
-            );
-            background-size: 200% 100%;
-            animation: shimmer 3s infinite;
-            pointer-events: none;
-            border-radius: 15px;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* ========== 龙凤呈祥装饰 ========== */
-        .dragon-phoenix {
-            position: fixed;
-            font-size: 3rem;
-            opacity: 0.1;
-            z-index: 1;
-        }
-
-        .dragon {
-            top: 20%;
-            left: 5%;
-            animation: dragonMove 15s ease-in-out infinite;
-        }
-
-        .phoenix {
-            top: 20%;
-            right: 5%;
-            animation: phoenixMove 15s ease-in-out infinite;
-        }
-
-        @keyframes dragonMove {
-            0%, 100% { transform: translateY(0) rotate(-10deg); }
-            50% { transform: translateY(-30px) rotate(10deg); }
-        }
-
-        @keyframes phoenixMove {
-            0%, 100% { transform: translateY(0) rotate(10deg); }
-            50% { transform: translateY(-30px) rotate(-10deg); }
-        }
-
-        /* ========== 宝石装饰 ========== */
-        .gem-decorations {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .gem {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: radial-gradient(circle at 30% 30%, #FFD700, #B8860B);
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-            animation: gemSparkle 3s ease-in-out infinite;
-        }
-
-        @keyframes gemSparkle {
-            0%, 100% {
-                opacity: 0.3;
-                transform: scale(1) rotate(0deg);
-                filter: brightness(1);
+            .avatar-image {
+                width: 120px;
+                height: 120px;
             }
-            50% {
-                opacity: 1;
-                transform: scale(1.2) rotate(180deg);
-                filter: brightness(1.5);
+
+            .celebrity-name {
+                font-size: 1.5rem;
             }
-        }
-
-        /* ========== 水墨晕染效果 ========== */
-        .ink-wash {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 30%;
-            background: linear-gradient(180deg, transparent 0%, rgba(139, 0, 0, 0.1) 100%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .ink-wash::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background:
-                radial-gradient(ellipse at 20% 100%, rgba(139, 0, 0, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 100%, rgba(139, 0, 0, 0.2) 0%, transparent 50%);
-        }
-
-        /* ========== 帘幕效果 ========== */
-        .curtain-left, .curtain-right {
-            position: fixed;
-            top: 0;
-            width: 80px;
-            height: 100%;
-            pointer-events: none;
-            z-index: 4;
-        }
-
-        .curtain-left {
-            left: 0;
-            background: linear-gradient(90deg,
-                rgba(139, 0, 0, 0.3) 0%,
-                rgba(139, 0, 0, 0.1) 50%,
-                transparent 100%);
-        }
-
-        .curtain-right {
-            right: 0;
-            background: linear-gradient(-90deg,
-                rgba(139, 0, 0, 0.3) 0%,
-                rgba(139, 0, 0, 0.1) 50%,
-                transparent 100%);
-        }
-
-        .curtain-left::before, .curtain-right::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            width: 3px;
-            height: 100%;
-            background: linear-gradient(180deg,
-                var(--imperial-gold) 0%,
-                transparent 20%,
-                var(--imperial-gold) 40%,
-                transparent 60%,
-                var(--imperial-gold) 80%,
-                transparent 100%);
-        }
-
-        .curtain-left::before { right: 0; }
-        .curtain-right::before { left: 0; }
-
-        /* ========== 祥云装饰 ========== */
-        .cloud-decoration {
-            position: fixed;
-            font-size: 2rem;
-            color: var(--imperial-gold);
-            opacity: 0.15;
-            z-index: 1;
-        }
-
-        .cloud-1 { top: 10%; left: 10%; animation: cloudFloat 10s ease-in-out infinite; }
-        .cloud-2 { top: 30%; right: 15%; animation: cloudFloat 12s ease-in-out infinite reverse; }
-        .cloud-3 { bottom: 30%; left: 15%; animation: cloudFloat 14s ease-in-out infinite; }
-        .cloud-4 { bottom: 15%; right: 10%; animation: cloudFloat 11s ease-in-out infinite reverse; }
-
-        @keyframes cloudFloat {
-            0%, 100% { transform: translateX(0) translateY(0); }
-            50% { transform: translateX(20px) translateY(-10px); }
-        }
-
-        /* ========== 流星效果 ========== */
-        .meteor-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 3;
-            overflow: hidden;
-        }
-
-        .meteor {
-            position: absolute;
-            width: 2px;
-            height: 80px;
-            background: linear-gradient(180deg, rgba(255, 215, 0, 0), rgba(255, 215, 0, 1));
-            animation: meteorFall 3s linear infinite;
-            opacity: 0;
-        }
-
-        @keyframes meteorFall {
-            0% {
-                transform: translateX(0) translateY(-100px) rotate(45deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(200px) translateY(calc(100vh + 100px)) rotate(45deg);
-                opacity: 0;
-            }
-        }
-
-        /* ========== 印章效果 ========== */
-        .imperial-seal {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border: 2px solid var(--crimson);
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Ma Shan Zheng', cursive;
-            font-size: 1.2rem;
-            color: var(--crimson);
-            transform: rotate(-15deg);
-            opacity: 0.5;
-            z-index: 5;
-        }
-
-        .imperial-seal::before {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            right: 3px;
-            bottom: 3px;
-            border: 1px solid var(--crimson);
-        }
-
-        /* ========== 灯笼装饰 ========== */
-        .lantern {
-            position: fixed;
-            width: 30px;
-            height: 50px;
-            z-index: 4;
-            animation: lanternSway 4s ease-in-out infinite;
-        }
-
-        .lantern::before {
-            content: '🏮';
-            font-size: 2rem;
-            filter: drop-shadow(0 0 10px rgba(255, 100, 0, 0.5));
-        }
-
-        .lantern-1 { top: 50px; left: 30px; animation-delay: 0s; }
-        .lantern-2 { top: 50px; right: 30px; animation-delay: 1s; }
-
-        @keyframes lanternSway {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg); }
-        }
-
-        /* ========== 烟雾效果 ========== */
-        .mist {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 200%;
-            height: 150px;
-            background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.03) 100%);
-            animation: mistFloat 30s linear infinite;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        @keyframes mistFloat {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* ========== 璀璨星辰 ========== */
-        .stars-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .star {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #FFD700;
-            border-radius: 50%;
-            animation: starTwinkle 2s ease-in-out infinite;
-        }
-
-        @keyframes starTwinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.5); }
         }
     </style>
 </head>
 <body>
-    <!-- 金箔粒子 -->
-    <div class="gold-particles" id="goldParticles"></div>
+    <!-- 背景图案层 -->
+    <div class="seigaiha-bg"></div>
+    <div class="asanoha-bg"></div>
+    <div class="shippo-bg"></div>
 
-    <!-- 樱花飘落 -->
-    <div class="sakura-container" id="sakuraContainer"></div>
+    <!-- 金屏风边框 -->
+    <div class="kinbyobu-frame"></div>
+    <div class="corner-kiku top-left"></div>
+    <div class="corner-kiku top-right"></div>
+    <div class="corner-kiku bottom-left"></div>
+    <div class="corner-kiku bottom-right"></div>
 
-    <!-- 漂浮装饰 -->
-    <div class="floating-ornaments">
-        <span class="floating-crane" style="top: 15%; left: 10%;">🦢</span>
-        <span class="floating-crane" style="top: 60%; right: 8%;">🦢</span>
+    <!-- 御簾帘幕 -->
+    <div class="misu-curtain left">
+        <div class="misu-tassel"></div>
+    </div>
+    <div class="misu-curtain right">
+        <div class="misu-tassel"></div>
     </div>
 
-    <!-- 龙凤 -->
-    <div class="dragon-phoenix dragon">🐉</div>
-    <div class="dragon-phoenix phoenix">🦚</div>
+    <!-- 提灯 -->
+    <div class="chochin-container left">
+        <div class="chochin">
+            <div class="chochin-top"></div>
+            <div class="chochin-body"></div>
+            <div class="chochin-bottom"></div>
+            <div class="chochin-tassel"></div>
+        </div>
+    </div>
+    <div class="chochin-container right">
+        <div class="chochin">
+            <div class="chochin-top"></div>
+            <div class="chochin-body"></div>
+            <div class="chochin-bottom"></div>
+            <div class="chochin-tassel"></div>
+        </div>
+    </div>
 
-    <!-- 宝石装饰 -->
-    <div class="gem-decorations" id="gemDecorations"></div>
+    <!-- 扇子 -->
+    <div class="sensu-decoration left">
+        <div class="sensu"></div>
+    </div>
+    <div class="sensu-decoration right">
+        <div class="sensu"></div>
+    </div>
 
-    <!-- 星辰 -->
-    <div class="stars-container" id="starsContainer"></div>
+    <!-- 和傘 -->
+    <div class="wagasa-container left">
+        <div class="wagasa"></div>
+    </div>
+    <div class="wagasa-container right">
+        <div class="wagasa"></div>
+    </div>
 
-    <!-- 流星 -->
-    <div class="meteor-container" id="meteorContainer"></div>
+    <!-- 龍 -->
+    <div class="ryu-decoration left">🐉</div>
+    <div class="ryu-decoration right">🐉</div>
 
-    <!-- 祥云 -->
-    <div class="cloud-decoration cloud-1">☁️</div>
-    <div class="cloud-decoration cloud-2">☁️</div>
-    <div class="cloud-decoration cloud-3">☁️</div>
-    <div class="cloud-decoration cloud-4">☁️</div>
+    <!-- 鳳凰 -->
+    <div class="houou-decoration left">🦚</div>
+    <div class="houou-decoration right">🦚</div>
 
-    <!-- 帘幕 -->
-    <div class="curtain-left"></div>
-    <div class="curtain-right"></div>
+    <!-- 鶴 -->
+    <div class="tsuru-container">
+        <div class="tsuru" style="top: 12%; left: 15%;">🦢</div>
+        <div class="tsuru" style="top: 25%; right: 12%; animation-delay: -5s;">🦢</div>
+        <div class="tsuru" style="bottom: 30%; left: 10%; animation-delay: -10s;">🦢</div>
+        <div class="tsuru" style="bottom: 20%; right: 15%; animation-delay: -15s;">🦢</div>
+    </div>
 
-    <!-- 水墨 -->
-    <div class="ink-wash"></div>
+    <!-- 金箔 -->
+    <div class="kinpaku-container" id="kinpakuContainer"></div>
 
-    <!-- 烟雾 -->
-    <div class="mist"></div>
+    <!-- 樱花 -->
+    <div class="sakura-container" id="sakuraContainer"></div>
 
-    <!-- 灯笼 -->
-    <div class="lantern lantern-1"></div>
-    <div class="lantern lantern-2"></div>
+    <!-- 流水纹 -->
+    <div class="mizunagare"></div>
 
-    <!-- 印章 -->
-    <div class="imperial-seal">御选</div>
-
-    <!-- 揭晓光效 -->
-    <div class="reveal-overlay" id="revealOverlay"></div>
-
-    <!-- 翻牌特效容器 -->
-    <div class="flip-effect" id="flipEffect"></div>
+    <!-- 揭晓特效 -->
+    <div class="reveal-flash" id="revealFlash"></div>
+    <div class="reveal-burst" id="revealBurst"></div>
 
     <!-- 主容器 -->
     <div class="main-container">
         <!-- 皇室徽章 -->
         <header class="imperial-header">
-            <div class="imperial-crest"></div>
+            <div class="kiku-crest"></div>
             <h1 class="main-title">御前翻牌</h1>
-            <p class="sub-title">✦ 皇室盛典 ✦</p>
+            <div class="title-decoration">
+                <span>❀</span>
+                <span>皇</span>
+                <span>室</span>
+                <span>盛</span>
+                <span>典</span>
+                <span>❀</span>
+            </div>
+            <p class="sub-title">天選之人</p>
         </header>
 
-        <!-- 装饰分隔线 -->
-        <div class="ornate-divider">
-            <span class="ornate-divider-symbol">❀</span>
+        <!-- 唐草纹分隔线 -->
+        <div class="karakusa-divider">
+            <div class="karakusa-center"></div>
         </div>
 
-        <!-- 牌子舞台 -->
-        <div class="cards-stage">
-            <div class="stage-spotlight"></div>
+        <!-- 舞台区域 -->
+        <div class="stage-container">
+            <div class="stage-aura"></div>
+            <div class="stage-rings">
+                <div class="stage-ring"></div>
+                <div class="stage-ring"></div>
+                <div class="stage-ring"></div>
+                <div class="stage-ring"></div>
+            </div>
 
-            <!-- 翻牌卡片 -->
-            <div class="flip-card-container" id="flipCardContainer">
-                <!-- 光环效果 -->
-                <div class="aura-effect">
-                    <div class="aura-ring"></div>
-                    <div class="aura-ring"></div>
-                    <div class="aura-ring"></div>
-                </div>
-
-                <!-- 音效装饰 -->
-                <div class="sound-effect" id="soundEffect">
-                    <div class="sound-ring"></div>
-                </div>
-
-                <div class="flip-card" id="flipCard">
-                    <!-- 牌子背面 -->
-                    <div class="flip-card-face flip-card-back">
-                        <div class="shimmer-overlay"></div>
-                        <div class="card-back-pattern"></div>
-
-                        <div class="corner-ornament top-left">❧</div>
-                        <div class="corner-ornament top-right">❧</div>
-                        <div class="corner-ornament bottom-left">❧</div>
-                        <div class="corner-ornament bottom-right">❧</div>
-
-                        <div class="card-back-emblem">
-                            <div class="emblem-outer"></div>
-                            <div class="emblem-inner">
-                                <span class="emblem-character">牌</span>
-                            </div>
+            <!-- 牌子背面 -->
+            <div class="fuda-card visible" id="fudaBack" onclick="flipCard()">
+                <div class="fuda-back">
+                    <div class="fuda-shimmer"></div>
+                    <div class="fuda-corner tl">❧</div>
+                    <div class="fuda-corner tr">❧</div>
+                    <div class="fuda-corner bl">❧</div>
+                    <div class="fuda-corner br">❧</div>
+                    <div class="fuda-emblem">
+                        <div class="emblem-ring outer"></div>
+                        <div class="emblem-ring middle"></div>
+                        <div class="emblem-ring inner"></div>
+                        <div class="emblem-center">
+                            <span class="emblem-text">牌</span>
                         </div>
                     </div>
+                    <div class="fuda-hint">— 輕觸翻牌 —</div>
+                </div>
+            </div>
 
-                    <!-- 牌子正面 -->
-                    <div class="flip-card-face flip-card-front">
-                        <div class="front-top-ornament">◈ 天选之人 ◈</div>
-
-                        <div class="avatar-frame">
+            <!-- 结果卡片 -->
+            <div class="fuda-card hidden" id="resultCard">
+                <div class="result-card">
+                    <div class="result-content">
+                        <div class="result-top-decor">
+                            <span>✦</span>
+                            <span>天選之人</span>
+                            <span>✦</span>
+                        </div>
+                        <div class="avatar-container">
                             <div class="avatar-glow"></div>
-                            <div class="avatar-border"></div>
+                            <div class="avatar-frame"></div>
                             <img class="avatar-image" id="avatarImage" src="" alt="明星头像">
                         </div>
-
-                        <div class="celebrity-name-container">
-                            <div class="name-decoration"></div>
+                        <div class="name-container">
+                            <div class="name-frame"></div>
                             <span class="celebrity-name" id="celebrityName">???</span>
                         </div>
-
-                        <div class="front-bottom-ornament">
+                        <div class="result-bottom-decor">
+                            <span>❀</span>
                             <span>✦</span>
+                            <span>◆</span>
                             <span>✦</span>
-                            <span>✦</span>
+                            <span>❀</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- 点击提示 -->
-                <div class="tap-hint" id="tapHint">— 轻触翻牌 —</div>
             </div>
         </div>
 
         <!-- 重新翻牌按钮 -->
-        <button class="reset-button" id="resetButton" style="display: none;">
-            ✦ 再翻一牌 ✦
+        <button class="reset-button" id="resetButton" onclick="resetCard()">
+            ◆ 再翻一牌 ◆
         </button>
 
         <!-- 底部装饰 -->
-        <footer class="footer-ornament">
-            <div class="footer-waves">
-                <div class="wave-line"></div>
-                <div class="wave-line"></div>
-                <div class="wave-line"></div>
+        <footer class="footer-decoration">
+            <div class="footer-pattern">
+                <div class="footer-line"></div>
+                <span class="footer-symbol">❀</span>
+                <div class="footer-line"></div>
             </div>
-            <p class="footer-text">御前翻牌 · 皇恩浩荡</p>
+            <p class="footer-text">御前翻牌 · 皇恩浩蕩</p>
         </footer>
     </div>
 
     <script>
         // ==================== 内娱男明星数据库 ====================
         const celebrities = [
-            "肖战", "王一博", "蔡徐坤", "易烊千玺", "王俊凯", "王源", "鹿晗", "吴亦凡", "黄子韬", "张艺兴",
+            "肖战", "王一博", "蔡徐坤", "易烊千玺", "王俊凯", "王源", "鹿晗", "黄子韬", "张艺兴",
             "李现", "杨洋", "邓伦", "朱一龙", "任嘉伦", "罗云熙", "许凯", "成毅", "龚俊", "张新成",
             "刘昊然", "吴磊", "张若昀", "李易峰", "陈伟霆", "井柏然", "白敬亭", "魏大勋", "王嘉尔", "范丞丞",
             "周震南", "刘宇宁", "丁禹兮", "宋威龙", "侯明昊", "秦俊杰", "张彬彬", "徐开骋", "李汶翰", "陈哲远",
-            "檀健次", "陈飞宇", "张云龙", "韩东君", "王安宇", "张凌赫", "张淼怡", "周柯宇", "敖瑞鹏", "丁程鑫",
+            "檀健次", "陈飞宇", "张云龙", "韩东君", "王安宇", "张凌赫", "周柯宇", "敖瑞鹏", "丁程鑫",
             "马嘉祺", "贺峻霖", "张真源", "严浩翔", "刘耀文", "宋亚轩", "刘彰", "焉栩嘉", "夏之光", "翟潇闻",
-            "何洛洛", "赵让", "张颜齐", "周震南", "姚琛", "刘也", "林墨", "任豪", "张极", "李振宁",
-            "胡春杨", "孙亦航", "林焕钧", "管栎", "嘉羿", "李汶翰", "查杰", "陈泽希", "夏瀚宇", "姚弛",
-            "郑云龙", "阿云嘎", "高天鹤", "蔡程昱", "鞠红川", "王晰", "周深", "简弘亦", "仝卓", "马佳",
-            "黄霄云", "刘端端", "张超", "代超", "翟天临", "胡歌", "霍建华", "彭于晏", "陈坤", "黄晓明",
+            "何洛洛", "赵让", "张颜齐", "姚琛", "刘也", "林墨", "任豪", "张极", "李振宁",
+            "胡春杨", "孙亦航", "林焕钧", "管栎", "嘉羿", "查杰", "陈泽希", "夏瀚宇", "姚弛",
+            "郑云龙", "阿云嘎", "高天鹤", "蔡程昱", "鞠红川", "王晰", "周深", "简弘亦", "马佳",
+            "刘端端", "张超", "代超", "胡歌", "霍建华", "彭于晏", "陈坤", "黄晓明",
             "邓超", "黄渤", "沈腾", "王宝强", "徐峥", "雷佳音", "张译", "于和伟", "段奕宏", "张涵予",
             "吴京", "甄子丹", "王凯", "靳东", "张鲁一", "祖峰", "刘奕君", "倪大红", "陈道明", "张国立",
             "王刚", "葛优", "陈宝国", "李雪健", "唐国强", "张丰毅", "濮存昕", "吴刚", "王劲松", "何冰",
-            "张嘉益", "姚晨", "闫妮", "王珞丹", "杨紫", "迪丽热巴", "赵丽颖", "杨幂", "唐嫣", "刘诗诗",
-            "高伟光", "黄景瑜", "张翰", "林更新", "乔振宇", "任泉", "严屹宽", "冯绍峰", "陆毅", "钟汉良",
-            "王凯", "尹正", "宋继扬", "李泽锋", "官鸿", "施柏宇", "赖冠霖", "黄明昊", "朱正廷", "毕雯珺",
-            "董思成", "黄旭熙", "李永钦", "钱锟", "肖顺尧", "边江", "姜广涛", "宝木中阳", "吴磊", "夏磊",
-            "阿杰", "苏尚卿", "陈奕迅", "周杰伦", "林俊杰", "薛之谦", "毛不易", "华晨宇", "许嵩", "汪苏泷"
+            "张嘉益", "高伟光", "黄景瑜", "张翰", "林更新", "乔振宇", "严屹宽", "冯绍峰", "陆毅", "钟汉良",
+            "尹正", "宋继扬", "李泽锋", "官鸿", "施柏宇", "赖冠霖", "黄明昊", "朱正廷", "毕雯珺",
+            "董思成", "黄旭熙", "李永钦", "钱锟", "肖顺尧", "陈奕迅", "周杰伦", "林俊杰", "薛之谦",
+            "毛不易", "华晨宇", "许嵩", "汪苏泷", "王鹤棣", "陈星旭", "丁禹兮", "刘学义", "陈若轩",
+            "于适", "陈哲远", "王星越", "丞磊", "陈靖可", "李宏毅", "周翊然", "孙泽源", "叶盛佳"
         ];
 
         // 使用 randomuser.me API 获取随机头像
         const getRandomAvatar = () => {
-            const gender = 'men';
             const randomId = Math.floor(Math.random() * 99) + 1;
-            return `https://randomuser.me/api/portraits/${gender}/${randomId}.jpg`;
+            return `https://randomuser.me/api/portraits/men/${randomId}.jpg`;
         };
 
         // ==================== DOM 元素 ====================
-        const flipCardContainer = document.getElementById('flipCardContainer');
-        const flipCard = document.getElementById('flipCard');
+        const fudaBack = document.getElementById('fudaBack');
+        const resultCard = document.getElementById('resultCard');
         const avatarImage = document.getElementById('avatarImage');
         const celebrityName = document.getElementById('celebrityName');
         const resetButton = document.getElementById('resetButton');
-        const tapHint = document.getElementById('tapHint');
-        const revealOverlay = document.getElementById('revealOverlay');
-        const flipEffect = document.getElementById('flipEffect');
-        const soundEffect = document.getElementById('soundEffect');
+        const revealFlash = document.getElementById('revealFlash');
+        const revealBurst = document.getElementById('revealBurst');
 
         let isFlipped = false;
 
         // ==================== 翻牌功能 ====================
-        function flipTheCard() {
+        function flipCard() {
             if (isFlipped) return;
-
             isFlipped = true;
-            tapHint.classList.add('hidden');
 
             // 随机选择明星
             const randomCelebrity = celebrities[Math.floor(Math.random() * celebrities.length)];
             const randomAvatar = getRandomAvatar();
 
-            // 预加载头像
+            // 设置结果
             avatarImage.src = randomAvatar;
             celebrityName.textContent = randomCelebrity;
 
-            // 翻牌
-            flipCard.classList.add('flipped');
+            // 隐藏牌子背面
+            fudaBack.classList.remove('visible');
+            fudaBack.classList.add('hidden');
 
-            // 音效视觉
-            soundEffect.classList.add('active');
-            setTimeout(() => soundEffect.classList.remove('active'), 800);
-
-            // 揭晓光效
+            // 触发特效
             setTimeout(() => {
-                revealOverlay.classList.add('active');
-                createFlipParticles();
-                setTimeout(() => revealOverlay.classList.remove('active'), 1000);
-            }, 600);
+                revealFlash.classList.add('active');
+                createBurstParticles();
+            }, 300);
+
+            // 显示结果卡片
+            setTimeout(() => {
+                resultCard.classList.remove('hidden');
+                resultCard.classList.add('visible');
+            }, 400);
+
+            // 清除闪光
+            setTimeout(() => {
+                revealFlash.classList.remove('active');
+            }, 1000);
 
             // 显示重置按钮
             setTimeout(() => {
-                resetButton.style.display = 'block';
-            }, 1200);
+                resetButton.classList.add('visible');
+            }, 800);
         }
 
         function resetCard() {
             isFlipped = false;
-            flipCard.classList.remove('flipped');
-            resetButton.style.display = 'none';
-            tapHint.classList.remove('hidden');
+
+            // 隐藏结果卡片
+            resultCard.classList.remove('visible');
+            resultCard.classList.add('hidden');
+
+            // 隐藏按钮
+            resetButton.classList.remove('visible');
+
+            // 显示牌子背面
+            setTimeout(() => {
+                fudaBack.classList.remove('hidden');
+                fudaBack.classList.add('visible');
+            }, 400);
         }
 
-        // 事件监听
-        flipCardContainer.addEventListener('click', flipTheCard);
-        resetButton.addEventListener('click', resetCard);
+        // ==================== 粒子爆发效果 ====================
+        function createBurstParticles() {
+            revealBurst.innerHTML = '';
+            revealBurst.classList.add('active');
 
-        // ==================== 翻牌粒子特效 ====================
-        function createFlipParticles() {
-            const container = flipEffect;
-            container.innerHTML = '';
-            container.classList.add('active');
-
-            const rect = flipCardContainer.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 40; i++) {
                 const particle = document.createElement('div');
-                particle.className = 'flip-effect-particle';
-                particle.style.left = centerX + 'px';
-                particle.style.top = centerY + 'px';
+                particle.className = 'burst-particle';
+                particle.style.width = (4 + Math.random() * 8) + 'px';
+                particle.style.height = particle.style.width;
 
-                const angle = (Math.PI * 2 * i) / 30;
-                const distance = 100 + Math.random() * 150;
+                const angle = (Math.PI * 2 * i) / 40 + Math.random() * 0.5;
+                const distance = 80 + Math.random() * 180;
                 particle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
                 particle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
 
-                container.appendChild(particle);
+                revealBurst.appendChild(particle);
             }
 
             setTimeout(() => {
-                container.classList.remove('active');
+                revealBurst.classList.remove('active');
             }, 1000);
         }
 
-        // ==================== 金箔粒子生成 ====================
-        function createGoldParticles() {
-            const container = document.getElementById('goldParticles');
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'gold-particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.width = (2 + Math.random() * 4) + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-                container.appendChild(particle);
+        // ==================== 金箔生成 ====================
+        function createKinpaku() {
+            const container = document.getElementById('kinpakuContainer');
+            for (let i = 0; i < 25; i++) {
+                const kinpaku = document.createElement('div');
+                kinpaku.className = 'kinpaku ' + (Math.random() > 0.5 ? 'square' : 'diamond');
+                kinpaku.style.left = Math.random() * 100 + '%';
+                const size = 4 + Math.random() * 8;
+                kinpaku.style.width = size + 'px';
+                kinpaku.style.height = size + 'px';
+                kinpaku.style.animationDelay = Math.random() * 20 + 's';
+                kinpaku.style.animationDuration = (12 + Math.random() * 10) + 's';
+                container.appendChild(kinpaku);
             }
         }
 
         // ==================== 樱花生成 ====================
         function createSakura() {
             const container = document.getElementById('sakuraContainer');
-            for (let i = 0; i < 15; i++) {
-                const sakura = document.createElement('div');
-                sakura.className = 'sakura';
-                sakura.style.left = Math.random() * 100 + '%';
-                sakura.style.animationDuration = (8 + Math.random() * 10) + 's';
-                sakura.style.animationDelay = Math.random() * 15 + 's';
-                container.appendChild(sakura);
-            }
-        }
-
-        // ==================== 宝石生成 ====================
-        function createGems() {
-            const container = document.getElementById('gemDecorations');
-            for (let i = 0; i < 15; i++) {
-                const gem = document.createElement('div');
-                gem.className = 'gem';
-                gem.style.left = Math.random() * 100 + '%';
-                gem.style.top = Math.random() * 100 + '%';
-                gem.style.animationDelay = Math.random() * 3 + 's';
-                container.appendChild(gem);
-            }
-        }
-
-        // ==================== 星辰生成 ====================
-        function createStars() {
-            const container = document.getElementById('starsContainer');
-            for (let i = 0; i < 50; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 2 + 's';
-                container.appendChild(star);
-            }
-        }
-
-        // ==================== 流星生成 ====================
-        function createMeteors() {
-            const container = document.getElementById('meteorContainer');
-            for (let i = 0; i < 5; i++) {
-                const meteor = document.createElement('div');
-                meteor.className = 'meteor';
-                meteor.style.left = (20 + Math.random() * 60) + '%';
-                meteor.style.top = '-100px';
-                meteor.style.animationDelay = (i * 5 + Math.random() * 5) + 's';
-                container.appendChild(meteor);
+            for (let i = 0; i < 20; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'sakura-petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = (10 + Math.random() * 15) + 's';
+                petal.style.animationDelay = Math.random() * 20 + 's';
+                const size = 10 + Math.random() * 10;
+                petal.style.width = size + 'px';
+                petal.style.height = size + 'px';
+                container.appendChild(petal);
             }
         }
 
         // ==================== 初始化 ====================
         document.addEventListener('DOMContentLoaded', function() {
-            createGoldParticles();
+            createKinpaku();
             createSakura();
-            createGems();
-            createStars();
-            createMeteors();
 
-            // 预加载一个头像
+            // 预加载头像
             avatarImage.src = getRandomAvatar();
         });
     </script>
