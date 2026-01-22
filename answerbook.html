@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>答案之書 · 命運指引</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <style>
+        /* ========== 基础重置与变量 ========== */
+        :root {
+            --imperial-gold: #D4AF37;
+            --bright-gold: #FFD700;
+            --deep-gold: #B8860B;
+            --royal-red: #8B0000;
+            --vermillion: #E34234;
+            --crimson: #DC143C;
+            --sakura-pink: #FFB7C5;
+            --pearl-white: #FAF0E6;
+            --midnight-purple: #1a0a2e;
+            --mystical-blue: #1a1a3e;
+            --deep-indigo: #191970;
+            --jade-green: #00A86B;
+            --lacquer-black: #0D0D0D;
+            --washi-cream: #F5E6D3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* ========== 主体背景 - 神秘星空风格 ========== */
+        body {
+            min-height: 100vh;
+            font-family: 'Noto Serif SC', serif;
+            background:
+                /* 顶部神秘光芒 */
+                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(100, 100, 200, 0.3) 0%, transparent 50%),
+                /* 左侧紫色光晕 */
+                radial-gradient(ellipse at 0% 30%, rgba(75, 0, 130, 0.4) 0%, transparent 40%),
+                /* 右侧蓝色光晕 */
+                radial-gradient(ellipse at 100% 40%, rgba(25, 25, 112, 0.4) 0%, transparent 40%),
+                /* 底部深紫渐变 */
+                radial-gradient(ellipse 120% 60% at 50% 120%, rgba(50, 0, 80, 0.5) 0%, transparent 50%),
+                /* 中心金色聚光 */
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 40%),
+                /* 基础深色背景 */
+                linear-gradient(180deg, #0a0515 0%, #0d0d2b 30%, #1a0a2e 60%, #0a0a1a 100%);
+            position: relative;
+        }
+
+        /* ========== 星空背景 ========== */
+        .stars-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: starTwinkle ease-in-out infinite;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* ========== 青海波纹背景 ========== */
+        .seigaiha-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 50'%3E%3Cpath d='M0 50 Q25 0 50 50 Q75 0 100 50' fill='none' stroke='%23D4AF3710' stroke-width='1'/%3E%3Cpath d='M-25 50 Q0 0 25 50' fill='none' stroke='%23D4AF3708' stroke-width='1'/%3E%3Cpath d='M75 50 Q100 0 125 50' fill='none' stroke='%23D4AF3708' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: 100px 50px;
+            animation: seigaihaMove 40s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes seigaihaMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 50px; }
+        }
+
+        /* ========== 神秘符文层 ========== */
+        .rune-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23FFD70008' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23FFD70006' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='20' fill='none' stroke='%23FFD70004' stroke-width='0.5'/%3E%3Cpath d='M50 10 L50 90 M10 50 L90 50' stroke='%23FFD70005' stroke-width='0.5'/%3E%3C/svg%3E");
+            background-size: 150px 150px;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 2;
+            animation: runeRotate 120s linear infinite;
+        }
+
+        @keyframes runeRotate {
+            0% { background-position: 0 0; }
+            100% { background-position: 150px 150px; }
+        }
+
+        /* ========== 金屏风边框 ========== */
+        .kinbyobu-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 10px solid transparent;
+            border-image: linear-gradient(135deg,
+                #D4AF37 0%, #FFD700 10%, #B8860B 20%,
+                #D4AF37 30%, #FFD700 40%, #B8860B 50%,
+                #D4AF37 60%, #FFD700 70%, #B8860B 80%,
+                #D4AF37 90%, #FFD700 100%) 1;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .kinbyobu-frame::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 1px solid rgba(100, 100, 180, 0.3);
+            pointer-events: none;
+        }
+
+        /* 角落装饰 - 月亮符文 */
+        .corner-moon {
+            position: fixed;
+            width: 70px;
+            height: 70px;
+            z-index: 101;
+            pointer-events: none;
+        }
+
+        .corner-moon::before {
+            content: '☽';
+            position: absolute;
+            font-size: 2.5rem;
+            color: var(--imperial-gold);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+            animation: moonGlow 4s ease-in-out infinite;
+        }
+
+        .corner-moon.top-left { top: 12px; left: 12px; }
+        .corner-moon.top-right { top: 12px; right: 12px; transform: scaleX(-1); }
+        .corner-moon.bottom-left { bottom: 12px; left: 12px; transform: scaleY(-1); }
+        .corner-moon.bottom-right { bottom: 12px; right: 12px; transform: scale(-1, -1); }
+
+        @keyframes moonGlow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)); }
+            50% { filter: drop-shadow(0 0 30px rgba(255, 215, 0, 1)); }
+        }
+
+        /* ========== 御簾帘幕效果 ========== */
+        .misu-curtain {
+            position: fixed;
+            top: 0;
+            width: 80px;
+            height: 100%;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .misu-curtain.left {
+            left: 0;
+            background:
+                repeating-linear-gradient(0deg,
+                    rgba(75, 0, 130, 0.25) 0px,
+                    rgba(75, 0, 130, 0.25) 2px,
+                    transparent 2px,
+                    transparent 8px),
+                linear-gradient(90deg, rgba(25, 25, 60, 0.6) 0%, transparent 100%);
+        }
+
+        .misu-curtain.right {
+            right: 0;
+            background:
+                repeating-linear-gradient(0deg,
+                    rgba(75, 0, 130, 0.25) 0px,
+                    rgba(75, 0, 130, 0.25) 2px,
+                    transparent 2px,
+                    transparent 8px),
+                linear-gradient(-90deg, rgba(25, 25, 60, 0.6) 0%, transparent 100%);
+        }
+
+        .misu-curtain::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 25px;
+            background: linear-gradient(180deg,
+                #D4AF37 0%, #B8860B 30%, #8B6914 60%, #D4AF37 100%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .misu-tassel {
+            position: absolute;
+            top: 25px;
+            width: 16px;
+            height: 50px;
+            background: linear-gradient(180deg, #D4AF37 0%, #4B0082 40%, #8B008B 100%);
+            border-radius: 0 0 8px 8px;
+            animation: tasselSway 4s ease-in-out infinite;
+        }
+
+        .misu-curtain.left .misu-tassel { right: 15px; }
+        .misu-curtain.right .misu-tassel { left: 15px; }
+
+        @keyframes tasselSway {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        /* ========== 神秘光点漂浮 ========== */
+        .mystical-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            animation: orbFloat linear infinite;
+        }
+
+        .orb.gold {
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.8) 0%, rgba(212, 175, 55, 0.4) 50%, transparent 70%);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .orb.purple {
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.6) 0%, rgba(75, 0, 130, 0.3) 50%, transparent 70%);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+        }
+
+        .orb.blue {
+            background: radial-gradient(circle, rgba(100, 149, 237, 0.6) 0%, rgba(65, 105, 225, 0.3) 50%, transparent 70%);
+            box-shadow: 0 0 15px rgba(100, 149, 237, 0.5);
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% {
+                transform: translateY(-100px) translateX(50px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* ========== 樱花飘落 ========== */
+        .sakura-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 21;
+            overflow: hidden;
+        }
+
+        .sakura-petal {
+            position: absolute;
+            top: -30px;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(ellipse at 30% 30%, rgba(255, 228, 233, 0.9), rgba(255, 183, 197, 0.7), rgba(255, 145, 164, 0.5));
+            border-radius: 150% 0 150% 0;
+            box-shadow: 0 0 8px rgba(255, 183, 197, 0.5);
+            animation: sakuraFall linear infinite;
+        }
+
+        @keyframes sakuraFall {
+            0% {
+                transform: translateY(-30px) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            5% { opacity: 0.8; }
+            95% { opacity: 0.6; }
+            100% {
+                transform: translateY(calc(100vh + 30px)) translateX(100px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* ========== 提灯 ========== */
+        .chochin-container {
+            position: fixed;
+            top: 70px;
+            z-index: 60;
+            animation: chochinSway 5s ease-in-out infinite;
+        }
+
+        .chochin-container.left { left: 40px; animation-delay: 0s; }
+        .chochin-container.right { right: 40px; animation-delay: 2.5s; }
+
+        .chochin {
+            width: 45px;
+            height: 70px;
+            position: relative;
+        }
+
+        .chochin-top {
+            width: 25px;
+            height: 8px;
+            background: linear-gradient(180deg, #1a1a1a, #333);
+            margin: 0 auto;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .chochin-body {
+            width: 45px;
+            height: 52px;
+            background: linear-gradient(90deg, #4B0082 0%, #8B008B 50%, #4B0082 100%);
+            border-radius: 50%;
+            position: relative;
+            box-shadow:
+                inset 0 0 20px rgba(255, 200, 255, 0.5),
+                0 0 30px rgba(138, 43, 226, 0.5);
+            overflow: hidden;
+        }
+
+        .chochin-body::before {
+            content: '命';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.3rem;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        .chochin-body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(0deg,
+                transparent 0px, transparent 7px,
+                rgba(0, 0, 0, 0.15) 7px, rgba(0, 0, 0, 0.15) 9px);
+        }
+
+        .chochin-bottom {
+            width: 18px;
+            height: 6px;
+            background: linear-gradient(180deg, #333, #1a1a1a);
+            margin: 0 auto;
+            border-radius: 0 0 50% 50%;
+        }
+
+        .chochin-tassel {
+            width: 3px;
+            height: 20px;
+            background: linear-gradient(180deg, #D4AF37 0%, #8B008B 50%, #4B0082 100%);
+            margin: 0 auto;
+            border-radius: 0 0 2px 2px;
+        }
+
+        @keyframes chochinSway {
+            0%, 100% { transform: rotate(-4deg); }
+            50% { transform: rotate(4deg); }
+        }
+
+        /* ========== 鶴 飛翔 ========== */
+        .tsuru-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .tsuru {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.15;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.4));
+            animation: tsuruFly 30s ease-in-out infinite;
+        }
+
+        @keyframes tsuruFly {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(80px, -40px) rotate(5deg); }
+            50% { transform: translate(160px, 10px) rotate(-3deg); }
+            75% { transform: translate(80px, -20px) rotate(2deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        /* ========== 流水纹 ========== */
+        .mizunagare {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 80px;
+            background:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 30'%3E%3Cpath d='M0 15 Q25 0 50 15 T100 15 T150 15 T200 15' fill='none' stroke='%23D4AF3725' stroke-width='1.5'/%3E%3C/svg%3E");
+            background-size: 200px 30px;
+            animation: mizuFlow 12s linear infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes mizuFlow {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ========== 主容器 ========== */
+        .main-container {
+            position: relative;
+            z-index: 30;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px 20px;
+            padding-top: 50px;
+        }
+
+        /* ========== 顶部标题区域 ========== */
+        .header-section {
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        /* 神秘之眼图标 */
+        .mystical-eye {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 12px;
+            position: relative;
+            animation: eyeGlow 4s ease-in-out infinite;
+        }
+
+        .mystical-eye::before {
+            content: '👁';
+            position: absolute;
+            font-size: 3rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8))
+                    drop-shadow(0 0 40px rgba(138, 43, 226, 0.5));
+        }
+
+        @keyframes eyeGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)); }
+            50% { filter: drop-shadow(0 0 40px rgba(255, 215, 0, 1)); }
+        }
+
+        /* ========== 标题样式 ========== */
+        .main-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2.6rem;
+            background: linear-gradient(180deg,
+                #FFD700 0%,
+                #D4AF37 20%,
+                #B8860B 40%,
+                #D4AF37 60%,
+                #FFD700 80%,
+                #FFF8DC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.5em;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            animation: titleShine 4s ease-in-out infinite;
+        }
+
+        @keyframes titleShine {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)) brightness(1); }
+            50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.8)) brightness(1.2); }
+        }
+
+        .title-decoration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .title-decoration span {
+            color: var(--imperial-gold);
+            font-size: 1rem;
+            animation: decorPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes decorPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        .sub-title {
+            font-family: 'ZCOOL XiaoWei', serif;
+            font-size: 0.95rem;
+            background: linear-gradient(90deg, #9370DB, #BA55D3, #9370DB);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.6em;
+            margin-top: 8px;
+            animation: subtitleFloat 5s ease-in-out infinite;
+        }
+
+        @keyframes subtitleFloat {
+            0%, 100% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(-3px); opacity: 1; }
+        }
+
+        /* ========== 引导文字 ========== */
+        .guidance-text {
+            font-family: 'ZCOOL XiaoWei', serif;
+            font-size: 0.85rem;
+            color: rgba(255, 215, 0, 0.7);
+            text-align: center;
+            margin: 10px 0;
+            letter-spacing: 0.15em;
+            line-height: 1.8;
+        }
+
+        /* ========== 分隔线 ========== */
+        .divider {
+            width: 85%;
+            max-width: 320px;
+            height: 30px;
+            margin: 10px auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(138, 43, 226, 0.5) 30%,
+                #D4AF37 50%,
+                rgba(138, 43, 226, 0.5) 70%,
+                transparent 100%);
+        }
+
+        .divider-symbol {
+            font-size: 1.5rem;
+            color: var(--imperial-gold);
+            margin: 0 15px;
+            animation: symbolPulse 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+        }
+
+        @keyframes symbolPulse {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+        }
+
+        /* ========== 舞台区域 ========== */
+        .stage-container {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            height: 440px;
+            margin: 5px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 舞台光效 */
+        .stage-aura {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 380px;
+            height: 480px;
+            background:
+                radial-gradient(ellipse at center, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 60%);
+            animation: auraBreath 5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes auraBreath {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+        }
+
+        /* 魔法阵 */
+        .magic-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 320px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 50%;
+            animation: circleRotate 30s linear infinite;
+            pointer-events: none;
+        }
+
+        .magic-circle::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            right: 10%;
+            bottom: 10%;
+            border: 1px dashed rgba(138, 43, 226, 0.3);
+            border-radius: 50%;
+        }
+
+        .magic-circle::after {
+            content: '✦';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--imperial-gold);
+            font-size: 1.2rem;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+        }
+
+        @keyframes circleRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* ========== 牌子卡片 ========== */
+        .fuda-card {
+            position: absolute;
+            width: 240px;
+            height: 360px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center center;
+        }
+
+        .fuda-card:hover {
+            transform: scale(1.02);
+        }
+
+        .fuda-card.hidden {
+            opacity: 0;
+            transform: scale(0.8) rotateY(90deg);
+            pointer-events: none;
+        }
+
+        .fuda-card.visible {
+            opacity: 1;
+            transform: scale(1) rotateY(0deg);
+        }
+
+        /* ========== 牌子背面 ========== */
+        .fuda-back {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            background: linear-gradient(145deg,
+                #0d0520 0%,
+                #1a0a3a 20%,
+                #2d1050 40%,
+                #1a0a3a 60%,
+                #0d0520 80%,
+                #050210 100%);
+            box-shadow:
+                0 0 50px rgba(138, 43, 226, 0.4),
+                0 0 100px rgba(212, 175, 55, 0.2),
+                inset 0 0 50px rgba(138, 43, 226, 0.15),
+                0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .fuda-back::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(135deg,
+                #D4AF37 0%, #8B008B 20%, #4B0082 40%,
+                #D4AF37 50%, #8B008B 60%, #4B0082 80%,
+                #D4AF37 100%);
+            border-radius: 18px;
+            z-index: -1;
+            animation: borderShimmer 4s linear infinite;
+        }
+
+        @keyframes borderShimmer {
+            0% { filter: brightness(1) hue-rotate(0deg); }
+            50% { filter: brightness(1.3) hue-rotate(30deg); }
+            100% { filter: brightness(1) hue-rotate(0deg); }
+        }
+
+        .fuda-back::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            border-radius: 10px;
+            background:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='%23D4AF3715' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='35' fill='none' stroke='%238B008B15' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='25' fill='none' stroke='%23D4AF3715' stroke-width='0.5'/%3E%3C/svg%3E");
+            background-size: 180px 180px;
+            background-position: center;
+        }
+
+        /* 闪光效果 */
+        .fuda-shimmer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                115deg,
+                transparent 20%,
+                rgba(255, 255, 255, 0.08) 40%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(255, 255, 255, 0.08) 60%,
+                transparent 80%
+            );
+            background-size: 200% 100%;
+            animation: shimmerMove 5s ease-in-out infinite;
+            border-radius: 15px;
+            pointer-events: none;
+        }
+
+        @keyframes shimmerMove {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* 角落装饰 */
+        .fuda-corner {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            color: var(--imperial-gold);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.7));
+        }
+
+        .fuda-corner.tl { top: 18px; left: 18px; }
+        .fuda-corner.tr { top: 18px; right: 18px; transform: scaleX(-1); }
+        .fuda-corner.bl { bottom: 18px; left: 18px; transform: scaleY(-1); }
+        .fuda-corner.br { bottom: 18px; right: 18px; transform: scale(-1, -1); }
+
+        /* 中心纹章 */
+        .fuda-emblem {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+        }
+
+        .emblem-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            animation: emblemRotate 10s linear infinite;
+        }
+
+        .emblem-ring.outer {
+            width: 140px;
+            height: 140px;
+            border: 2px dashed rgba(138, 43, 226, 0.6);
+        }
+
+        .emblem-ring.middle {
+            width: 110px;
+            height: 110px;
+            border: 2px solid var(--imperial-gold);
+            animation-direction: reverse;
+        }
+
+        .emblem-ring.inner {
+            width: 80px;
+            height: 80px;
+            border: 1px solid rgba(138, 43, 226, 0.5);
+        }
+
+        @keyframes emblemRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .emblem-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle,
+                #8B008B 0%,
+                #4B0082 40%,
+                #2d0050 70%,
+                #1a0030 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--imperial-gold);
+            box-shadow:
+                0 0 30px rgba(138, 43, 226, 0.8),
+                inset 0 0 20px rgba(255, 215, 0, 0.3);
+            animation: emblemPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes emblemPulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(138, 43, 226, 0.8), inset 0 0 20px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(138, 43, 226, 1), inset 0 0 30px rgba(255, 215, 0, 0.5); }
+        }
+
+        .emblem-text {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.6rem;
+            color: var(--imperial-gold);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        /* 点击提示 */
+        .fuda-hint {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 215, 0, 0.8);
+            font-family: 'ZCOOL XiaoWei', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.25em;
+            white-space: nowrap;
+            animation: hintBlink 2.5s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
+        @keyframes hintBlink {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* ========== 结果卡片 ========== */
+        .result-card {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            border-radius: 15px;
+            overflow: hidden;
+            background: linear-gradient(180deg,
+                #FDF8F0 0%,
+                #F5E6D3 15%,
+                #EFE0C9 40%,
+                #E8D4B8 70%,
+                #DCC8A8 100%);
+            box-shadow:
+                0 0 50px rgba(212, 175, 55, 0.5),
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                inset 0 0 80px rgba(212, 175, 55, 0.1);
+        }
+
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(135deg,
+                #FFD700 0%, #D4AF37 25%, #B8860B 50%, #D4AF37 75%, #FFD700 100%);
+            border-radius: 18px;
+            z-index: -1;
+            animation: resultBorderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes resultBorderGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .result-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .result-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 15px;
+        }
+
+        /* 顶部装饰 */
+        .result-top-decor {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--imperial-gold);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+
+        .result-top-decor span {
+            animation: topDecorFloat 2s ease-in-out infinite;
+        }
+
+        .result-top-decor span:nth-child(1) { animation-delay: 0s; }
+        .result-top-decor span:nth-child(2) { animation-delay: 0.15s; }
+        .result-top-decor span:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes topDecorFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
+
+        /* 风景图区域 */
+        .landscape-container {
+            position: relative;
+            width: 180px;
+            height: 120px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .landscape-glow {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+            border-radius: 15px;
+            animation: landscapeGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes landscapeGlow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .landscape-frame {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 3px solid var(--imperial-gold);
+            border-radius: 12px;
+            z-index: 2;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .landscape-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 答案区域 */
+        .answer-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 15px;
+            width: 100%;
+        }
+
+        .answer-frame {
+            position: relative;
+            padding: 15px 20px;
+            max-width: 100%;
+            border: 2px solid var(--imperial-gold);
+            border-radius: 10px;
+            background: linear-gradient(135deg,
+                rgba(212, 175, 55, 0.1) 0%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(212, 175, 55, 0.1) 100%);
+            box-shadow:
+                0 0 20px rgba(212, 175, 55, 0.2),
+                inset 0 0 20px rgba(212, 175, 55, 0.05);
+        }
+
+        .answer-frame::before,
+        .answer-frame::after {
+            content: '✦';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--imperial-gold);
+            font-size: 0.9rem;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.6));
+        }
+
+        .answer-frame::before { left: -18px; }
+        .answer-frame::after { right: -18px; }
+
+        .answer-text {
+            font-family: 'ZCOOL XiaoWei', serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+            background: linear-gradient(180deg,
+                #4B0082 0%,
+                #8B008B 30%,
+                #9932CC 50%,
+                #8B008B 70%,
+                #4B0082 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.08em;
+        }
+
+        /* 底部装饰 */
+        .result-bottom-decor {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .result-bottom-decor span {
+            color: var(--imperial-gold);
+            font-size: 0.8rem;
+            animation: bottomDecorDance 1.8s ease-in-out infinite;
+        }
+
+        .result-bottom-decor span:nth-child(1) { animation-delay: 0s; }
+        .result-bottom-decor span:nth-child(2) { animation-delay: 0.12s; }
+        .result-bottom-decor span:nth-child(3) { animation-delay: 0.24s; }
+        .result-bottom-decor span:nth-child(4) { animation-delay: 0.36s; }
+        .result-bottom-decor span:nth-child(5) { animation-delay: 0.48s; }
+
+        @keyframes bottomDecorDance {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-3px) scale(1.1); }
+        }
+
+        /* ========== 揭晓特效 ========== */
+        .reveal-burst {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 200;
+            opacity: 0;
+        }
+
+        .reveal-burst.active {
+            opacity: 1;
+        }
+
+        .burst-particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: burstFly 1.2s ease-out forwards;
+        }
+
+        .burst-particle.gold {
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+        }
+
+        .burst-particle.purple {
+            background: linear-gradient(135deg, #8B008B, #4B0082);
+        }
+
+        @keyframes burstFly {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .reveal-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center,
+                rgba(138, 43, 226, 0.5) 0%,
+                rgba(255, 215, 0, 0.3) 30%,
+                transparent 70%);
+            pointer-events: none;
+            z-index: 199;
+            opacity: 0;
+        }
+
+        .reveal-flash.active {
+            animation: flashBurst 1s ease-out forwards;
+        }
+
+        @keyframes flashBurst {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* ========== 重新翻牌按钮 ========== */
+        .reset-button {
+            margin-top: 20px;
+            padding: 14px 40px;
+            font-family: 'ZCOOL XiaoWei', serif;
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            color: var(--imperial-gold);
+            background: linear-gradient(180deg,
+                rgba(13, 5, 32, 0.95) 0%,
+                rgba(26, 10, 58, 0.95) 50%,
+                rgba(13, 5, 32, 0.95) 100%);
+            border: 2px solid transparent;
+            border-image: linear-gradient(135deg, #D4AF37, #8B008B, #D4AF37) 1;
+            border-radius: 0;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow:
+                0 0 25px rgba(138, 43, 226, 0.3),
+                inset 0 0 15px rgba(212, 175, 55, 0.1);
+            opacity: 0;
+            transform: translateY(15px);
+            pointer-events: none;
+        }
+
+        .reset-button.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .reset-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(138, 43, 226, 0.3) 50%,
+                transparent 100%);
+            transition: left 0.5s ease;
+        }
+
+        .reset-button:hover {
+            transform: scale(1.05);
+            box-shadow:
+                0 0 40px rgba(138, 43, 226, 0.5),
+                inset 0 0 25px rgba(212, 175, 55, 0.15);
+        }
+
+        .reset-button:hover::before {
+            left: 100%;
+        }
+
+        .reset-button:active {
+            transform: scale(0.98);
+        }
+
+        /* ========== 底部装饰 ========== */
+        .footer-decoration {
+            margin-top: auto;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-pattern {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .footer-line {
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.5), var(--imperial-gold), rgba(138, 43, 226, 0.5), transparent);
+        }
+
+        .footer-symbol {
+            color: var(--imperial-gold);
+            font-size: 1rem;
+            animation: footerSymbolPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes footerSymbolPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.1) rotate(180deg); }
+        }
+
+        .footer-text {
+            font-family: 'ZCOOL XiaoWei', serif;
+            color: rgba(186, 85, 211, 0.6);
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 380px) {
+            .main-title {
+                font-size: 2.1rem;
+                letter-spacing: 0.3em;
+            }
+
+            .fuda-card {
+                width: 210px;
+                height: 320px;
+            }
+
+            .stage-container {
+                height: 400px;
+            }
+
+            .landscape-container {
+                width: 160px;
+                height: 100px;
+            }
+
+            .answer-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 星空层 -->
+    <div class="stars-layer" id="starsLayer"></div>
+
+    <!-- 背景图案 -->
+    <div class="seigaiha-bg"></div>
+    <div class="rune-layer"></div>
+
+    <!-- 金屏风边框 -->
+    <div class="kinbyobu-frame"></div>
+    <div class="corner-moon top-left"></div>
+    <div class="corner-moon top-right"></div>
+    <div class="corner-moon bottom-left"></div>
+    <div class="corner-moon bottom-right"></div>
+
+    <!-- 帘幕 -->
+    <div class="misu-curtain left">
+        <div class="misu-tassel"></div>
+    </div>
+    <div class="misu-curtain right">
+        <div class="misu-tassel"></div>
+    </div>
+
+    <!-- 提灯 -->
+    <div class="chochin-container left">
+        <div class="chochin">
+            <div class="chochin-top"></div>
+            <div class="chochin-body"></div>
+            <div class="chochin-bottom"></div>
+            <div class="chochin-tassel"></div>
+        </div>
+    </div>
+    <div class="chochin-container right">
+        <div class="chochin">
+            <div class="chochin-top"></div>
+            <div class="chochin-body"></div>
+            <div class="chochin-bottom"></div>
+            <div class="chochin-tassel"></div>
+        </div>
+    </div>
+
+    <!-- 鶴 -->
+    <div class="tsuru-container">
+        <div class="tsuru" style="top: 15%; left: 12%;">🦢</div>
+        <div class="tsuru" style="top: 28%; right: 10%; animation-delay: -8s;">🦢</div>
+        <div class="tsuru" style="bottom: 25%; left: 8%; animation-delay: -15s;">🦢</div>
+    </div>
+
+    <!-- 神秘光点 -->
+    <div class="mystical-orbs" id="orbsContainer"></div>
+
+    <!-- 樱花 -->
+    <div class="sakura-container" id="sakuraContainer"></div>
+
+    <!-- 流水纹 -->
+    <div class="mizunagare"></div>
+
+    <!-- 揭晓特效 -->
+    <div class="reveal-flash" id="revealFlash"></div>
+    <div class="reveal-burst" id="revealBurst"></div>
+
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 标题区域 -->
+        <header class="header-section">
+            <div class="mystical-eye"></div>
+            <h1 class="main-title">答案之書</h1>
+            <div class="title-decoration">
+                <span>☽</span>
+                <span>✦</span>
+                <span>命運指引</span>
+                <span>✦</span>
+                <span>☾</span>
+            </div>
+            <p class="sub-title">聆聽內心的聲音</p>
+        </header>
+
+        <!-- 引导文字 -->
+        <p class="guidance-text">
+            閉上雙眼，在心中默念你最關心的問題<br>
+            然後輕觸命運之牌，獲得指引
+        </p>
+
+        <!-- 分隔线 -->
+        <div class="divider">
+            <span class="divider-symbol">◇</span>
+        </div>
+
+        <!-- 舞台区域 -->
+        <div class="stage-container">
+            <div class="stage-aura"></div>
+            <div class="magic-circle"></div>
+
+            <!-- 牌子背面 -->
+            <div class="fuda-card visible" id="fudaBack" onclick="revealAnswer()">
+                <div class="fuda-back">
+                    <div class="fuda-shimmer"></div>
+                    <div class="fuda-corner tl">☽</div>
+                    <div class="fuda-corner tr">☽</div>
+                    <div class="fuda-corner bl">☽</div>
+                    <div class="fuda-corner br">☽</div>
+                    <div class="fuda-emblem">
+                        <div class="emblem-ring outer"></div>
+                        <div class="emblem-ring middle"></div>
+                        <div class="emblem-ring inner"></div>
+                        <div class="emblem-center">
+                            <span class="emblem-text">命</span>
+                        </div>
+                    </div>
+                    <div class="fuda-hint">— 觸碰獲得指引 —</div>
+                </div>
+            </div>
+
+            <!-- 结果卡片 -->
+            <div class="fuda-card hidden" id="resultCard">
+                <div class="result-card">
+                    <div class="result-content">
+                        <div class="result-top-decor">
+                            <span>✦</span>
+                            <span>命運啟示</span>
+                            <span>✦</span>
+                        </div>
+                        <div class="landscape-container">
+                            <div class="landscape-glow"></div>
+                            <div class="landscape-frame"></div>
+                            <img class="landscape-image" id="landscapeImage" src="" alt="風景">
+                        </div>
+                        <div class="answer-container">
+                            <div class="answer-frame">
+                                <p class="answer-text" id="answerText">???</p>
+                            </div>
+                        </div>
+                        <div class="result-bottom-decor">
+                            <span>☽</span>
+                            <span>✦</span>
+                            <span>◇</span>
+                            <span>✦</span>
+                            <span>☾</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 重新翻牌按钮 -->
+        <button class="reset-button" id="resetButton" onclick="resetCard()">
+            ◇ 再問一次 ◇
+        </button>
+
+        <!-- 底部装饰 -->
+        <footer class="footer-decoration">
+            <div class="footer-pattern">
+                <div class="footer-line"></div>
+                <span class="footer-symbol">☽</span>
+                <div class="footer-line"></div>
+            </div>
+            <p class="footer-text">答案之書 · 命運指引</p>
+        </footer>
+    </div>
+
+    <script>
+        // ==================== 答案数据库 ====================
+        const answers = [
+            // 肯定与鼓励
+            "是的，就是现在",
+            "相信你的直觉",
+            "机会就在眼前",
+            "勇敢地迈出那一步",
+            "命运站在你这边",
+            "一切都在按计划进行",
+            "你比想象中更强大",
+            "答案其实你早已知道",
+            "时机成熟了",
+            "放心去做吧",
+            "这是最好的选择",
+            "宇宙正在为你铺路",
+            "好运正在向你靠近",
+            "你值得拥有最好的",
+            "这一次会不同",
+            "你的努力不会白费",
+            "光明就在前方",
+            "相信过程",
+            "你已经准备好了",
+            "这正是你需要的",
+
+            // 等待与耐心
+            "再等一等",
+            "不是现在，但很快",
+            "耐心是最好的答案",
+            "让时间来证明一切",
+            "静待花开",
+            "欲速则不达",
+            "沉淀一下再做决定",
+            "给自己多一点时间",
+            "答案正在路上",
+            "种子需要时间发芽",
+            "暂时搁置这个问题",
+            "等待中孕育着可能",
+            "慢慢来，不必急",
+            "现在还不是时候",
+            "让事情自然发展",
+
+            // 反思与谨慎
+            "再想一想",
+            "换个角度看问题",
+            "你可能忽略了什么",
+            "三思而后行",
+            "倾听内心深处的声音",
+            "这真的是你想要的吗",
+            "重新审视你的动机",
+            "也许有更好的方式",
+            "退一步海阔天空",
+            "不要被表象迷惑",
+            "问问你真正害怕的是什么",
+            "答案在问题之中",
+            "回到起点重新思考",
+            "真相往往很简单",
+            "你需要更多信息",
+
+            // 行动与改变
+            "现在就行动",
+            "改变从此刻开始",
+            "打破常规",
+            "走出舒适区",
+            "做那个勇敢的决定",
+            "不要再犹豫了",
+            "是时候放手一搏",
+            "把想法变成行动",
+            "第一步最重要",
+            "行动胜过完美计划",
+            "别让恐惧阻止你",
+            "现在是最佳时机",
+            "去做那件一直想做的事",
+            "改变需要勇气",
+            "突破自我设限",
+
+            // 关系与他人
+            "坦诚相待",
+            "聆听对方的心声",
+            "给彼此一些空间",
+            "主动迈出第一步",
+            "真诚是最好的策略",
+            "相信他们",
+            "这段关系值得珍惜",
+            "说出你的真实想法",
+            "原谅是给自己的礼物",
+            "有些人注定要离开",
+            "不要害怕表达爱",
+            "界限同样重要",
+            "命中注定的人会留下",
+            "给予而不求回报",
+            "珍惜眼前人",
+
+            // 释然与放下
+            "放下执念",
+            "有些事不是你的责任",
+            "接受无法改变的事",
+            "顺其自然",
+            "不必事事完美",
+            "释放过去的重担",
+            "允许自己脆弱",
+            "失去也是一种获得",
+            "臣服于当下",
+            "有些答案不需要寻找",
+            "结束是新的开始",
+            "放过自己",
+            "接纳不完美",
+            "让它去吧",
+            "此刻即是圆满",
+
+            // 自我与成长
+            "相信自己的判断",
+            "你比任何人都了解自己",
+            "做真实的自己",
+            "你的价值不需要证明",
+            "这是成长的机会",
+            "挑战塑造更强的你",
+            "保持初心",
+            "你正在成为更好的自己",
+            "每一步都算数",
+            "相信你走过的路",
+            "你的独特是礼物",
+            "不必与人比较",
+            "接纳自己的节奏",
+            "你已经足够好",
+            "成长需要时间",
+
+            // 神秘与命运
+            "命运自有安排",
+            "一切都是最好的安排",
+            "冥冥之中自有天意",
+            "相信宇宙的指引",
+            "你正走在对的路上",
+            "有些事超越理解",
+            "信任生命的旅程",
+            "奇迹正在发生",
+            "你与这个世界有约定",
+            "答案会在梦中显现",
+            "跟随你的心",
+            "直觉不会欺骗你",
+            "倾听星辰的低语",
+            "命运的齿轮正在转动",
+            "你被宇宙眷顾着",
+
+            // 否定与警示
+            "现在不是好时机",
+            "再考虑一下",
+            "这条路或许不适合你",
+            "注意隐藏的风险",
+            "保持警惕",
+            "不要被冲动左右",
+            "这需要更多准备",
+            "暂时说不",
+            "保护好自己",
+            "有些机会不值得抓住",
+            "相信你的不安感",
+            "停下来休息一下",
+            "退后一步看全局",
+            "不必所有事都说是",
+            "谨慎行事",
+
+            // 希望与未来
+            "美好的事情即将发生",
+            "黑暗之后是黎明",
+            "希望永远存在",
+            "未来比想象更精彩",
+            "好事多磨",
+            "风雨之后见彩虹",
+            "你的春天就要来了",
+            "每一天都是新的开始",
+            "幸福正在靠近",
+            "最好的还在后面",
+            "坚持住，就快到了",
+            "转机即将出现",
+            "新的篇章即将开启",
+            "你的故事还在继续",
+            "明天会更好"
+        ];
+
+        // 使用 picsum.photos 获取随机风景图
+        const getRandomLandscape = () => {
+            const randomId = Math.floor(Math.random() * 1000);
+            return `https://picsum.photos/seed/${randomId}/400/300`;
+        };
+
+        // ==================== DOM 元素 ====================
+        const fudaBack = document.getElementById('fudaBack');
+        const resultCard = document.getElementById('resultCard');
+        const landscapeImage = document.getElementById('landscapeImage');
+        const answerText = document.getElementById('answerText');
+        const resetButton = document.getElementById('resetButton');
+        const revealFlash = document.getElementById('revealFlash');
+        const revealBurst = document.getElementById('revealBurst');
+
+        let isRevealed = false;
+
+        // ==================== 翻牌功能 ====================
+        function revealAnswer() {
+            if (isRevealed) return;
+            isRevealed = true;
+
+            // 随机选择答案
+            const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
+            const randomLandscape = getRandomLandscape();
+
+            // 设置结果
+            landscapeImage.src = randomLandscape;
+            answerText.textContent = randomAnswer;
+
+            // 隐藏牌子背面
+            fudaBack.classList.remove('visible');
+            fudaBack.classList.add('hidden');
+
+            // 触发特效
+            setTimeout(() => {
+                revealFlash.classList.add('active');
+                createBurstParticles();
+            }, 350);
+
+            // 显示结果卡片
+            setTimeout(() => {
+                resultCard.classList.remove('hidden');
+                resultCard.classList.add('visible');
+            }, 450);
+
+            // 清除闪光
+            setTimeout(() => {
+                revealFlash.classList.remove('active');
+            }, 1200);
+
+            // 显示重置按钮
+            setTimeout(() => {
+                resetButton.classList.add('visible');
+            }, 900);
+        }
+
+        function resetCard() {
+            isRevealed = false;
+
+            // 隐藏结果卡片
+            resultCard.classList.remove('visible');
+            resultCard.classList.add('hidden');
+
+            // 隐藏按钮
+            resetButton.classList.remove('visible');
+
+            // 显示牌子背面
+            setTimeout(() => {
+                fudaBack.classList.remove('hidden');
+                fudaBack.classList.add('visible');
+            }, 450);
+        }
+
+        // ==================== 粒子爆发效果 ====================
+        function createBurstParticles() {
+            revealBurst.innerHTML = '';
+            revealBurst.classList.add('active');
+
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'burst-particle ' + (Math.random() > 0.5 ? 'gold' : 'purple');
+                particle.style.width = (3 + Math.random() * 8) + 'px';
+                particle.style.height = particle.style.width;
+
+                const angle = (Math.PI * 2 * i) / 50 + Math.random() * 0.4;
+                const distance = 80 + Math.random() * 200;
+                particle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                particle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+
+                revealBurst.appendChild(particle);
+            }
+
+            setTimeout(() => {
+                revealBurst.classList.remove('active');
+            }, 1200);
+        }
+
+        // ==================== 星空生成 ====================
+        function createStars() {
+            const container = document.getElementById('starsLayer');
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = 1 + Math.random() * 2;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.animationDuration = (2 + Math.random() * 3) + 's';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        // ==================== 神秘光点生成 ====================
+        function createOrbs() {
+            const container = document.getElementById('orbsContainer');
+            const colors = ['gold', 'purple', 'blue'];
+            for (let i = 0; i < 15; i++) {
+                const orb = document.createElement('div');
+                orb.className = 'orb ' + colors[Math.floor(Math.random() * colors.length)];
+                orb.style.left = Math.random() * 100 + '%';
+                const size = 8 + Math.random() * 15;
+                orb.style.width = size + 'px';
+                orb.style.height = size + 'px';
+                orb.style.animationDelay = Math.random() * 20 + 's';
+                orb.style.animationDuration = (15 + Math.random() * 15) + 's';
+                container.appendChild(orb);
+            }
+        }
+
+        // ==================== 樱花生成 ====================
+        function createSakura() {
+            const container = document.getElementById('sakuraContainer');
+            for (let i = 0; i < 15; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'sakura-petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = (12 + Math.random() * 18) + 's';
+                petal.style.animationDelay = Math.random() * 25 + 's';
+                const size = 8 + Math.random() * 8;
+                petal.style.width = size + 'px';
+                petal.style.height = size + 'px';
+                container.appendChild(petal);
+            }
+        }
+
+        // ==================== 初始化 ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            createOrbs();
+            createSakura();
+
+            // 预加载风景图
+            landscapeImage.src = getRandomLandscape();
+        });
+    </script>
+</body>
+</html>
